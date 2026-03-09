@@ -1,4 +1,4 @@
-export default function CadastroEndereco() {
+export default function CadastroArtistaEndereco() {
     return (
         <div className="h-dvh grid grid-cols-12">
             {/* FORM */}
