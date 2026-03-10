@@ -1,5 +1,4 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Art Connect",
@@ -11,7 +10,6 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       <body>
         <div>
-          <Navbar />
           {children}
         </div>
       </body>
