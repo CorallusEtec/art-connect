@@ -1,5 +1,5 @@
 import CriarPost from "@/components/CriarPost";
-import PostText from "@/components/Post";
+import PostText from "@/components/PostText";
 
 export default function Home() {
     return (

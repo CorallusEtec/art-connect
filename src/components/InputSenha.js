@@ -16,7 +16,7 @@ export default function InputSenha({ placeholder, value, setValue }) {
         onClick={() => setMostrarSenha(!mostrarSenha)}
         className="cursor-pointer"
       >
-        <i className={mostrarSenha ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+        <i className={mostrarSenha ? "bi bi-eye-slash" : "bi bi-eye"}></i>
       </button>
     </div>
   );
