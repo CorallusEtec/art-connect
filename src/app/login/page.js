@@ -28,7 +28,7 @@ export default function Login() {
                             <span>Lembre-se de Mim</span>
                         </div>
                         <div className="flex">
-                            <a href="" className="text-emerald-600 underline">Esqueci a senha</a>
+                            <a href="login/esqueciSenha" className="text-emerald-600 underline">Esqueci a senha</a>
                         </div>
                     </div>
                     {/* BOTÕES */}
