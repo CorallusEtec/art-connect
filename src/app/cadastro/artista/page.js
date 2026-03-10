@@ -1,21 +1,17 @@
 'use client'
 
+import InputDate from "@/components/InputDate";
 import InputSenha from "@/components/InputSenha";
 import { useState } from "react";
 
 export default function CadastroArtista() {
-    const [nome, setNome] = useState();
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
-    const [cpf, setCpf] = useState();
-    const [dataNasc, setDataNasc] = useState(new Date());
-    const [sexo, setSexo] = useState();
-
-    function handleData(value) {
-        const data = value.target.value;
-        setDataNasc(new Date(data));
-    }
-    console.log(dataNasc)
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [senhaConfirm, setSenhaConfirm] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [dataNasc, setDataNasc] = useState(new Date("2000-01-01T03:24:00"));
+    const [sexo, setSexo] = useState("");
 
     return (
         <div className="h-screen grid grid-cols-12">
@@ -33,7 +29,7 @@ export default function CadastroArtista() {
                             <i className="bi bi-person text-2xl"></i>
                             <input
                             value={nome}
-                            onChange={setNome}
+                            onChange={(e)=>setNome(e.target.value)}
                             type="text" className="text-lg w-full outline-none" placeholder="Nome Completo" />
                         </div>
                         {/* EMAIL */}
@@ -41,18 +37,18 @@ export default function CadastroArtista() {
                             <i className="bi bi-envelope text-2xl"></i>
                             <input
                             value={email}
-                            onChange={setEmail}
+                            onChange={(e)=>setEmail(e.target.value)}
                             type="text" className="text-lg w-full outline-none" placeholder="E-mail" />
                         </div>
                         {/* SENHA */}
-                        <InputSenha value={senha} setValue={setSenha} placeholder="Senha"/>
+                        <InputSenha value={senha} setValue={(e)=>setSenha(e.target.value)} placeholder="Senha"/>
                         {/* CONFIRMAR SENHA */}
-                        <InputSenha  placeholder="Confirme a senha"/>
+                        <InputSenha value={senhaConfirm} setValue={(e)=>setSenhaConfirm(e.target.value)} placeholder="Confirme a senha"/>
                         {/* CPF */}
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-key text-2xl"></i>
                             <input
-                            onChange={setCpf}
+                            onChange={(e)=>setCpf(e.target.value)}
                             value={cpf}
                             type="text" className="text-lg w-full outline-none" placeholder="CPF" />
                         </div>
@@ -61,22 +57,17 @@ export default function CadastroArtista() {
                             {/* DATA NASC */}
                             <div className="flex col-span-7 flex-col">
                                 <span className="text-lg">Data de Nascimento</span>
-                                <input
-                                onChange={(e)=>handleData(e)}
-                                value={dataNasc}
-                                max={new Date().toISOString().split("T")[0]}
-                                type="date"
-                                className="bg-stone-200 p-2 border border-stone-300 rounded-lg text-lg text-stone-600 cursor-pointer" />
+                                <InputDate value={dataNasc} setValue={setDataNasc} />
                             </div>
                             {/* SEXO */}
                             <div className="flex col-span-4 col-start-9 flex-col">
                                 <span className="text-lg">Sexo</span>
                                 <select
                                 value={sexo}
-                                onChange={setSexo}
+                                onChange={(e)=>setSexo(e.target.value)}
                                 className="bg-stone-200 p-3 border border-stone-300 rounded-lg text-lg text-stone-600 cursor-pointer">
-                                    <option>Feminino</option>
-                                    <option>Masculino</option>
+                                    <option value="f">Feminino</option>
+                                    <option value="m">Masculino</option>
                                 </select>
                             </div>
                         </div>

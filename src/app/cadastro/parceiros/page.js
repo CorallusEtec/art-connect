@@ -61,7 +61,7 @@ export default function CadastroParceiro() {
                     
                     {/* BOTÕES */}
                         <div className="flex flex-col items-center gap-5">
-                        <a href="cadastroEndereco" className="w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
+                        <a href="parceiros/cadastroEndereco" className="w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
                             <i className="bi bi-arrow-right text-2xl"></i>
                         </a>
                         </div>

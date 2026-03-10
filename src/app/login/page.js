@@ -1,5 +1,9 @@
+import Navbar from "@/components/Navbar";
+
 export default function Login() {
     return (
+        <>
+        <Navbar />
         <div className="h-dvh grid grid-cols-12">
             {/* FORM */}
             <div className="flex justify-center items-center flex-col col-span-4">
@@ -47,5 +51,6 @@ export default function Login() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
