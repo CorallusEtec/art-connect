@@ -10,8 +10,8 @@ export default function PostText() {
                     <h2 className="text-lg">Nome Perfil</h2>
                     <span className="text-stone-500">há 3 dias atrás</span>
                 </div>
-                <button className="flex justify-center col-span-1">
-                    <i class="bi bi-three-dots"></i>
+                <button className="cursor-pointer flex justify-center col-span-1">
+                    <i className="bi bi-three-dots"></i>
                 </button>
             </div>
             <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ipsum nisi. Pellentesque id nisi sed orci aliquam vehicula et id leo. Etiam rutrum, arcu at egestas iaculis, libero lorem aliquet ligula, quis molestie sapien velit at enim. Aliquam et massa eu lectus eleifend facilisis quis a lectus. Praesent et gravida sapien. Proin ex mi, eleifend eget consectetur id, rutrum sit amet nibh.
