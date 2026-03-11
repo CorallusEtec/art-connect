@@ -1,6 +1,21 @@
+'use client'
+
 import InputSenha from "@/components/InputSenha";
+import LoginService from "@/services/LoginService";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const route = useRouter();
+
+  async function login() {
+    const usuario = await LoginService.login(email, senha);
+    sessionStorage.setItem('@login', JSON.stringify(usuario));
+    route.push("/home");
+  }
+
   return (
     <div className="h-dvh grid grid-cols-12">
       {/* FORM */}
@@ -13,13 +28,15 @@ export default function Login() {
             <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
               <i className="bi bi-envelope text-lg"></i>
               <input
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
                 type="email"
                 className="text-lg w-full outline-none"
                 placeholder="E-mail"
               />
             </div>
             {/* SENHA */}
-            <InputSenha placeholder="Senha" />
+            <InputSenha value={senha} setValue={(e)=>setSenha(e.target.value)} placeholder="Senha" />
           </div>
           {/* LEMBRE DE MIM E ESQUECI SENHA */}
           <div className="flex justify-between mb-10">
@@ -43,12 +60,13 @@ export default function Login() {
           </div>
           {/* BOTÕES */}
           <div className="flex flex-col items-center gap-5">
-            <a
-              className="w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center"
-              href=""
+            <button
+              onClick={()=>login()}
+              className="cursor-pointer w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center"
+              
             >
               Entrar
-            </a>
+            </button>
             <a
               className="w-[50%] rounded-lg bg-white border border-teal-600 text-teal-600 p-2 text-center"
               href=""

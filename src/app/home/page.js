@@ -1,11 +1,31 @@
+'use client'
+
 import CriarPost from "@/components/CriarPost";
 import PostText from "@/components/PostText";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 
 export default function Home() {
+    const route = useRouter();
+    const [usuario, setUsuario] = useState(null);
+    const [load, setLoad] = useState(true);
+    useEffect(()=>{
+        if(sessionStorage.getItem('@login') == null) {
+            route.back();
+        } else {
+            const data = JSON.parse(sessionStorage.getItem('@login'));
+            setUsuario(data);
+            setLoad(false);
+        }
+    }, [])
+
+    if(load) return <span>Carregando</span>
+
     return (
         <div className="grid grid-cols-3 mt-3">
             <div className="flex flex-col col-start-2 gap-4">
-                <h1 className="text-3xl font-medium">Olá Fulano! </h1>
+                <h1 className="text-3xl font-medium">Olá {usuario.nome}! </h1>
                 <CriarPost />
                 <PostText />
             </div>
