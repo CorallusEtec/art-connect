@@ -1,16 +1,23 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { useState } from "react"
 
 export default function NavbarHome() {
-    
     const [config, setConfig] = useState(false);
-    
+    const route = useRouter();
+    function logout() {
+        sessionStorage.clear();
+        route.push('/login');
+    }
+
     return (
         <>
             <header className="grid grid-cols-12 bg-teal-400 p-1 text-white items-center">
                 <div className="col-span-4 flex items-center gap-10">
-                    <img className="max-w-32 invert" src="/img/logo.svg" />
+                    <a href="/home">
+                        <img className="max-w-32 invert" src="/img/logo.svg" />
+                    </a>
                     <div className="flex w-full bg-stone-100 border gap-1 rounded-2xl border-stone-300 p-2">
                         <input
                         placeholder="Pesquisar"
@@ -45,7 +52,7 @@ export default function NavbarHome() {
             </header>
             <div className="flex justify-end p-3 absolute right-0">
                 <div className={`bg-stone-100 border text-lg font-light p-2 ${config?"visible":"invisible"} border-stone-300 rounded-lg gap-3 flex flex-col`}>
-                    <a href="" className="flex gap-2">
+                    <a href="home/seuPerfil" className="flex gap-2">
                         <i className="bi bi-person"></i>
                         <span>Meu Perfil</span>
                     </a>
@@ -61,7 +68,7 @@ export default function NavbarHome() {
                         <i className="bi bi-question-circle"></i>
                         <span>Suporte</span>
                     </a>
-                    <button className="cursor-pointer text-red-500 gap-2 justify-center flex">
+                    <button onClick={()=>logout()} className="cursor-pointer text-red-500 gap-2 justify-center flex">
                         <i className="bi bi-box-arrow-left"></i>
                         <span>Sair</span>
                     </button>
