@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       <body>
         <div>
-          {children}
+            {children}
         </div>
       </body>
     </html>
