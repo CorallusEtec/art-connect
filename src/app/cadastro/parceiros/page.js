@@ -2,13 +2,29 @@
 
 import { useState } from "react"
 import InputSenha from "@/components/InputSenha";
+import EstabelecimentoModel from "@/models/EstabelecimentoModel";
+import { useRouter } from "next/navigation";
 export default function CadastroParceiro() {
     const [nome, setNome] = useState("");
     const [razaoSocial, setRazaoSocial] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [senhaConfirm, setSenhaConfirm] = useState("");
-    const [cpf, setCpf] = useState("");
+    const [cnpj, setCnpj] = useState("");
+
+    const route = useRouter();
+
+    function save() {
+        const estab = new EstabelecimentoModel({
+            nome: nome,
+            razaoSocial: razaoSocial,
+            email: email,
+            senha: senha,
+            cnpj: cnpj
+        });
+        sessionStorage.setItem('@parceiro', JSON.stringify(estab));
+        route.push('parceiros/cadastroEndereco');
+    }
 
     return (
         <div className="h-screen grid grid-cols-12">
@@ -29,7 +45,7 @@ export default function CadastroParceiro() {
                             onChange={(e)=>setNome(e.target.value)}
                             type="text" className="text-lg w-full outline-none" placeholder="Nome da empresa" />
                         </div>
-                        {/* RASÂO SOCIAL */}
+                        {/* RAZÂO SOCIAL */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-at text-2xl"></i>
                             <input
@@ -53,17 +69,17 @@ export default function CadastroParceiro() {
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-key text-2xl"></i>
                             <input
-                            onChange={(e)=>setCpf(e.target.value)}
-                            value={cpf}
+                            onChange={(e)=>setCnpj(e.target.value)}
+                            value={cnpj}
                             type="text" className="text-lg w-full outline-none" placeholder="CNPJ" />
                         </div>
                     </div>
                     
                     {/* BOTÕES */}
                         <div className="flex flex-col items-center gap-5">
-                        <a href="parceiros/cadastroEndereco" className="w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
-                            <i className="bi bi-arrow-right text-2xl"></i>
-                        </a>
+                            <button onClick={()=>save()} className="cursor-pointer w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
+                                <i className="bi bi-arrow-right text-2xl"></i>
+                            </button>
                         </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 const config = {
-    apiKey: "http://localhost:8080"
+    apiKey: ""
 }
 
 export default config;

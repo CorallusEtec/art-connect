@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import ArtistaService from "@/services/ArtistaService"
 import ArtistaModel from "@/models/ArtistaModel";
+import SelectUf from "@/components/SelectUf";
 
 export default function CadastroArtistaEndereco() {
     
@@ -13,27 +14,12 @@ export default function CadastroArtistaEndereco() {
     const [bairro, setBairro] = useState("");
     const [cidade, setCidade] = useState("");
     const [uf, setUf] = useState("");
-    const [load, setLoad] = useState(true);
-    const [listaEstados, setListaEstados] = useState([]);
     const route = useRouter()
     useEffect(()=>{
         if(sessionStorage.getItem('@artista') == null) {
             route.back()
         }
-        carregarUfs()
     }, [])
-
-    async function carregarUfs() {
-        try {
-            const dados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
-            const json = await dados.json();
-            setListaEstados(json);
-        } catch(e) {
-            console.error(e);
-        } finally {
-            setLoad(false);
-        }
-    }
 
     async function save() {
         const artista = new ArtistaModel(JSON.parse(sessionStorage.getItem('@artista')));
@@ -51,8 +37,6 @@ export default function CadastroArtistaEndereco() {
         sessionStorage.clear();
         route.push('/login');
     }
-
-    if(load) return <span>Carregando</span>
 
     return (
         <div className="h-dvh grid grid-cols-12">
@@ -99,12 +83,7 @@ export default function CadastroArtistaEndereco() {
                         </div>
                         {/* UF */}
                         <div className="flex flex-col items-center">
-                            <select value={uf} onChange={(e)=>setUf(e.target.value)} name="" id="" className="w-[70%] text-stone-500 border text-xl rounded-lg border-stone-300 p-2 bg-stone-200">
-                                <option value="">Selecione UF</option>
-                                {listaEstados.map(uf=> (
-                                    <option key={uf.id} value={uf.sigla}>{uf.nome}</option>
-                                ))}
-                            </select>
+                            <SelectUf value={uf} setValue={setUf} />
                         </div>
                     </div>
                    
