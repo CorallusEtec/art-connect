@@ -3,6 +3,8 @@
 import InputDate from "@/components/InputDate";
 import InputSenha from "@/components/InputSenha";
 import { useState } from "react";
+import ArtistaModel from "@/models/ArtistaModel";
+import { useRouter } from "next/navigation";
 
 export default function CadastroArtista() {
     const [nome, setNome] = useState("");
@@ -11,8 +13,22 @@ export default function CadastroArtista() {
     const [senhaConfirm, setSenhaConfirm] = useState("");
     const [cpf, setCpf] = useState("");
     const [dataNasc, setDataNasc] = useState(new Date("2000-01-01T03:24:00"));
-    const [sexo, setSexo] = useState("");
+    const [sexo, setSexo] = useState("f");
 
+    const router = useRouter();
+    function save() {
+        const artista = new ArtistaModel({
+            nome:nome,
+            email:email,
+            senha:senha,
+            cpf:cpf,
+            dataNasc:dataNasc,
+            sexo:sexo
+        });
+        sessionStorage.setItem('@artista', JSON.stringify(artista));
+        router.push("artista/cadastroEndereco")
+    }
+    
     return (
         <div className="h-screen grid grid-cols-12">
             {/* FORM */}
@@ -76,9 +92,9 @@ export default function CadastroArtista() {
                    
                     {/* BOTÕES */}
                      <div className="flex flex-col items-center gap-5">
-                        <a href="cadastroEndereco" className="w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
+                        <button onClick={()=>save()} className="cursor-pointer w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center">
                             <i className="bi bi-arrow-right text-2xl"></i>
-                        </a>
+                        </button>
                      </div>
                 </div>
             </div>
