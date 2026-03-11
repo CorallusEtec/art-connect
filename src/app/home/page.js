@@ -12,7 +12,7 @@ export default function Home() {
     const [load, setLoad] = useState(true);
     useEffect(()=>{
         if(sessionStorage.getItem('@login') == null) {
-            route.back();
+            route.push("/login");
         } else {
             const data = JSON.parse(sessionStorage.getItem('@login'));
             setUsuario(data);
