@@ -51,7 +51,7 @@ export default function Login() {
             </div>
             <div className="flex">
               <a
-                href="login/esqueciSenha"
+                href="/login/esqueciSenha"
                 className="text-emerald-600 underline"
               >
                 Esqueci a senha

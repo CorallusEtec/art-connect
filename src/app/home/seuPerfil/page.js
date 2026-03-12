@@ -1,5 +1,6 @@
 'use client'
 
+import ArteService from "@/services/ArteService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
@@ -13,10 +14,19 @@ export default function Page() {
             route.push("/login");
         } else {
             const data = JSON.parse(sessionStorage.getItem('@login'));
+            if(data.tipoUsuario=="ARTISTA") {
+                data.nomeArte = getArte(data.idArte)
+            } else {
+                data.nomeArte = data.razaoSocial;
+            }
             setUser(data);
-            setLoad(false)
+            setLoad(false);
         }
     }, [])
+    async function getArte(idArte) {
+        const data = await ArteService.getArte(idArte);
+        return data.nomeArte ;
+    }
 
     if(load) return <span>Carregando</span>
 
@@ -35,13 +45,13 @@ export default function Page() {
                         {/* NOME */}
                         <div className="flex gap-3 justify-center">
                             <span>{user.nome}</span>
-                            <a href="">
+                            <a href="/home/editarPerfil">
                                 <i className="bi bi-pencil-square"></i>
                             </a>
                         </div>
                         {/* ARTE E LOG */}
                         <div className="flex justify-around">
-                            <span>Ginasta...</span>
+                            <span>{user.nomeArte}</span>
                             <span>{user.cidade} - {user.estado}</span>
                         </div>
                         {/* POST E SEG */}

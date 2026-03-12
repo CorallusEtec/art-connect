@@ -2,10 +2,10 @@
 
 import InputDate from "@/components/InputDate";
 import InputSenha from "@/components/InputSenha";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ArtistaModel from "@/models/ArtistaModel";
 import { useRouter } from "next/navigation";
-import ArteService from "@/services/ArteService";
+import TipoArte from "@/components/TipoArte";
 
 export default function CadastroArtista() {
     const [nome, setNome] = useState("");
@@ -16,8 +16,6 @@ export default function CadastroArtista() {
     const [dataNasc, setDataNasc] = useState(new Date("2000-01-01T03:24:00"));
     const [sexo, setSexo] = useState("f");
     const [tipoArte, setTipoArte] = useState(1);
-    const [listaArtes, setListaArtes] = useState([]);
-    const [load, setLoad] = useState(true);
     const router = useRouter();
     function save() {
         const artista = new ArtistaModel({
@@ -32,23 +30,6 @@ export default function CadastroArtista() {
         sessionStorage.setItem('@artista', JSON.stringify(artista));
         router.push("artista/cadastroEndereco")
     }
-
-    async function carregarListaArtes() {
-        const data = await ArteService.todos();
-        setListaArtes(data);
-    }
-    
-    useEffect(()=>{
-        try {
-            carregarListaArtes();
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoad(false);
-        }
-    }, [])
-
-    if(load) return <span>Carregando...</span>
 
     return (
         <div className="h-screen grid grid-cols-12">
@@ -67,7 +48,7 @@ export default function CadastroArtista() {
                             <input
                             value={nome}
                             onChange={(e)=>setNome(e.target.value)}
-                            type="text" className="text-lg w-full outline-none" placeholder="Nome Completo" />
+                            type="text" className="text-lg w-full outline-none" placeholder="Nome" />
                         </div>
                         {/* EMAIL */}
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
@@ -112,12 +93,7 @@ export default function CadastroArtista() {
                         <div className="grid grid-cols-12 justify-center">
                             <div className="flex col-span-8 col-start-3 flex-col">
                                 <span className="text-lg">Qual o seu tipo de arte?</span>
-                                <select value={tipoArte} onChange={(e)=>setTipoArte(e.target.value)} className="border text-lg rounded-lg p-3 text-stone-600 border-stone-300 bg-stone-200">
-                                    <option>Tipos de arte</option>
-                                    {listaArtes.map(arte=>(
-                                        <option key={arte.id} value={arte.id}>{arte.nomeArte}</option>
-                                    ))}
-                                </select>
+                                <TipoArte tipoArte={tipoArte} setTipoArte={setTipoArte} />
                             </div>
                         </div>
                     </div>
