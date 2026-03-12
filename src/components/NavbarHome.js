@@ -52,7 +52,7 @@ export default function NavbarHome() {
             </header>
             <div className="flex justify-end p-3 absolute right-0">
                 <div className={`bg-stone-100 border text-lg font-light p-2 ${config?"visible":"invisible"} border-stone-300 rounded-lg gap-3 flex flex-col`}>
-                    <a href="home/seuPerfil" className="flex gap-2">
+                    <a href="/home/seuPerfil" className="flex gap-2">
                         <i className="bi bi-person"></i>
                         <span>Meu Perfil</span>
                     </a>
