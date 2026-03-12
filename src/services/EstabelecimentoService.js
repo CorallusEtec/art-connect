@@ -16,4 +16,19 @@ export default class EstabelecimentoService {
             console.error(e);
         }
     }
+
+    static async alter(id, parceiro) {
+        try {
+            const data = await fetch(`${config.apiKey}/parceiros/alterar/${id}`,{
+                body: JSON.stringify(parceiro),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                method: 'PUT'
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }
