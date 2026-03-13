@@ -1,6 +1,7 @@
 import config from "./config";
+import GlobalService from "./GlobalService";
 
-export default class ArtistaService {
+export default class ArtistaService extends GlobalService {
 
     static async save(artista) {
         try {

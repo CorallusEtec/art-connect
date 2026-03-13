@@ -40,7 +40,7 @@ export default function Home() {
           </div>
       </section>
       <section className="p-3">
-        <div className="flex items-center gap-3 text-4xl mb-5">
+        <div className="flex items-center gap-3 justify-center text-4xl mb-5">
           <i className="bi bi-camera-reels"></i>
           <h2 className="font-light">Video Pitch do Projeto</h2>
         </div>
