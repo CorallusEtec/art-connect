@@ -10,7 +10,7 @@ export default function CadastroArtistaEndereco() {
     const [artista, setArtista] = useState();
     const [load, setLoad] = useState(true);
     const route = useRouter()
-    let erro = {valido: false, msg:""}
+    let erro = {valido: true, msg:""}
     const [erroVisual, setErroVisual] = useState(erro);
 
     useEffect(()=>{
@@ -39,6 +39,32 @@ export default function CadastroArtistaEndereco() {
                     [campo]: Number(event.target.value)
                 }));
                 break;
+            case 'cep':
+                if(event.target.value >=8) {
+                    (async ()=>{
+                        const data = await attPeloCEP(event.target.value);
+                        if(data != undefined) {
+                            setArtista(att=>({
+                                ...att,
+                                ['bairro']: data.bairro,
+                                ['estado']: data.uf,
+                                ['nomeLog']: data.logradouro,
+                                ['tipoLog']: data.logradouro.split(' ')[0],
+                                ['cidade']: data.localidade
+                            }));
+                        }
+                    })()
+                } else {
+                    setArtista(att=>({
+                        ...att,
+                        [campo]: event.target.value
+                    }));
+                }
+                setArtista(att=>({
+                    ...att,
+                    [campo]: event.target.value
+                }));
+            break
             default:
                 setArtista(att=>({
                     ...att,
@@ -48,8 +74,15 @@ export default function CadastroArtistaEndereco() {
     }
     async function attPeloCEP(cep) {
         if(cep.length ==9) {
-            const data = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            console.log(data.json());
+            try {
+                setLoad(true);
+                const data = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                return data.json();
+            } catch (e) {
+
+            } finally {
+                setLoad(false);
+            }
         }
     }
     async function save() {

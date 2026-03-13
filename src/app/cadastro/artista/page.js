@@ -13,7 +13,7 @@ export default function CadastroArtista() {
     const [artista, setArtista] = useState(new ArtistaModel(null));
     const [senhaConfirm, setSenhaConfirm] = useState("");
     // Estado do Feedback de erro
-    const [erroMsg, setErroMsg] = useState({valido: false, msg: ""});
+    const [erroMsg, setErroMsg] = useState({valido: true, msg: ""});
     let erro = {valido: true, msg: ""}
     const router = useRouter();
     function save() {
