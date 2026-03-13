@@ -12,4 +12,14 @@ export default class LoginService {
             console.error('Erro ao buscar artistas:', erro);
         }
     }
+
+
+    static async todos() {
+        try {
+            const data = await fetch(`${config.apiKey}/login/todos`);
+            return data.json();
+        } catch(e) {
+
+        }
+    }
 }

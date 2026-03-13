@@ -20,4 +20,15 @@ export default class GlobalService {
             return this.nomeValidator(valor);
         }
     }
-}
+
+
+
+    // LOGIN VALIDAÇÃO 
+    /*static async validarLogin(campos) {
+        let valido = true;
+
+        for(let i=0; i<campos)
+        if(e)
+        this.emailPattern.test(email);
+    }
+}*/
