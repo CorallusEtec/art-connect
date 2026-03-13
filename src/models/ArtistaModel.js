@@ -4,7 +4,6 @@ export default class ArtistaModel extends UsuarioModel {
     constructor(data) {
         super(data);
         if(data==null) {
-            this.id = 0;
             this.cpf = "";
             this.dataNasc = new Date(new Date().getFullYear(),0,1,0,0);
             this.sexo = "";

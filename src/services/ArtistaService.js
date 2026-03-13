@@ -1,7 +1,7 @@
 import config from "./config";
 import GlobalService from "./GlobalService";
 
-export default class ArtistaService extends GlobalService {
+export default class ArtistaService {
 
     static async save(artista) {
         try {
@@ -31,5 +31,34 @@ export default class ArtistaService extends GlobalService {
         } catch (e) {
             console.error(e);
         }
+    }
+
+
+    static validarCampos(artista, senhaConfirm) {
+        let valido = true;
+        let msg = "";
+        const campos = ["nome", "email", "senha", "cpf"];
+        for(let i=0; i<campos.length; i++) {
+            if(artista[campos[i]] == "") {
+                valido = false;
+                msg = "Há campos não preenchidos";
+                break;
+            }
+            if(GlobalService.emailPattern.test(artista.email)==false) {
+                if(!GlobalService.emailPattern.test(artista.email)) {
+                    valido = false;
+                    msg = "E-mail inválido";
+                    break;
+                }
+            }
+            if(campos[i] == "senha") {
+                if(senhaConfirm != artista.senha) {
+                    valido = false;
+                    msg = "As senhas não se conhecidem";
+                    break;
+                }
+            }
+        }
+        return {valido: valido, msg: msg};
     }
 }

@@ -6,65 +6,74 @@ import { useState } from "react";
 import ArtistaModel from "@/models/ArtistaModel";
 import { useRouter } from "next/navigation";
 import TipoArte from "@/components/TipoArte";
+import { InputMask } from "@react-input/mask";
+import ArtistaService from "@/services/ArtistaService";
 
 export default function CadastroArtista() {
     const [artista, setArtista] = useState(new ArtistaModel(null));
     const [senhaConfirm, setSenhaConfirm] = useState("");
-    console.log(artista);
+    const [erro, setErro] = useState({valido: true});
     const router = useRouter();
     function save() {
         try {
-            sessionStorage.setItem('@artista', JSON.stringify(artista));
-            router.push("artista/cadastroEndereco")
+            if(ArtistaService.validarCampos(artista, senhaConfirm).valido) {
+                sessionStorage.setItem('@artista', JSON.stringify(artista));
+                router.push("artista/cadastroEndereco")
+            } else {
+                setErro(ArtistaService.validarCampos(artista, senhaConfirm));
+            }
         } catch(e) {
 
         }
         
     }
-    function handleUsuario(campo, valor) {
+    function handleUsuario(campo, event) {
         setArtista(att=>({
             ...att,
-            [campo]: valor
+            [campo]: campo=="idArte"?Number(event.target.value):event.target.value
         }));
     };
     return (
         <div className="h-screen grid grid-cols-12">
             {/* FORM */}
             <div className="flex justify-start items-center flex-col col-span-4">
-                <div className="flex flex-col p-5 w-[75%] gap-3">
-                    <div className="flex flex-col items-center">
+                <div className="flex flex-col p-5 w-[80%]">
+                    <div className="flex flex-col items-center mb-12">
                         <h2 className="text-4xl mb-3 font-light">É Artista? Crie uma conta</h2>
                         <p className="font-light">Já tem uma conta? <a className="underline text-emerald-600" href="/login">Faça Login</a></p>
                     </div>
                     {/* CAMPOS */}
-                    <div className="flex flex-col mb-3 gap-2">
+                    <div className="flex flex-col mb-10 gap-2">
+                        {!erro.valido?<span className="text-red-500">* {erro.msg}</span>:<></>}
                         {/* NOME */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-person text-2xl"></i>
                             <input
                             value={artista.nome}
-                            onChange={(e)=>handleUsuario('nome', e.target.value)}
+                            onChange={(e)=>handleUsuario('nome', e)}
                             type="text" className="text-lg w-full outline-none" placeholder="Nome" />
                         </div>
                         {/* EMAIL */}
-                        <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
+                        <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-envelope text-2xl"></i>
                             <input
                             value={artista.email}
-                            onChange={(e)=>handleUsuario('email', e.target.value)}
-                            type="text" className="text-lg w-full outline-none" placeholder="E-mail" />
+                            onChange={(e)=>handleUsuario('email', e)}
+                            type="email" className="text-lg w-full outline-none" placeholder="E-mail" />
                         </div>
                         {/* SENHA */}
-                        <InputSenha value={artista.senha} setValue={(e)=>handleUsuario('senha', e.target.value)} placeholder="Senha"/>
+                        <InputSenha value={artista.senha} setValue={(e)=>handleUsuario('senha', e)} placeholder="Senha"/>
                         {/* CONFIRMAR SENHA */}
                         <InputSenha value={senhaConfirm} setValue={(e)=>setSenhaConfirm(e.target.value)} placeholder="Confirme a senha"/>
                         {/* CPF */}
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-key text-2xl"></i>
-                            <input
-                            onChange={(e)=>handleUsuario('cpf', e.target.value)}
+                            <InputMask
+                            mask="___.___.___-__"
+                            replacement={{_:/\d/}}
+                            onChange={(e)=>handleUsuario('cpf', e)}
                             value={artista.cpf}
-                            type="text" className="text-lg w-full outline-none" placeholder="CPF" />
+                            type="text" placeholder="CPF" className="text-lg w-full outline-none"/>
                         </div>
                         {/* DATA NASC E SEXO */}
                         <div className="grid grid-cols-12">
@@ -78,7 +87,7 @@ export default function CadastroArtista() {
                                 <span className="text-lg">Sexo</span>
                                 <select
                                 value={artista.sexo}
-                                onChange={(e)=>handleUsuario('sexo', e.target.value)}
+                                onChange={(e)=>handleUsuario('sexo', e)}
                                 className="bg-stone-200 p-3 border border-stone-300 rounded-lg text-lg text-stone-600 cursor-pointer">
                                     <option value="Feminino">Feminino</option>
                                     <option value="Masculino">Masculino</option>
@@ -91,7 +100,7 @@ export default function CadastroArtista() {
                         <div className="grid grid-cols-12 justify-center">
                             <div className="flex col-span-8 col-start-3 flex-col">
                                 <span className="text-lg">Qual o seu tipo de arte?</span>
-                                <TipoArte tipoArte={artista.idArte} setTipoArte={(e)=>handleUsuario('idArte', Number(e))} />
+                                <TipoArte tipoArte={artista.idArte} setTipoArte={(e)=>handleUsuario('idArte', e)} />
                             </div>
                         </div>
                     </div>
