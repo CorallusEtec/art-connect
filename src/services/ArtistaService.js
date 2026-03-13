@@ -39,13 +39,12 @@ export default class ArtistaService {
     }
 
     // Validar Campos da primeira página de cadastro do artista
-    static validarCampos(artista, senhaConfirm) {
+    static validarCampos(artista, senhaConfirm, campos) {
         let valido = true;
         let msg = "";
-        const campos = ["nome", "email", "senha", "cpf", "dataNasc"];
         for(let i=0; i<campos.length; i++) {
             if(campos[i] != 'dataNasc') {
-                if(artista[campos[i]].trim() == "") {
+                if(artista[campos[i]].toString().trim() == "") {
                     valido = false;
                     msg = "Há campos não preenchidos";
                     

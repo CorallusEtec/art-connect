@@ -12,13 +12,13 @@ import ArtistaService from "@/services/ArtistaService";
 export default function CadastroArtista() {
     const [artista, setArtista] = useState(new ArtistaModel(null));
     const [senhaConfirm, setSenhaConfirm] = useState("");
+    // Estado do Feedback de erro
     const [erroMsg, setErroMsg] = useState({valido: false, msg: ""});
     let erro = {valido: true, msg: ""}
     const router = useRouter();
     function save() {
-        erro = ArtistaService.validarCampos(artista, senhaConfirm);
+        erro = ArtistaService.validarCampos(artista, senhaConfirm, ["nome", "email", "senha", "cpf", "dataNasc"]);
         setErroMsg(erro);
-        console.log(erro);
         if(erro.valido) {
             sessionStorage.setItem('@artista', JSON.stringify(artista));
             router.push("artista/cadastroEndereco")
@@ -26,10 +26,26 @@ export default function CadastroArtista() {
         
     }
     function handleUsuario(campo, event) {
-        setArtista(att=>({
-            ...att,
-            [campo]: campo=="idArte"?Number(event.target.value):event.target.value
-        }));
+        switch (campo) {
+            case 'idArte':
+                setArtista(att=>({
+                    ...att,
+                    [campo]: Number(event.target.value)
+                }));
+                break;
+            case 'dataNasc':
+                setArtista(att=>({
+                    ...att,
+                    [campo]: event
+                }));
+                break;
+            default:
+                setArtista(att=>({
+                    ...att,
+                    [campo]: event.target.value
+                }));
+        }
+        
     };
     return (
         <div className="h-screen grid grid-cols-12">
@@ -87,9 +103,9 @@ export default function CadastroArtista() {
                                 value={artista.sexo}
                                 onChange={(e)=>handleUsuario('sexo', e)}
                                 className="bg-stone-200 p-3 border border-stone-300 rounded-lg text-lg text-stone-600 cursor-pointer">
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Não-Binário">Não-Binário</option>
+                                    <option value="f">Feminino</option>
+                                    <option value="m">Masculino</option>
+                                    <option value="n">Não-Binário</option>
                                     <option value="">Prefiro Não dizer</option>
                                 </select>
                             </div>
