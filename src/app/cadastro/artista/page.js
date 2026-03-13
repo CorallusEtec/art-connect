@@ -12,18 +12,16 @@ import ArtistaService from "@/services/ArtistaService";
 export default function CadastroArtista() {
     const [artista, setArtista] = useState(new ArtistaModel(null));
     const [senhaConfirm, setSenhaConfirm] = useState("");
-    const [erro, setErro] = useState({valido: true});
+    const [erroMsg, setErroMsg] = useState({valido: false, msg: ""});
+    let erro = {valido: true, msg: ""}
     const router = useRouter();
     function save() {
-        try {
-            if(ArtistaService.validarCampos(artista, senhaConfirm).valido) {
-                sessionStorage.setItem('@artista', JSON.stringify(artista));
-                router.push("artista/cadastroEndereco")
-            } else {
-                setErro(ArtistaService.validarCampos(artista, senhaConfirm));
-            }
-        } catch(e) {
-
+        erro = ArtistaService.validarCampos(artista, senhaConfirm);
+        setErroMsg(erro);
+        console.log(erro);
+        if(erro.valido) {
+            sessionStorage.setItem('@artista', JSON.stringify(artista));
+            router.push("artista/cadastroEndereco")
         }
         
     }
@@ -44,7 +42,7 @@ export default function CadastroArtista() {
                     </div>
                     {/* CAMPOS */}
                     <div className="flex flex-col mb-10 gap-2">
-                        {!erro.valido?<span className="text-red-500">* {erro.msg}</span>:<></>}
+                        {!erroMsg.valido?<span className="ease-in-out duration-500 text-red-500">* {erroMsg.msg}</span>:<></>}
                         {/* NOME */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-person text-2xl"></i>

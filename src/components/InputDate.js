@@ -2,9 +2,9 @@ export default function InputDate({ value, setValue }) {
     function handleData(value) {
         const data = value.target.value;
         if(data.split("-")[0] > new Date().getFullYear() || data.split("-")[0] < 1900) {
-            setValue(new Date());
+            setValue({target:{value:new Date()}});
         } else {
-            setValue(new Date(data+"T03:24:00"));
+            setValue({target:{value:new Date(data+"T03:24:00")}});
         }
     }
     return (

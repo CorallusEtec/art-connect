@@ -1,7 +1,11 @@
 import config from "./config";
 import GlobalService from "./GlobalService";
 
+// Validações de dados e CRUDS do artista
+
 export default class ArtistaService {
+
+    // Perssistir o artista no banco de dados e na sessão
 
     static async save(artista) {
         try {
@@ -18,6 +22,7 @@ export default class ArtistaService {
         }
     }
 
+    // Alterar o artista no banco de dados e na sessão
     static async alter(id, artista) {
         try {
             const data = await fetch(`${config.apiKey}/artista/alterar/${id}`,{
@@ -33,28 +38,57 @@ export default class ArtistaService {
         }
     }
 
-
+    // Validar Campos da primeira página de cadastro do artista
     static validarCampos(artista, senhaConfirm) {
         let valido = true;
         let msg = "";
-        const campos = ["nome", "email", "senha", "cpf"];
+        const campos = ["nome", "email", "senha", "cpf", "dataNasc"];
         for(let i=0; i<campos.length; i++) {
-            if(artista[campos[i]] == "") {
-                valido = false;
-                msg = "Há campos não preenchidos";
-                break;
+            if(campos[i] != 'dataNasc') {
+                if(artista[campos[i]].trim() == "") {
+                    valido = false;
+                    msg = "Há campos não preenchidos";
+                    
+                    break;
+                }
+            } else {
+                const hoje = new Date();
+                const nascimento = new Date(artista.dataNasc);
+                
+                // Calcula a diferença de idade
+                let idade = hoje.getFullYear() - nascimento.getFullYear();
+                const mes = hoje.getMonth() - nascimento.getMonth();
+                
+                // Ajusta se o aniversário ainda não ocorreu este ano
+                if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+                    idade--;
+                }
+                if(idade<18) {
+                    valido = false;
+                    msg = "O artista deve ser maior de idade";
+                    break;
+                }
             }
-            if(GlobalService.emailPattern.test(artista.email)==false) {
-                if(!GlobalService.emailPattern.test(artista.email)) {
+            
+            if(GlobalService.emailPattern.test(artista.email.trim())==false) {
+                if(GlobalService.emailPattern.test(artista.email.trim()) ==false) {
                     valido = false;
                     msg = "E-mail inválido";
+                    
                     break;
                 }
             }
             if(campos[i] == "senha") {
-                if(senhaConfirm != artista.senha) {
+                if(senhaConfirm.trim() != artista.senha.trim()) {
                     valido = false;
                     msg = "As senhas não se conhecidem";
+                    
+                    break;
+                }
+                if(artista.senha.length < 6) {
+                    valido = false;
+                    msg = "A senha deve conter no mínino 6 caracteres";
+                    
                     break;
                 }
             }

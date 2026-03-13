@@ -13,7 +13,8 @@ export default function TipoArte({ tipoArte, setTipoArte }) {
         try {
             carregarListaArtes();
         } catch (e) {
-            console.error(e);
+            console.log("Oi")
+            setListaArtes([])
         } finally {
             setLoad(false);
         }
