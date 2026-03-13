@@ -1,3 +1,6 @@
+//Utilitário de validações de formuçários 
+
+
 export default class GlobalService {
     static emailPattern = /([a-z0-9]{2,})\@([a-z0-9]{2,})\.([a-z0-9]{2,})(\.([a-z0-9]{2,}))?/g;
     

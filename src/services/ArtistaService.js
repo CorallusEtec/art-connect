@@ -1,9 +1,12 @@
 import config from "./config";
+import ErroStatus from "./ErroStatus";
 import GlobalService from "./GlobalService";
 
 // Validações de dados e CRUDS do artista
 
 export default class ArtistaService {
+
+    static cpfPattern = /([0-9]{3})\.([0-9]{3})\.([0-9]{3})\-([0-9]{2})/g;
 
     // Perssistir o artista no banco de dados e na sessão
 
@@ -36,6 +39,11 @@ export default class ArtistaService {
         } catch (e) {
             console.error(e);
         }
+    }
+
+
+    static vazio(campo) {
+        return !(campo.toString().trim() == "")
     }
 
     // Validar Campos da primeira página de cadastro do artista
@@ -93,5 +101,25 @@ export default class ArtistaService {
             }
         }
         return {valido: valido, msg: msg};
+    }
+
+    /**
+     * IMPLEMENTAÇÃO FUTURA:
+     */
+    static validarCamposNovo(artista, campos) {
+        const erro = new ErroStatus();
+
+        campos.forEach(campo => {
+            if(this.vazio(campo)) {
+                return erro.gerarErro("Há campos vazios");
+            }
+            if(typeof campo == 'string') {
+                switch (campo) {
+                    case 'nome':
+                        break
+                }
+            }
+                
+        });
     }
 }

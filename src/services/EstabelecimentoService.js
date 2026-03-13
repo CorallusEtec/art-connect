@@ -1,6 +1,9 @@
 import config from "./config";
 
 export default class EstabelecimentoService {
+
+    static cnpjPattern = /([A-Z0-9]{2})\.([A-Z0-9]{3})\.([A-Z0-9]{3})\/([A-Z0-9]{4})\-([0-9]{2})/g
+
     static async save(estab) {
         try {
             const data = await fetch(`${config.apiKey}/parceiros/cadastro`,{
