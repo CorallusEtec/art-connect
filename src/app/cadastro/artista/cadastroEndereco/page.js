@@ -5,13 +5,26 @@ import ArtistaService from "@/services/ArtistaService"
 import ArtistaModel from "@/models/ArtistaModel";
 import SelectUf from "@/components/SelectUf";
 import { InputMask } from "@react-input/mask";
+import { ErroValidacao } from "@/services/ErroValidacao";
 
 export default function CadastroArtistaEndereco() {
-    const [artista, setArtista] = useState();
+    const [artista, setArtista] = useState(new ArtistaModel(null));
     const [load, setLoad] = useState(true);
     const route = useRouter()
-    let erro = {valido: true, msg:""}
+    /* FEEDBACK DE VALIDAÇÃO DO FORMULÁRIO  */
+    let erro = new ErroValidacao();
     const [erroVisual, setErroVisual] = useState(erro);
+
+    function refreshValido(status, tempo) {
+        setErroVisual(status);
+        setTimeout(()=>{
+            setErroVisual(st=>({
+                ...st,
+                valido: true
+            }))
+        }, tempo)
+    }
+
 
     useEffect(()=>{
         if(sessionStorage.getItem('@artista') == null) {
@@ -40,7 +53,8 @@ export default function CadastroArtistaEndereco() {
                 }));
                 break;
             case 'cep':
-                if(event.target.value >=8) {
+                if(event.target.value.length ==9) {
+                    setLoad(true);
                     (async ()=>{
                         const data = await attPeloCEP(event.target.value);
                         if(data != undefined) {
@@ -53,7 +67,7 @@ export default function CadastroArtistaEndereco() {
                                 ['cidade']: data.localidade
                             }));
                         }
-                    })()
+                    })();  
                 } else {
                     setArtista(att=>({
                         ...att,
@@ -87,7 +101,7 @@ export default function CadastroArtistaEndereco() {
     }
     async function save() {
         erro = ArtistaService.validarCampos(artista, undefined, ['nomeLog', 'numLog', 'cep', 'bairro', 'cidade', 'estado'])
-        setErroVisual(erro);
+        refreshValido(erro, 2500);
         if(erro.valido) {
             artista.dataNasc = artista.dataNasc.split('T')[0];
             await ArtistaService.save(artista);

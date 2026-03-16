@@ -8,23 +8,37 @@ import { useRouter } from "next/navigation";
 import TipoArte from "@/components/TipoArte";
 import { InputMask } from "@react-input/mask";
 import ArtistaService from "@/services/ArtistaService";
+import { ErroValidacao } from "@/services/ErroValidacao";
 
 export default function CadastroArtista() {
     const [artista, setArtista] = useState(new ArtistaModel(null));
     const [senhaConfirm, setSenhaConfirm] = useState("");
-    // Estado do Feedback de erro
-    const [erroMsg, setErroMsg] = useState({valido: true, msg: ""});
-    let erro = {valido: true, msg: ""}
     const router = useRouter();
+
+    // Estado do Feedback de erro
+    let erro = new ErroValidacao();
+    function refreshValido(status, tempo) {
+        setErroMsg(status);
+        setTimeout(()=>{
+            setErroMsg(st=>({
+                ...st,
+                valido: true
+            }))
+        }, tempo)
+    }
+    const [erroMsg, setErroMsg] = useState(erro);
+
     function save() {
         erro = ArtistaService.validarCampos(artista, senhaConfirm, ["nome", "email", "senha", "cpf", "dataNasc"]);
-        setErroMsg(erro);
+        refreshValido(erro, 2000);
         if(erro.valido) {
             sessionStorage.setItem('@artista', JSON.stringify(artista));
             router.push("artista/cadastroEndereco")
         }
         
     }
+
+
     function handleUsuario(campo, event) {
         switch (campo) {
             case 'idArte':
@@ -46,7 +60,7 @@ export default function CadastroArtista() {
                 }));
         }
         
-    };
+    }
     return (
         <div className="h-screen grid grid-cols-12">
             {/* FORM */}
@@ -58,7 +72,7 @@ export default function CadastroArtista() {
                     </div>
                     {/* CAMPOS */}
                     <div className="flex flex-col mb-10 gap-2">
-                        {!erroMsg.valido?<span className="ease-in-out duration-500 text-red-500">* {erroMsg.msg}</span>:<></>}
+                        {!erroMsg.valido?<span className=" ease-in-out duration-500 text-red-500">* {erroMsg.msg}</span>:<></>}
                         {/* NOME */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-person text-2xl"></i>

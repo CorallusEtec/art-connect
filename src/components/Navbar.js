@@ -1,6 +1,6 @@
 export default function Navbar() {
     return (
-         <header className="flex justify-between bg-teal-500 p-1 text-white items-center">
+         <header className="flex justify-between bg-teal-500 p-2 px-5 text-white items-center">
             <img className="max-w-32 invert" src="/img/logo.svg" />
             <div className="flex gap-20 items-center text-xl">
                 <a href="/">Sobre o Art Connect</a>

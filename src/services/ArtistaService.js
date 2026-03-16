@@ -1,5 +1,5 @@
 import config from "./config";
-import ErroStatus from "./ErroStatus";
+import { ErroValidacao } from "./ErroValidacao";
 import GlobalService from "./GlobalService";
 
 // Validações de dados e CRUDS do artista
@@ -42,84 +42,50 @@ export default class ArtistaService {
     }
 
 
-    static vazio(campo) {
-        return !(campo.toString().trim() == "")
-    }
 
     // Validar Campos da primeira página de cadastro do artista
     static validarCampos(artista, senhaConfirm, campos) {
-        let valido = true;
-        let msg = "";
+        let valido = new ErroValidacao();
+
         for(let i=0; i<campos.length; i++) {
-            if(campos[i] != 'dataNasc') {
-                if(artista[campos[i]].toString().trim() == "") {
-                    valido = false;
-                    msg = "Há campos não preenchidos";
-                    
-                    break;
-                }
-            } else {
-                const hoje = new Date();
-                const nascimento = new Date(artista.dataNasc);
-                
-                // Calcula a diferença de idade
-                let idade = hoje.getFullYear() - nascimento.getFullYear();
-                const mes = hoje.getMonth() - nascimento.getMonth();
-                
-                // Ajusta se o aniversário ainda não ocorreu este ano
-                if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-                    idade--;
-                }
-                if(idade<18) {
-                    valido = false;
-                    msg = "O artista deve ser maior de idade";
-                    break;
-                }
-            }
             
-            if(GlobalService.emailPattern.test(artista.email.trim())==false) {
-                if(GlobalService.emailPattern.test(artista.email.trim()) ==false) {
-                    valido = false;
-                    msg = "E-mail inválido";
-                    
-                    break;
+            if(typeof artista[campos[i]] == 'string') {
+                if(artista[campos[i]].toString().trim() == "") {
+                    return valido.invalido("Há campos não preenchidos");
                 }
-            }
-            if(campos[i] == "senha") {
-                if(senhaConfirm.trim() != artista.senha.trim()) {
-                    valido = false;
-                    msg = "As senhas não se conhecidem";
+                if(campos[i] == 'email') {
+                    if(GlobalService.emailPattern.test(artista.email.trim())==false) {
+                        if(GlobalService.emailPattern.test(artista.email.trim())==false) {
+                            return valido.invalido("E-mail inválido");
+                        }
+                    }
+                } else if(campos[i] == "senha") {
+                    if(senhaConfirm.trim() != artista.senha.trim()) {
+                        return valido.invalido("As senhas não se conhecidem");
+                    }
+                    if(artista.senha.length < 6) {
+                        return valido.invalido("A senha deve conter no mínino 6 caracteres");
+                    }
+                } 
+            } else if (typeof artista[campos[i]] == 'object') {
+                    if(campos[i] == 'dataNasc') {
+                    const hoje = new Date();
+                    const nascimento = new Date(artista.dataNasc);
                     
-                    break;
-                }
-                if(artista.senha.length < 6) {
-                    valido = false;
-                    msg = "A senha deve conter no mínino 6 caracteres";
+                    // Calcula a diferença de idade
+                    let idade = hoje.getFullYear() - nascimento.getFullYear();
+                    const mes = hoje.getMonth() - nascimento.getMonth();
                     
-                    break;
+                    // Ajusta se o aniversário ainda não ocorreu este ano
+                    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+                        idade--;
+                    }
+                    if(idade<18) {
+                        return valido.invalido("O artista deve ser maior de idade");
+                    }
                 }
             }
         }
-        return {valido: valido, msg: msg};
-    }
-
-    /**
-     * IMPLEMENTAÇÃO FUTURA:
-     */
-    static validarCamposNovo(artista, campos) {
-        const erro = new ErroStatus();
-
-        campos.forEach(campo => {
-            if(this.vazio(campo)) {
-                return erro.gerarErro("Há campos vazios");
-            }
-            if(typeof campo == 'string') {
-                switch (campo) {
-                    case 'nome':
-                        break
-                }
-            }
-                
-        });
+        return valido;
     }
 }
