@@ -13,7 +13,8 @@ export default function TipoArte({ tipoArte, setTipoArte }) {
         try {
             carregarListaArtes();
         } catch (e) {
-            console.error(e);
+            console.log("Oi")
+            setListaArtes([])
         } finally {
             setLoad(false);
         }
@@ -21,7 +22,7 @@ export default function TipoArte({ tipoArte, setTipoArte }) {
         if(load) return <span>Carregando...</span>
 
     return (
-        <select value={tipoArte} onChange={(e)=>setTipoArte(e.target.value)} className="border text-lg rounded-lg p-3 text-stone-600 border-stone-300 bg-stone-200">
+        <select value={tipoArte} onChange={setTipoArte} className="border text-lg rounded-lg p-3 text-stone-600 border-stone-300 bg-stone-200">
             <option>Tipos de arte</option>
             {listaArtes.map(arte=>(
                 <option key={arte.id} value={arte.id}>{arte.nomeArte}</option>

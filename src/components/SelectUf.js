@@ -20,7 +20,7 @@ export default function SelectUf({ value, setValue }) {
 
     if(load) return <select></select>
     return (
-        <select value={value} onChange={(e)=>setValue(e.target.value)} className="w-[70%] text-stone-500 border text-xl rounded-lg border-stone-300 p-2 bg-stone-200">
+        <select value={value} onChange={setValue} className="outline-none w-[70%] text-stone-500 border text-xl rounded-lg border-stone-300 p-2 bg-stone-200">
             <option value="">Selecione UF</option>
             {listaEstados.map(uf=> (
                 <option key={uf.id} value={uf.sigla}>{uf.nome}</option>

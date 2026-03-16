@@ -4,26 +4,45 @@ import { useState } from "react"
 import InputSenha from "@/components/InputSenha";
 import EstabelecimentoModel from "@/models/EstabelecimentoModel";
 import { useRouter } from "next/navigation";
+import EstabelecimentoService from "@/services/EstabelecimentoService";
+import { ErroValidacao } from "@/services/ErroValidacao";
+import { InputMask } from "@react-input/mask";
 export default function CadastroParceiro() {
-    const [nome, setNome] = useState("");
-    const [razaoSocial, setRazaoSocial] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
     const [senhaConfirm, setSenhaConfirm] = useState("");
-    const [cnpj, setCnpj] = useState("");
-
+    const [parceiro, setParceiro] = useState(new EstabelecimentoModel(null));
     const route = useRouter();
+    let valido = new ErroValidacao();
+    const [validoVisual, setValidoVisual] = useState(valido);
+
+    function fadeFeedback(state, tempo) {
+        setValidoVisual(state);
+        setTimeout(()=>{
+        setValidoVisual(st=>({
+            ...st,
+            valido: true
+        }));
+        }, tempo)
+    }
+
 
     function save() {
-        const estab = new EstabelecimentoModel({
-            nome: nome,
-            razaoSocial: razaoSocial,
-            email: email,
-            senha: senha,
-            cnpj: cnpj
-        });
-        sessionStorage.setItem('@parceiro', JSON.stringify(estab));
-        route.push('parceiros/cadastroEndereco');
+        let valido = EstabelecimentoService.validarCampos(parceiro, senhaConfirm, ['nome', 'razaoSocial', 'email', 'senha', 'cnpj'])
+        if(!valido.valido) {
+            fadeFeedback(valido, 2500);
+        } else {
+            sessionStorage.setItem('@parceiro', JSON.stringify(parceiro));
+            route.push('parceiros/cadastroEndereco');
+        }
+    }
+
+    function handleUsuario(event, campo) {
+        switch(campo) {
+            default:
+                setParceiro(dados=>({
+                    ...dados,
+                    [campo]: event.target.value
+                }))
+        }
     }
 
     return (
@@ -37,40 +56,43 @@ export default function CadastroParceiro() {
                     </div>
                     {/* CAMPOS */}
                     <div className="flex flex-col mb-3 gap-2">
+                        {!validoVisual.valido?<span className="text-red-600">* {validoVisual.msg}</span>:<></>}
                         {/* NOME EMPRESA */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-briefcase text-2xl"></i>
                             <input
-                            value={nome}
-                            onChange={(e)=>setNome(e.target.value)}
+                            value={parceiro.nome}
+                            onChange={(e)=>handleUsuario(e, 'nome')}
                             type="text" className="text-lg w-full outline-none" placeholder="Nome da empresa" />
                         </div>
                         {/* RAZÂO SOCIAL */}
                         <div className="flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-at text-2xl"></i>
                             <input
-                            value={razaoSocial}
-                            onChange={(e)=>setRazaoSocial(e.target.value)}
+                            value={parceiro.razaoSocial}
+                            onChange={(e)=>handleUsuario(e, 'razaoSocial')}
                             type="text" className="text-lg w-full outline-none" placeholder="Razão Social" />
                         </div>
                         {/* EMAIL */}
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-envelope text-2xl"></i>
                             <input
-                            value={email}
-                            onChange={(e)=>setEmail(e.target.value)}
+                            value={parceiro.email}
+                            onChange={(e)=>handleUsuario(e, 'email')}
                             type="text" className="text-lg w-full outline-none" placeholder="E-mail" />
                         </div>
                         {/* SENHA */}
-                        <InputSenha value={senha} setValue={(e)=>setSenha(e.target.value)} placeholder="Senha"/>
+                        <InputSenha value={parceiro.senha} setValue={(e)=>handleUsuario(e, 'senha')} placeholder="Senha"/>
                         {/* CONFIRMAR SENHA */}
                         <InputSenha value={senhaConfirm} setValue={(e)=>setSenhaConfirm(e.target.value)}  placeholder="Confirme a senha"/>
                         {/* CNPJ */}
                         <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
                             <i className="bi bi-key text-2xl"></i>
-                            <input
-                            onChange={(e)=>setCnpj(e.target.value)}
-                            value={cnpj}
+                            <InputMask
+                            onChange={(e)=>handleUsuario(e, 'cnpj')}
+                            mask="__.___.___/____-__"
+                            replacement={{_:/\d/}}
+                            value={parceiro.cnpj}
                             type="text" className="text-lg w-full outline-none" placeholder="CNPJ" />
                         </div>
                     </div>

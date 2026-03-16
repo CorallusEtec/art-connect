@@ -9,8 +9,8 @@ export default function InputDate({ value, setValue }) {
     }
     return (
         <input
-        onChange={(e)=>handleData(e)}
-        value={value.toISOString().split("T")[0]}
+        onChange={handleData}
+        value={value.toISOString().split('T')[0]}
         max={new Date().toISOString().split("T")[0]}
         type="date"
         className="bg-stone-200 p-2 border border-stone-300 rounded-lg text-lg text-stone-600 cursor-pointer" />
