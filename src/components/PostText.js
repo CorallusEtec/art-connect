@@ -1,4 +1,4 @@
-export default function PostText() {
+export default function PostText({ content }) {
     return (
         <div className="border border-stone-300 p-2 rounded-lg">
             {/* FOTO NOME E OPÇÕES */}
@@ -14,8 +14,7 @@ export default function PostText() {
                     <i className="bi bi-three-dots"></i>
                 </button>
             </div>
-            <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ipsum nisi. Pellentesque id nisi sed orci aliquam vehicula et id leo. Etiam rutrum, arcu at egestas iaculis, libero lorem aliquet ligula, quis molestie sapien velit at enim. Aliquam et massa eu lectus eleifend facilisis quis a lectus. Praesent et gravida sapien. Proin ex mi, eleifend eget consectetur id, rutrum sit amet nibh.
-            </p>
+            <p className="text-lg">{content}</p>
             <div className="flex gap-7 mt-3">
                 <div className=" text-xl flex gap-1">
                     <span>5</span>

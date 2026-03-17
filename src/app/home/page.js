@@ -27,7 +27,7 @@ export default function Home() {
             <div className="flex flex-col col-start-2 gap-4">
                 <h1 className="text-3xl font-medium">Olá {usuario.nome}! </h1>
                 <CriarPost />
-                <PostText />
+                <PostText content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet ipsum nisi. Pellentesque id nisi sed orci aliquam vehicula et id leo. Etiam rutrum, arcu at egestas iaculis, libero lorem aliquet ligula, quis molestie sapien velit at enim. Aliquam et massa eu lectus eleifend facilisis quis a lectus. Praesent et gravida sapien. Proin ex mi, eleifend eget consectetur id, rutrum sit amet nibh."} />
             </div>
         </div>
     )
