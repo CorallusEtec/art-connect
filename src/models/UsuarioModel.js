@@ -13,6 +13,7 @@ export default class UsuarioModel {
             this.cidade = "";
             this.estado = "";
         } else {
+            this.id = data.id
             this.nome = data.nome;
             this.email = data.email;
             this.senha = data.senha;
