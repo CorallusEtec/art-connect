@@ -50,29 +50,27 @@ export default function NavbarHome() {
                     
                 </div>
             </header>
-            <div className="flex justify-end p-3 absolute right-0">
-                <div className={`bg-stone-100 border text-lg font-light p-2 ${config?"visible":"invisible"} border-stone-300 rounded-lg gap-3 flex flex-col`}>
-                    <a href="/home/seuPerfil" className="flex gap-2">
-                        <i className="bi bi-person"></i>
-                        <span>Meu Perfil</span>
-                    </a>
-                    <a href="" className="flex gap-2">
-                        <i className="bi bi-gear"></i>
-                        <span>Configurações</span>
-                    </a>
-                    <a href="" className="flex gap-2">
-                        <i className="bi bi-book"></i>
-                        <span>Sobre o Art Connect</span>
-                    </a>
-                    <a href="" className="flex gap-2">
-                        <i className="bi bi-question-circle"></i>
-                        <span>Suporte</span>
-                    </a>
-                    <button onClick={()=>logout()} className="cursor-pointer text-red-500 gap-2 justify-center flex">
-                        <i className="bi bi-box-arrow-left"></i>
-                        <span>Sair</span>
-                    </button>
-                </div>
+            <div onMouseLeave={()=>setConfig(false)} className={`bg-stone-100 border text-lg p-3 absolute right-0 font-light ${config?"flex":"invisible"} border-stone-300 rounded-lg gap-3 flex flex-col`}>
+                <a href="/home/seuPerfil" className="flex gap-2">
+                    <i className="bi bi-person"></i>
+                    <span>Meu Perfil</span>
+                </a>
+                <a href="" className="flex gap-2">
+                    <i className="bi bi-gear"></i>
+                    <span>Configurações</span>
+                </a>
+                <a href="" className="flex gap-2">
+                    <i className="bi bi-book"></i>
+                    <span>Sobre o Art Connect</span>
+                </a>
+                <a href="" className="flex gap-2">
+                    <i className="bi bi-question-circle"></i>
+                    <span>Suporte</span>
+                </a>
+                <button onClick={()=>logout()} className="cursor-pointer text-red-500 gap-2 justify-center flex">
+                    <i className="bi bi-box-arrow-left"></i>
+                    <span>Sair</span>
+                </button>
             </div>
         </>
     )
