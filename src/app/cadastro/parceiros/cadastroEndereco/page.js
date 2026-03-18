@@ -38,7 +38,7 @@ export default function CadastroParceiroEndereco() {
     }, [])
     
     async function save() {
-        valido = EstabelecimentoService.validarCampos(parceiro, undefined, ['nomeLog', 'numLog', 'complemento', 'cep', 'bairro', 'cidade', 'estado'])
+        valido = EstabelecimentoService.validarCampos(parceiro, undefined, ['nomeLog', 'numLog', 'cep', 'bairro', 'cidade', 'estado'])
         if(!valido.valido) {
             refreshValido(valido, 2500);
         } else {

@@ -2,20 +2,25 @@
 
 import CriarPost from "@/components/CriarPost";
 import PostText from "@/components/PostText";
+import UsuarioModel from "@/models/UsuarioModel";
+import LoginService from "@/services/LoginService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export default function Home() {
     const route = useRouter();
-    const [usuario, setUsuario] = useState(null);
+    const [usuario, setUsuario] = useState(new UsuarioModel(null));
     const [load, setLoad] = useState(true);
     useEffect(()=>{
         if(sessionStorage.getItem('@login') == null) {
             route.push("/login");
         } else {
             const data = JSON.parse(sessionStorage.getItem('@login'));
-            setUsuario(data);
+            (async()=>{
+                const login = await LoginService.login(data.email, data.senha);
+                setUsuario(login);
+            })();
             setLoad(false);
         }
     }, [])

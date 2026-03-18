@@ -36,11 +36,20 @@ export default class ArtistaService {
                 },
                 method: 'PUT'
             });
+            return data.status;
         } catch (e) {
             console.error(e);
         }
     }
 
+    static async findArtista(id) {
+        try {
+            const data = await fetch(`${config.apiKey}/${id}`);
+            return data.json();
+        } catch (e) {
+
+        }
+    }
 
 
     // Validar Campos da primeira página de cadastro do artista
@@ -82,6 +91,12 @@ export default class ArtistaService {
                     }
                     if(idade<18) {
                         return valido.invalido("O artista deve ser maior de idade");
+                    }
+                }
+            } else if(typeof artista[campos[i]] == 'number') {
+                if(campos[i] == 'numLog') {
+                    if(artista[campos[i]] == 0) {
+                        return valido.invalido("Digite o número do endereço");
                     }
                 }
             }
