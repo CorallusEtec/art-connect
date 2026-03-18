@@ -50,7 +50,7 @@ export default function NavbarHome() {
                     
                 </div>
             </header>
-            <div onMouseLeave={()=>setConfig(false)} className={`bg-stone-100 border text-lg font-light flex justify-end p-3 absolute right-0 ${config?"flex":"invisible"} border-stone-300 rounded-lg gap-3 flex-col`}>
+            <div onMouseLeave={()=>setConfig(false)} className={`bg-stone-100 border text-lg p-3 absolute right-0 font-light ${config?"flex":"invisible"} border-stone-300 rounded-lg gap-3 flex flex-col`}>
                 <a href="/home/seuPerfil" className="flex gap-2">
                     <i className="bi bi-person"></i>
                     <span>Meu Perfil</span>
