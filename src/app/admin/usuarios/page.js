@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 
 export default function AdminUsuarios() {
     const [listaUsuarios, setListaUsuarios] = useState([]);
+    const [inputFiltro, setInputFiltro] = useState("");
     const route = useRouter();
     const [load, setLoad] = useState(true);
     useEffect(()=>{
@@ -44,11 +45,30 @@ export default function AdminUsuarios() {
                         <input className="text-xl p-2 outline-none border-b-2 border-b-stone-200"
                         type="text" placeholder="Pesquise por conta"
                         />
-                        <button className="cursor-pointer text-stone-800 hover:bg-stone-200 p-2
-                        flex items-center gap-2 rounded-lg bg-stone-100 border-stone-300 border">
-                            <i className="bi bi-filter"></i>
-                            <span>Filtrar</span>
-                        </button>
+                        <div>
+                            <button className="cursor-pointer text-stone-800 hover:bg-stone-200 p-2
+                            flex items-center gap-2 rounded-lg bg-stone-100 border-stone-300 border">
+                                <i className="bi bi-filter"></i>
+                                <span>Filtrar</span>
+                            </button>
+                            <div className="absolute gap-2 flex p-3 rounded-xl flex-col bg-stone-100 border border-stone-300">
+                                <div>
+                                    <span className="text-xl">Filtar por:</span>
+                                </div>
+                                <div className="flex gap-3">
+                                    <input type="checkbox" />
+                                    <span>Nome</span>
+                                </div>
+                                <div className="flex gap-3">
+                                    <input type="checkbox" />
+                                    <span>Cidade</span>
+                                </div>
+                                <div className="flex gap-3">
+                                    <input type="checkbox" />
+                                    <span>Status</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button className="cursor-pointer
                     hover:bg-emerald-500 bg-emerald-600
