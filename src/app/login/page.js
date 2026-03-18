@@ -31,8 +31,12 @@ export default function Login() {
           fadeFeedback(GlobalService.validarLogin([email, senha]), 2500);
         } else {
           const usuario = await LoginService.login(email, senha);
-          sessionStorage.setItem('@login', JSON.stringify({email:email, senha:senha}));
-          route.push("/home");
+          if(usuario != undefined) {
+            sessionStorage.setItem('@login', JSON.stringify({email:email, senha:senha}));
+            route.push("/home");
+          } else {
+            throw new Error("Login inválido");
+          }
         }
         
     } catch(e) {

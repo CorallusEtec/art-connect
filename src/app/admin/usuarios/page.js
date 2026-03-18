@@ -1,12 +1,41 @@
+'use client'
+
+import LoginService from "@/services/LoginService";
+import { StatusContaService } from "@/services/StatusContaService";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react"
+
 export default function AdminUsuarios() {
+    const [listaUsuarios, setListaUsuarios] = useState([]);
+    const route = useRouter();
+    const [load, setLoad] = useState(true);
+    useEffect(()=>{
+        try {
+            (async ()=>{
+                const data = await LoginService.todos();
+                const listaCompleta = [...data[0], ...data[1]];
+                for(let i=0; i<listaCompleta.length; i++) {
+                    let statusNome = await StatusContaService.findById(listaCompleta[i].idStatusConta)
+                    listaCompleta[i].nomeStatusConta = statusNome.nomeStatus;
+                }
+                setListaUsuarios(listaCompleta);
+            })();
+        } catch(e) {
+            route.push("/admin");
+        } finally {
+            setLoad(false);
+        }
+    }, [])
+    if(load) return <span>Carregando...</span>
+
     return (
         <div className="flex flex-col h-dvh">
             {/* CONTROLES DE BUSCA */}
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 mb-7">
                 {/* REGISTRO NUMEROS */}
                 <div className="flex flex-col items-center p-3 gap-2">
                     <h1 className="text-4xl">Contas Cadastradas</h1>
-                    <h2 className="text-xl font-light">Total de registros encontrados: 20</h2>
+                    <h2 className="text-xl font-light">Total de registros encontrados: {listaUsuarios.length}</h2>
                 </div>
                 {/* CONTROLES */}
                 <div className="flex flex-col items-center gap-5">
@@ -29,8 +58,11 @@ export default function AdminUsuarios() {
             </div>
             {/* TABELA */}
             <div className="grid grid-cols-12">
-                <div className="col-start-2 flex flex-col col-span-10 p-3 border bg-stone-100 border-stone-300 rounded-lg">
-                    <h2 className="text-2xl text-stone-800">Usuários cadastrados</h2>
+                <div className="col-start-3 flex flex-col gap-5 col-span-9 p-3 border bg-stone-100 border-stone-300 rounded-lg">
+                    <div className="flex justify-center">
+                        <h2 className="text-2xl text-stone-800">Usuários cadastrados</h2>
+                    </div>
+                    {listaUsuarios.length>0?
                     <table className="border-collapse table-fixed">
                         <thead className="border-b border-b-stone-300">
                             <tr>
@@ -44,14 +76,25 @@ export default function AdminUsuarios() {
                             
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Oi</td>
-                            </tr>
-                            <tr>
-                                <td>Oi</td>
-                            </tr>
+                            {listaUsuarios.map(user=>(
+                                <tr key={user.email}>
+                                    <td className="text-center p-4">{user.tipoUsuario.charAt(0).toUpperCase()+user.tipoUsuario.slice(1).toLowerCase()}</td>
+                                    <td className="text-center">{user.nome}</td>
+                                    <td className="text-center">{user.email}</td>
+                                    <td className="text-center">{user.cidade} - {user.estado}</td>
+                                    <td className="text-center">{user.nomeStatusConta}</td>
+                                    <td className="text-center">
+                                        <button className="cursor-pointer">
+                                            <i className="text-2xl text-stone-800 bi bi-pencil-square"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
-                    </table>
+                    </table>:
+                    <div className="flex justify-center">
+                        <h2>Não há usuarios cadastrados no sistema</h2>
+                    </div>}
                 </div>
             </div>
         </div>
