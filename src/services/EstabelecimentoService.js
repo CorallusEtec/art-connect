@@ -36,7 +36,14 @@ export default class EstabelecimentoService {
         }
     }
 
+    static async findById(id) {
+        try {
+            const data = await fetch(`${config.apiKey}/parceiros/${id}`);
+            return data.json();
+        } catch(e) {
 
+        }
+    }
 
     static validarCampos(parceiro, senhaConfirm, campos) {
         let valido = new ErroValidacao();

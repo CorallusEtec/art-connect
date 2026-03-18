@@ -1,11 +1,13 @@
 'use client'
 
+import UsuarioModel from "@/models/UsuarioModel";
 import ArteService from "@/services/ArteService";
+import LoginService from "@/services/LoginService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export default function Page() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(new UsuarioModel(null));
     const [load, setLoad] = useState(true);
     const route = useRouter();
     
@@ -14,12 +16,14 @@ export default function Page() {
             route.push("/login");
         } else {
             const data = JSON.parse(sessionStorage.getItem('@login'));
-            if(data.tipoUsuario=="ARTISTA") {
-                data.nomeArte = getArte(data.idArte)
-            } else {
-                data.nomeArte = data.razaoSocial;
-            }
-            setUser(data);
+            (async()=>{
+                const login = await LoginService.login(data.email, data.senha);
+                if(login.tipoUsuario=="ARTISTA") {
+                    login.nomeArte = await getArte(login.idArte)
+                }
+                setUser(login);
+            })();
+            
             setLoad(false);
         }
     }, [])
@@ -29,7 +33,6 @@ export default function Page() {
     }
 
     if(load) return <span>Carregando</span>
-
     return (
         <div className="grid grid-cols-12">
 
@@ -51,7 +54,7 @@ export default function Page() {
                         </div>
                         {/* ARTE E LOG */}
                         <div className="flex justify-around">
-                            <span>{user.nomeArte}</span>
+                            <span>{user.tipoUsuario=="ARTISTA"?user.nomeArte:user.razaoSocial}</span>
                             <span>{user.cidade} - {user.estado}</span>
                         </div>
                         {/* POST E SEG */}

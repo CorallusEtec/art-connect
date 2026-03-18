@@ -1,6 +1,4 @@
 import config from "./config";
-import { ErroValidacao } from "./ErroValidacao";
-import GlobalService from "./GlobalService";
 
 export default class LoginService {
     static async login(email, senha) {
