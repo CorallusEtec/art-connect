@@ -45,7 +45,7 @@ export default function Home() {
           <h2 className="font-light">Video Pitch do Projeto</h2>
         </div>
         <div className="flex justify-center">
-          <iframe className="rounded-2xl" width="1280" height="723" src="https://www.youtube.com/embed/GlMpDZhPY88?si=HZ9idjrF0CRcEsYw" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/ewoi-Ternik?si=l2IrOGm2ordInKTz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </div>
       </section>
       <Footer />
