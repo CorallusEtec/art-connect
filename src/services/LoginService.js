@@ -7,7 +7,6 @@ export default class LoginService {
             const data = await fetch(`${config.apiKey}/login/logar?email=${email}&senha=${senha}`);
             return data.json();
         } catch(erro) {
-            console.error(erro);
         }
     }
 
@@ -15,9 +14,11 @@ export default class LoginService {
     static async todos() {
         try {
             const data = await fetch(`${config.apiKey}/login/todos`);
-            return data.json();
-        } catch(e) {
+            const lista = data.json();
 
+            return lista;
+        } catch(e) {
+            
         }
     }
 }
