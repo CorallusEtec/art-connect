@@ -2,31 +2,42 @@
 import LoginService from "@/services/LoginService";
 import { useEffect, useState } from "react"
 import { StatusContaService } from "@/services/StatusContaService";
+import { useRouter } from "next/navigation";
+import AdminModel from "@/models/AdminModel";
 export default function AdminDashboard() {
     const [listaUsuarios, setListaUsuarios] = useState([]);
+    const [admin, setAdmin] = useState(new AdminModel(null));
     const [load, setLoad] = useState(true);
+    const route = useRouter();
     
     useEffect(()=>{
         try {
-            (async ()=>{
-                const data = await LoginService.todos();
-                const listaCompleta = [...data[0], ...data[1]];
-                for(let i=0; i<listaCompleta.length; i++) {
-                    let statusNome = await StatusContaService.findById(listaCompleta[i].idStatusConta)
-                    listaCompleta[i].nomeStatusConta = statusNome.nomeStatus;
-                }
-                setListaUsuarios(listaCompleta);
-            })();
+            if(JSON.parse(sessionStorage.getItem("@login")) != null) {
+                const login = JSON.parse(sessionStorage.getItem('@login'));
+                (async ()=>{
+                    const admin = await LoginService.login(login.email, login.senha);
+                    setAdmin(admin);
+                    const data = await LoginService.todos();
+                    const listaCompleta = [...data[0], ...data[1]];
+                    for(let i=0; i<listaCompleta.length; i++) {
+                        let statusNome = await StatusContaService.findById(listaCompleta[i].idStatusConta)
+                        listaCompleta[i].nomeStatusConta = statusNome.nomeStatus;
+                    }
+                    setListaUsuarios(listaCompleta);
+                })();
+            } else {
+                route.push("/login");
+            }
+            
         } finally {
             setLoad(false);
         }
     }, [])
     if(load) return <span>Carregando...</span>
-
     return (
         <div className="flex flex-col">
             <div className="flex justify-center p-5">
-                <h1 className="text-3xl font-light text-stone-900">Bem vindo de volta, Fulano!</h1>
+                <h1 className="text-3xl font-light text-stone-900">Bem vindo de volta, {admin.nome}!</h1>
             </div>
 
             <div className="grid grid-cols-9">

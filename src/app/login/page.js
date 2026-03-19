@@ -33,7 +33,11 @@ export default function Login() {
           const usuario = await LoginService.login(email, senha);
           if(usuario != undefined) {
             sessionStorage.setItem('@login', JSON.stringify({email:email, senha:senha}));
-            route.push("/home");
+            if(usuario.tipoUsuario == "ADMIN") {
+              route.push("/admin");
+            }else {
+              route.push("/home");
+            }
           } else {
             throw new Error("Login inválido");
           }
