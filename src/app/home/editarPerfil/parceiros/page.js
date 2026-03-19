@@ -11,6 +11,8 @@ import { useEffect, useState } from "react"
 
 export default function EditarParceiro() {
     const route = useRouter();
+    const [inputContato, setInputContato] = useState("");
+    const [listaContatos, setListaContatos] = useState([]);
     const [load, setLoad] = useState(true);
     const [parceiro, setParceiro] = useState(new EstabelecimentoModel(null));
     let valido = new ErroValidacao();
@@ -107,12 +109,48 @@ export default function EditarParceiro() {
                 (async()=>{
                     const parceiro = await LoginService.login(data.email, data.senha);
                     setParceiro(parceiro);
+                    const lista = await EstabelecimentoService.todosContatos(parceiro.id);
+                    setListaContatos(lista);
                 })();
             } finally {
                 setLoad(false);
             }
         }
     }, [])
+
+    function addContato() {
+        setLoad(true);
+        const contato = {
+            valorContato: inputContato,
+            idEstabelecimento: parceiro.id
+        }
+        try {
+            (async()=>{
+                await EstabelecimentoService.addContato(parceiro.id, contato);
+                const data = await EstabelecimentoService.todosContatos(parceiro.id);
+                setListaContatos(data);
+            })();
+        } finally {
+            setLoad(false);
+            setInputContato("");
+        }
+
+    }
+    
+        function deleteContato(idContato) {
+            setLoad(true);
+            
+            try {
+                (async()=>{
+                    await EstabelecimentoService.deleteContato(idContato);
+                    const data = await EstabelecimentoService.todosContatos(parceiro.id);
+                    setListaContatos(data);
+                })();
+            } finally {
+                setLoad(false);
+                setInputContato("");
+            }
+        }
 
     if(load) return <span>Carregando...</span>
 
@@ -191,10 +229,23 @@ export default function EditarParceiro() {
                             <SelectUf value={parceiro.estado} setValue={(e)=>handleParceiro(e, 'estado')} />
                         </div>
                     </div>
+                    {/* CONTATOS */}
                     <div className="flex flex-col p-2">
-                        {/* EMAIL */}
-                        <div className="flex flex-col">
-                            <span>Emails</span>
+                        <span className="text-lg">Contatos</span>
+                        <div className="flex flex-col gap-5 p-2 mb-2">
+                            {listaContatos.map(c=>(
+                            <div key={c.id} className="rounded-lg flex justify-between items-center bg-stone-200">
+                                <span className="p-2">{c.valorContato}</span>
+                                <button onClick={()=>deleteContato(c.id)} className="rounded-r-lg cursor-pointer p-2 bg-red-600">
+                                    <i className="text-white bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        ))}
+                        {listaContatos<=0?<span>Nenhum contato adicionado</span>:<></>}
+                        </div>
+                        <div className="flex border border-stone-300 text-lg bg-stone-200 rounded-lg">
+                            <input value={inputContato} onChange={(e)=>setInputContato(e.target.value)} className="w-full p-2 outline-none" type="text" placeholder="Contato" />
+                            <button onClick={()=>addContato()} className=" rounded-r-lg cursor-pointer w-[20%] bg-emerald-700 text-white"><i className="text-4xl bi bi-plus"></i></button>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,8 @@
 
 import UsuarioModel from "@/models/UsuarioModel";
 import ArteService from "@/services/ArteService";
+import ArtistaService from "@/services/ArtistaService";
+import EstabelecimentoService from "@/services/EstabelecimentoService";
 import LoginService from "@/services/LoginService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
@@ -9,6 +11,8 @@ import { useEffect, useState } from "react"
 export default function Page() {
     const [user, setUser] = useState(new UsuarioModel(null));
     const [load, setLoad] = useState(true);
+    const [listaContatos, setListaContatos] = useState([]);
+    
     const route = useRouter();
     
     useEffect(()=>{
@@ -20,6 +24,11 @@ export default function Page() {
                 const login = await LoginService.login(data.email, data.senha);
                 if(login.tipoUsuario=="ARTISTA") {
                     login.nomeArte = await getArte(login.idArte)
+                    const lista = await ArtistaService.todosContatos(login.id);
+                    setListaContatos(lista);
+                } else {
+                    const lista = await EstabelecimentoService.todosContatos(login.id);
+                    setListaContatos(lista);
                 }
                 setUser(login);
             })();
@@ -75,37 +84,18 @@ export default function Page() {
                     </div>
                 </div>
                 {/* Contatos */}
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-3">
                     <div className="flex gap-2 justify-center">
                         <i className="bi bi-paperclip"></i>
                         <h2>Contatos</h2>
                     </div>
 
                     {/* LISTA DE CONTATOS */}
-                    <div className="flex justify-around">
-                        {/* EMAIL */}
-                        <div className="flex flex-col">
-                            <div className="flex gap-2">
-                                <i className="bi bi-envelope"></i>
-                                <h3>E-mail</h3>
-                            </div>
-                            <ul>
-                                <li>email@gmail.com</li>
-                                <li>outroe@gmail.com</li>
-                            </ul>
-                        </div>
-
-                        {/* TELEFONE */}
-                        <div className="flex flex-col">
-                            <div className="flex gap-2">
-                                <i className="bi bi-telephone"></i>
-                                <h3>Telefone</h3>
-                            </div>
-                            <ul>
-                                <li>(11) 99999-9999</li>
-                                <li>(11) 99999-9999</li>
-                            </ul>
-                        </div>
+                    <div className="flex flex-col items-center">
+                        {listaContatos.map(c=>(
+                            <span key={c.id} className="font-light">{c.valorContato}</span>
+                        ))}
+                        {listaContatos<=0?<span className="text-stone-500">Nenhum contato adicionando</span>:<></>}
                     </div>
 
                 </div>

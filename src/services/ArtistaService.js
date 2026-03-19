@@ -51,7 +51,43 @@ export default class ArtistaService {
         }
     }
 
+    static async addContato(idArtista, contato) {
+        try {
+            await fetch(`${config.apiKey}/artista/criar-contato/${idArtista}`,{
+                body: JSON.stringify(contato),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                method: 'POST'
+            })
+        } catch(e) {
 
+        }
+    }
+
+    static async deleteContato(idContato) {
+        try {
+            await fetch(`${config.apiKey}/artista/deletar-contato/${idContato}`,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                method: 'DELETE'
+            })
+        } catch(e) {
+            
+        }
+    }
+
+    static async todosContatos(idArtista) {
+        try {
+            const data = await fetch(`${config.apiKey}/artista/${idArtista}/todos`)
+            return data.json();
+        } catch (e) {
+
+        }
+    }
     // Validar Campos da primeira página de cadastro do artista
     static validarCampos(artista, senhaConfirm, campos) {
         let valido = new ErroValidacao();
