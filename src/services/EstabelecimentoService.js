@@ -45,6 +45,46 @@ export default class EstabelecimentoService {
         }
     }
 
+      static async addContato(idParceiro, contato) {
+        try {
+            await fetch(`${config.apiKey}/parceiros/criar-contato/${idParceiro}`,{
+                body: JSON.stringify(contato),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                method: 'POST'
+            })
+        } catch(e) {
+
+        }
+    }
+
+    static async deleteContato(idContato) {
+        try {
+            await fetch(`${config.apiKey}/parceiros/deletar-contato/${idContato}`,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                method: 'DELETE'
+            })
+        } catch(e) {
+            
+        }
+    }
+
+
+
+    static async todosContatos(idParceiro) {
+        try {
+            const data = await fetch(`${config.apiKey}/parceiros/${idParceiro}/todos`)
+            return data.json();
+        } catch(e) {
+
+        }
+    }
+
     static validarCampos(parceiro, senhaConfirm, campos) {
         let valido = new ErroValidacao();
 
