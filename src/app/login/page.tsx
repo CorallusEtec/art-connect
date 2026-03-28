@@ -1,9 +1,6 @@
 'use client'
 
 import InputSenha from "@/components/InputSenha";
-import { ErroValidacao } from "@/services/ErroValidacao";
-import GlobalService from "@/services/GlobalService";
-import LoginService from "@/services/LoginService";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,37 +8,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const route = useRouter();
-  let valido = new ErroValidacao();
-  const [validoVisual, setValidoVisual] = useState(valido);
-
-  function fadeFeedback(state, tempo) {
-    setValidoVisual(state);
-    setTimeout(()=>{
-      setValidoVisual(st=>({
-        ...st,
-        valido: true
-      }));
-    }, tempo)
-  }
 
   async function login() {
-    let valido = new ErroValidacao();
-    try {
-        if(GlobalService.validarLogin([email, senha]).valido == false) {
-          fadeFeedback(GlobalService.validarLogin([email, senha]), 2500);
-        } else {
-          const usuario = await LoginService.login(email, senha);
-          if(usuario != undefined) {
-            sessionStorage.setItem('@login', JSON.stringify({email:email, senha:senha}));
-            route.push("/home");
-          } else {
-            throw new Error("Login inválido");
-          }
-        }
-        
-    } catch(e) {
-      fadeFeedback(valido.invalido("Não foi possível autenticar o login"), 2500);
-    }
+    route.push("/home");
   }
 
   return (
@@ -52,7 +21,6 @@ export default function Login() {
           <h2 className="text-4xl mb-3 font-light">Faça Login</h2>
           {/* EMAIL E SENHA */}
           <div className="flex flex-col mb-3 gap-4">
-            {!validoVisual.valido?<span className="text-red-600">* {validoVisual.msg}</span>:<></>}
             {/* EMAIL */}
             <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
               <i className="bi bi-envelope text-lg"></i>
