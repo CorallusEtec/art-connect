@@ -13,7 +13,7 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-9">
                 {/* CARD USUARIOS */}
-                <a href="/admin/usuarios" className="p-2 col-span-2 col-start-3 gap-2 rounded-xl flex text-white flex-col bg-sky-500 border border-sky-600">
+                <a href="/admin/usuarios" className="p-2 col-span-2 col-start-3 gap-2 rounded-xl flex text-white flex-col bg-azul-200 border border-azul-600">
                     <div className="flex justify-center">
                         <h2 className="text-2xl">Usuários</h2>
                     </div>
@@ -33,7 +33,7 @@ export default function AdminDashboard() {
                     </div>
                 </a>
                 {/* CARD ESTABELECIMENTOS */}
-                <div className="p-2 col-span-2 col-end-8 gap-2 rounded-xl flex text-white flex-col bg-red-500 border border-red-600">
+                <div className="p-2 col-span-2 col-end-8 gap-2 rounded-xl flex text-white flex-col bg-vermelho-300 border border-vermelho-500">
                     <div className="flex justify-center">
                         <h2 className="text-2xl">Estabelecimentos</h2>
                     </div>

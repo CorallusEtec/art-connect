@@ -17,7 +17,7 @@ export default function Erro404() {
                     <p className="text-xl">O endereço que você está tentando acessar não existe.</p>
                     <button
                     onClick={()=>route.push("/")}
-                    className="cursor-pointer hover:bg-emerald-400 bg-emerald-500 text-white text-2xl p-2 w-[30%] border border-emerald-600 rounded-lg">Voltar</button>
+                    className="cursor-pointer hover:bg-azul-400 bg-azul-500 text-white text-2xl p-2 w-[30%] border border-azul-600 rounded-lg">Voltar</button>
                 </div>
             </div>
         </>

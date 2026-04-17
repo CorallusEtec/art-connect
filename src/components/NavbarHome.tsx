@@ -13,7 +13,7 @@ export default function NavbarHome() {
 
     return (
         <>
-            <header className="grid grid-cols-12 bg-teal-400 p-1 text-white items-center">
+            <header className="grid grid-cols-12 bg-azul-400 p-1 text-white items-center">
                 <div className="col-span-4 flex items-center gap-10">
                     <a href="/home">
                         <img className="max-w-32 invert" src="/img/logo.svg" />

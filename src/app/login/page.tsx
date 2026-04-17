@@ -38,7 +38,7 @@ export default function Login() {
             <div className="flex gap-2">
               <input
                 type="checkbox"
-                className="accent-emerald-600"
+                className="accent-azul-400"
                 name=""
                 id=""
               />
@@ -49,7 +49,7 @@ export default function Login() {
           <div className="flex flex-col items-center gap-5">
             <button
              
-              className="cursor-pointer w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center"
+              className="cursor-pointer w-[50%] rounded-lg bg-azul-400 border border-azul-600 text-white p-2 text-center"
               
             >
               Entrar
