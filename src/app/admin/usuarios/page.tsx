@@ -69,14 +69,14 @@ export default function AdminUsuarios() {
                         </div>
                     </div>
                     <button className="cursor-pointer
-                    hover:bg-emerald-500 bg-emerald-600
-                    p-2 w-[15%] rounded-xl border border-emerald-700 text-xl text-white"
+                    hover:bg-azul-400 bg-azul-500
+                    p-2 w-[15%] rounded-xl border border-azul-700 text-xl text-white"
                     >Buscar</button>
                 </div>
             </div>
             {/* TABELA */}
             <div className="grid grid-cols-12">
-                <div className="col-start-3 flex flex-col gap-5 col-span-9 p-3 border bg-stone-100 border-stone-300 rounded-lg">
+                <div className="col-start-3 flex flex-col gap-5 col-span-9 p-3 border bg-cinza-100 border-cinza-300 rounded-lg">
                     <div className="flex justify-center">
                         <h2 className="text-2xl text-stone-800">Usuários cadastrados</h2>
                     </div>

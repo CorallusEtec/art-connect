@@ -14,7 +14,7 @@ export default function NavbarAdmin() {
 
     return (
         <>
-            <header className=" bg-teal-400 p-1 text-white items-center px-7">
+            <header className=" bg-azul-400 p-1 text-white items-center px-7">
                 <div className="grid grid-cols-12 items-center gap-10">
                     {/* MENU */}
                     <div className="col-span-2 flex justify-between">
@@ -47,22 +47,22 @@ export default function NavbarAdmin() {
                 </div>
             </header>            
 
-            <div className={`bg-teal-600 h-full absolute ease-in-out duration-500 ${showMenu?"translate-x-0":"-translate-x-full"}`}>
+            <div className={`bg-azul-600 h-full absolute ease-in-out duration-500 ${showMenu?"translate-x-0":"-translate-x-full"}`}>
                 <ul className="text-white flex flex-col gap-2 text-lg">
                     <li>
-                        <a href="/admin" className="cursor-pointer flex gap-2 hover:bg-teal-500 p-3">
+                        <a href="/admin" className="cursor-pointer flex gap-2 hover:bg-azul-200 p-3">
                             <i className="bi bi-stack"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/usuarios" className="cursor-pointer flex hover:bg-teal-500 gap-2 p-3">
+                        <a href="/admin/usuarios" className="cursor-pointer flex hover:bg-azul-200 gap-2 p-3">
                             <i className="bi bi-people-fill"></i>
                             <span>Contas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/parceiros" className="cursor-pointer flex hover:bg-teal-500 gap-2 p-3">
+                        <a href="/admin/parceiros" className="cursor-pointer flex hover:bg-azul-200 gap-2 p-3">
                             <i className="bi bi-briefcase-fill"></i>
                             <span>Estabelecimentos</span>
                         </a>

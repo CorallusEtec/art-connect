@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <section className="bg-teal-700 flex flex-col gap-3">
+      <section className="bg-azul-600 flex flex-col gap-3">
         <div className="flex flex-col items-center">
           <img src="img/logo.svg" className="invert max-w-1/6" />
           <span className="text-white font-light text-3xl">"Conectando talentos à oportunidades reais"</span>

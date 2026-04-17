@@ -16,7 +16,7 @@ export default function Error({error, reset}) {
                     <h1 className="text-2xl text-center">Erro: {error.name}</h1>
                     <button
                     onClick={()=>route.push("/login")}
-                    className="cursor-pointer hover:bg-emerald-400 bg-emerald-500 text-white text-2xl p-2 border border-emerald-600 rounded-lg">Voltar</button>
+                    className="cursor-pointer hover:bg-azul-400 bg-azul-500 text-white text-2xl p-2 border border-azul-600 rounded-lg">Voltar</button>
                 </div>
             </div>
         
