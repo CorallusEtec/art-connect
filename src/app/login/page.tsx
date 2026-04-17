@@ -9,9 +9,6 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   const route = useRouter();
 
-  async function login() {
-    route.push("/home");
-  }
 
   return (
     <div className="h-dvh grid grid-cols-12">
@@ -21,6 +18,7 @@ export default function Login() {
           <h2 className="text-4xl mb-3 font-light">Faça Login</h2>
           {/* EMAIL E SENHA */}
           <div className="flex flex-col mb-3 gap-4">
+      
             {/* EMAIL */}
             <div className=" flex flex-row border text-xl rounded-lg border-stone-300 gap-1.5 p-2 bg-stone-200">
               <i className="bi bi-envelope text-lg"></i>
@@ -46,19 +44,11 @@ export default function Login() {
               />
               <span>Lembre-se de Mim</span>
             </div>
-            <div className="flex">
-              <a
-                href="/login/esqueciSenha"
-                className="text-emerald-600 underline"
-              >
-                Esqueci a senha
-              </a>
-            </div>
           </div>
           {/* BOTÕES */}
           <div className="flex flex-col items-center gap-5">
             <button
-              onClick={()=>login()}
+             
               className="cursor-pointer w-[50%] rounded-lg bg-teal-400 border border-teal-600 text-white p-2 text-center"
               
             >
