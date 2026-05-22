@@ -14,7 +14,7 @@ export default function Footer() {
                         <li><a href="/home">Home</a></li>
                     </ul>
                     <div className="flex justify-center">
-                        <img src="img/corallus-logo.png" className="max-w-2/5" alt="Corallus" />
+                        <img src="img/corallus-logo.png" className="w-48 h-48" alt="Corallus" />
                     </div>
                     <ul className="text-2xl text-white font-extralight">
                         <li><a className="font-semibold" href="">Suporte</a></li>

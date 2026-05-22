@@ -1,51 +1,117 @@
+'use client'
+
+import { ButtonSelect } from "@/components/ButtonSelect";
+import { Card } from "@/components/Card";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { useState } from "react";
 
 export default function Home() {
+  const [option, setOption] = useState("Busca");
+  
+  // Lista com os dados a serem consumidos na parte de funcionalidades do App
+  const features = {
+    "Busca": {
+      title: "Pesquise, Filtre e Encontre",
+      targets: [
+        "Pesquise por artistas ou postagens",
+        "Use a filtragem para encontrar o seu perfil ideal",
+        "Encontre o talento que você buscava"
+      ]
+    }
+  }
   return (
     <>
       <Navbar />
-      <section className="bg-azul-600 flex flex-col gap-3">
-        <div className="flex flex-col items-center">
-          <img src="img/logo.svg" className="invert max-w-1/6" />
-          <span className="text-white font-light text-3xl">"Conectando talentos à oportunidades reais"</span>
+      {/* BANNER */}
+      <section id="banner">
+        <div className="min-h-60 inset-shadow-md bg-contain flex items-center justify-center" style={{backgroundImage:"url('img/fundo.png')"}}>
+          <h1 className="text-white font-semibold text-5xl">Conectando talentos à oportunidades reais</h1>
         </div>
-        <div className="flex justify-center">
-          {/* TEXTO */}
-          <div className="flex flex-col col-span-8 items-center justify-center text-white">
-            <h2 className="text-2xl font-medium">O que é o Art Connect?</h2>
-            <p className="w-[65%] text-center text-xl font-light">
-              O Art Connect é uma plataforma própria para a criação e divulgação de portfólios e trabalhos 
-              artísticos. A proposta é realizar uma ponte entre artistas que merecem ter a sua arte exposta e 
-              estabelecimentos que buscam talentos para seu espaço
-            </p>
-          </div>
-          
-        </div>
-        <div className="flex justify-center col-span-4 p-5 gap-10">
-            <a href="/cadastro/artista" className="w-44 h-44 bg-white rounded-xl items-center justify-around flex flex-col">
-              <i className="text-5xl bi bi-music-note-beamed"></i>
-              <div className="flex flex-col text-2xl items-center">
-                <span className="font-extralight">É um artista?</span>
-                <span className="font-light">Crie um conta</span>
-              </div>
-            </a>
-            <a href="/cadastro/parceiros" className="w-44 h-44 bg-white rounded-xl items-center justify-around flex flex-col">
-              <i className="text-5xl bi bi-briefcase"></i>
-              <div className="flex flex-col text-xl items-center">
-                <span className="text-center font-extralight">É um estabelecimento?</span>
-                <span className="font-light">Crie um conta</span>
-              </div>
-            </a>
-          </div>
       </section>
-      <section className="p-3">
-        <div className="flex items-center gap-3 justify-center text-4xl mb-5">
-          <i className="bi bi-camera-reels"></i>
-          <h2 className="font-light">Video Pitch do Projeto</h2>
+      {/* O QUE É O ART CONNECT */}
+      <section id="conheca" className="mb-15">
+        <div className="grid grid-cols-4">
+          
+          {/* DESCRICAO E DOWNLOADS */}
+          <div className="flex flex-col col-span-2 gap-10 p-7">
+            {/* DESCRICAO */}
+            <div className="flex justify-end">
+              <div className="flex flex-col gap-4 w-3/4">
+                <h3 className="font-semibold text-3xl text-azul-600">O que é o Art Connect?</h3>
+                <p className="w-4/5 font-light text-xl text-azul-500">O Art Connect é um aplicativo que conecta artistas
+                  a contratantes por meio de portfólios personalizados
+                  e busca avançada por perfil
+                </p>
+              </div>
+            </div>
+            
+            {/* APP E DOWNLOAD*/}
+            <div className="flex flex-col items-center">
+              <img className="shadow-xl/20 border border-cinza-100 rounded-4xl aspect-square w-1/6" src="/splash-icon.png" alt="Icone Art Connect" />
+              <img className="aspect-5/2 w-1/4" src="/nameBanner.png" alt="Art Connect" />
+              {/* DOWNLOAD */}
+              <div className="flex gap-5">
+                <img src="/gplay.svg" alt="Google Play Store" />
+                <img src="/appleStore.svg" alt="Google Play Store" />
+              </div>
+            </div>
+          </div>
+
+          {/* CARDS */}
+          <div className="flex items-center h-full p-3 flex-col col-span-2">
+           <div className="flex flex-col h-full w-2/3 justify-around gap-10">
+
+            <Card title="Artista"
+              descricao="Monte seu portifólio com seus trabalhos e alcance possíveis contratantes."
+            >
+              <i className="text-azul-400 bi bi-star"></i>
+            </Card>
+
+            <Card title="Contratante"
+              descricao="Pesquise, filtre e encontre com facilidade artistas ideiais para o seu evento."
+            >
+              <i className=" text-azul-400 bi bi-briefcase"></i>
+            </Card>
+
+           </div>
+          </div>
         </div>
-        <div className="flex justify-center">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/ewoi-Ternik?si=l2IrOGm2ordInKTz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      </section>
+      
+      <section id="app">
+        <div className="flex flex-col mb-20 items-center gap-3">
+          <h2 className="font-medium text-azul-700 text-4xl">Conheça o Aplicativo</h2>
+          <div className="flex gap-5">
+            <ButtonSelect onClick={()=>setOption("Busca")} enable={option=="Busca"} title="Busca" />
+
+            <ButtonSelect onClick={()=>setOption("Portifólio")} enable={option=="Portifólio"} title="Portifólio" />
+
+            <ButtonSelect onClick={()=>setOption("Contatos")} enable={option=="Contatos"} title="Contatos" />
+          </div>
+        </div>
+        {/* FEATURES E PRINT DO CELULAR */}
+        <div className="grid grid-cols-6">
+          {/* PRINT CELULAR */}
+          <div className="col-span-2">
+
+          </div>
+          <div className="col-span-4">
+            <div className="flex justify-center mb-10">
+              <h3 className="text-3xl text-stone-800">{features[option].title}</h3>
+            </div>
+            {/* ITEMS */}
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col gap-5">
+                {features[option].targets.map((item:string)=>(
+                  <div className="">
+                    <i className="text-azul-500 bi bi-check2-square"></i>
+                    <span className="text-xl text-azul-400">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <Footer />

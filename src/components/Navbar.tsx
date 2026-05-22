@@ -13,7 +13,9 @@ export default function Navbar() {
                 <img className="max-w-32 invert" src="/img/logo.svg" />
                 <div className="flex gap-20 items-center text-xl">
                     <a href="/">Sobre o Art Connect</a>
-                    <a href="/login">Entrar</a>
+                    <div className="">
+                        <a className="border-2 rounded-lg p-3 px-8  bg-azul-300 border-azul-600" href="/login">Entrar</a>
+                    </div>
                     
                     
                 </div>
