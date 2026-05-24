@@ -16,7 +16,7 @@ export function InputSenha({setValue=undefined,
 ) {
     const [mostrarSenha, setMostrarSenha] = useState(false);
   return (
-    <div className="flex flex-row border rounded-lg border-stone-300 gap-1.5 p-2 bg-cinza-50">
+    <div className="flex flex-row border rounded-lg border-stone-300 gap-1.5 p-2 bg-cinza-50 has-focus:border-azul-400 transition-all">
       {children}
       
       <input

@@ -9,7 +9,7 @@ import { BiSolidBriefcase } from "react-icons/bi";
 import { BsStar } from "react-icons/bs";
 import { FaCheckSquare } from "react-icons/fa";
 
-export default function Home() {
+export default function LandindPage() {
   const [option, setOption] = useState("busca");
   
   // Lista com os dados a serem consumidos na parte de funcionalidades do App
@@ -39,7 +39,6 @@ export default function Home() {
   }
   return (
     <>
-      <Navbar />
       {/* BANNER */}
       <section id="banner">
         <div className="min-h-60 inset-shadow-md bg-contain flex items-center justify-center"

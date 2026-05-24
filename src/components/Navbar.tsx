@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react"
+import { Logo } from "./Logo";
 
 export default function Navbar() {
 
@@ -9,8 +10,8 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="flex justify-between bg-azul-400 p-2 px-5 text-white items-center">
-                <img className="max-w-32 invert" src="/assets/icons/artConnect-logo.svg" alt="Art Connect logo" />
+            <header className="flex justify-between bg-azul-400 p-2 px-5 text-white items-center sticky overflow-hidden top-0">
+                <Logo />
                 <div className="flex gap-20 items-center text-xl">
                     <a href="/">Sobre o Art Connect</a>
                     <div className="">
