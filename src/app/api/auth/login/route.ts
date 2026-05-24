@@ -5,12 +5,14 @@ export async function  POST(request: Request) {
     try {
         const { email, senha } = await request.json();
 
+        // FAZ O LOGIN NA API
         const response = await fetch(`${config.apiURL}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({email, senha})
         })
 
+        // SE DER ERRO DE AUTENTICAÇÃO
         if(!response.ok) {
             return NextResponse.json(
                 {messagem: response.statusText},
@@ -23,11 +25,12 @@ export async function  POST(request: Request) {
 
         const cookieStore = await cookies();
 
+        // SALVA TOKEN EM COOKIES SEGUROS COM HTTPONLY
         cookieStore.set("admin_token", token, {
-            httpOnly: true,
+            httpOnly: true, // PREVINE SCRIPTS DO CLIENT-SIDE
             secure: false, // EM PRODUÇÃO REAL DEIXAR TRUE PARA HTTPS
             sameSite: "lax",
-            maxAge: 60*60*2,
+            maxAge: 60*60*2, // EXPIRA EM 2 HORAS
             path: "/",
         });
 
