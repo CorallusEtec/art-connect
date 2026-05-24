@@ -4,7 +4,7 @@ export default function Footer() {
         <section className="bg-azul-600 p-2" id="footer">
             <div className="grid grid-cols-12">
                 <div className="col-span-2 flex flex-col justify-center">
-                    <img src="img/logo.svg" className="invert" />
+                    <img src="assets/icons/artConnect-logo.svg" alt="Art Connect Logo" className="invert" />
                 </div>
                 <div className="col-span-8 flex justify-around">
                     <ul className="text-2xl text-white font-extralight">
@@ -14,7 +14,7 @@ export default function Footer() {
                         <li><a href="/home">Home</a></li>
                     </ul>
                     <div className="flex justify-center">
-                        <img src="img/corallus-logo.png" className="max-w-2/5" alt="Corallus" />
+                        <img src="assets/icons/corallus-logo.png" className="w-48 h-48" alt="Corallus logo" />
                     </div>
                     <ul className="text-2xl text-white font-extralight">
                         <li><a className="font-semibold" href="">Suporte</a></li>
