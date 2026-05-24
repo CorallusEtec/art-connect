@@ -10,13 +10,14 @@ export function Card({...props}: CardProps) {
 
 
     return (
-        <div className="shadow-md/20 p-5 h-3/4 bg-cinza-50 grid grid-rows-3 border border-cinza-100 rounded-lg">
+        <div className="group shadow-md/20 p-5 h-3/4 bg-cinza-50 grid grid-rows-3 border border-cinza-100 rounded-lg
+        hover:bg-azul-400 hover:border-azul-500 transition-all duration-300 hover:p-15">
             <div className="flex row-span-1 items-center gap-2 text-4xl justify-center">
                 {props.children}
-                <span className="text-azul-300">{props.title}</span>
+                <span className="text-azul-300 group-hover:text-white">{props.title}</span>
             </div>
             <div className="flex row-span-2 items-center justify-center">
-                <p className="text-xl font-light text-center text-azul-600">{props.descricao}</p>
+                <p className="text-xl font-light text-center text-azul-600 group-hover:text-white">{props.descricao}</p>
             </div>
         </div>
     )
