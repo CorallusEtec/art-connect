@@ -5,6 +5,9 @@ import { Card } from "@/components/Card";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
+import { BiSolidBriefcase } from "react-icons/bi";
+import { BsStar } from "react-icons/bs";
+import { FaCheckSquare } from "react-icons/fa";
 
 export default function Home() {
   const [option, setOption] = useState("busca");
@@ -82,13 +85,13 @@ export default function Home() {
             <Card title="Artista"
               descricao="Monte seu portifólio com seus trabalhos e alcance possíveis contratantes."
             >
-              <i className="text-azul-400 group-hover:text-white bi bi-star"></i>
+              <BsStar className="text-azul-400 group-hover:text-white" />
             </Card>
 
             <Card title="Contratante"
               descricao="Pesquise, filtre e encontre com facilidade artistas ideiais para o seu evento."
             >
-              <i className=" text-azul-400 group-hover:text-white bi bi-briefcase"></i>
+              <BiSolidBriefcase className="text-azul-400 group-hover:text-white" />
             </Card>
 
            </div>
@@ -128,7 +131,7 @@ export default function Home() {
               <div className="flex flex-col gap-10 ml-7">
                 {features[option].targets.map((item:string)=>(
                   <div key={item} className="flex gap-3 items-center">
-                    <i className="text-azul-500 text-lg bi bi-check2-square"></i>
+                    <FaCheckSquare className="text-azul-500 text-lg" />
                     <span className="text-xl text-azul-400">{item}</span>
                   </div>
                 ))}
