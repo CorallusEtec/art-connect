@@ -7,7 +7,7 @@ export default function NavbarAdmin() {
 
     const [config, setConfig] = useState(false);
     const route = useRouter();
-    const [showMenu, setShowMenu] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
     function logout() {
         sessionStorage.clear();
         route.push('/login');

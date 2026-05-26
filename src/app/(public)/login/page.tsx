@@ -11,12 +11,14 @@ import { $ZodIssue } from 'zod/v4/core';
 import { ShowErrors } from '@/components/ShowErrors';
 import { AuthService } from "@/services/AuthService";
 import { redirect } from "next/navigation";
+import { Alert, Snackbar } from "@mui/material";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const [errors, setErrors] = useState<$ZodIssue[]>([]);
+  const [error, setError] = useState<string>("");
+  const [alert, setAlert] = useState(false);
 
   async function login() {
     const validation = loginSchema.safeParse({email, senha});
@@ -26,21 +28,26 @@ export default function Login() {
       
       redirect("/dashboard");
     } else {
-      
-      setErrors(validation.error.issues);
-      setTimeout(()=>{
-        setErrors([])
-      }, 3000)
+      console.log(validation.error.issues[0].message);
+      handleErrorAlert(validation.error.issues[0].message);
     }   
   }
 
+  function handleErrorAlert(message: string) {
+    setError(message);
+    setAlert(!alert);
+  }
 
   return (
     
-    <div className="grid grid-cols-8 min-h-[calc(50rem)] items-center">
-
+    <div className="grid grid-cols-12">
+      <Snackbar open={alert} autoHideDuration={2000} onClose={()=>setAlert(false)}>
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
       {/* CONTAINER PRICIPAL */}
-      <div className=" col-span-4 col-start-3 h-10/12 grid grid-cols-12 border rounded-lg shadow-2xl border-cinza-100">
+      <div className="mt-30 col-span-10 col-start-2 grid grid-cols-12 border rounded-lg shadow-2xl border-cinza-100">
+        
+        
         {/* BANNER */}
         <div className="flex col-span-6 p-3 bg-center bg-cover rounded-l-lg" style={{backgroundImage: "url('assets/bg/mic.jpg')"}}>
           <div className="">
@@ -49,7 +56,7 @@ export default function Login() {
         </div>
         
         {/* LOGIN UI */}
-        <div className="flex justify-center col-span-6 p-20 rounded-r-lg">
+        <div className="flex justify-center col-span-6 p-10 rounded-r-lg">
           
           <div className="flex flex-col gap-5">
             {/* HEADER */}
@@ -74,9 +81,8 @@ export default function Login() {
               
               {/* LOGAR */}
               <div className="flex justify-center">
-                <TextButton onClick={()=>login()}>Logar</TextButton>
+                <TextButton type="submit" onClick={()=>login()}>Logar</TextButton>  
               </div>
-              <ShowErrors errors={errors} />
             </div>
           </div>
         </div>

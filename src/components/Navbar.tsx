@@ -10,7 +10,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="flex justify-between bg-azul-400 p-2 px-5 text-white items-center sticky overflow-hidden top-0">
+            <header className="flex justify-between bg-azul-400 p-2 px-5 text-white items-center fixed w-full z-50">
                 <Logo />
                 <div className="flex gap-20 items-center text-xl">
                     <a href="/">Sobre o Art Connect</a>
