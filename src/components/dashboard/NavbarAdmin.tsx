@@ -15,34 +15,23 @@ export default function NavbarAdmin() {
 
     return (
         <>
-            <header className=" bg-azul-400 p-1 text-white items-center px-7">
+            <header className=" bg-azul-400 p-1 text-white items-center px-3">
                 <div className="grid grid-cols-12 items-center gap-10">
                     {/* MENU */}
                     <div className="col-span-2 flex justify-between">
                         <button className="cursor-pointer" onClick={()=>setShowMenu(!showMenu)}>
-                            <i className="text-4xl bi bi-list"></i>
+                            <i className="text-2xl bi bi-list"></i>
                         </button>
                         {/* LOGO */}
                         <a href="/dashboard">
-                            <img className="max-w-32 invert" src="/assets/icons/artConnect-logo.svg" />
+                            <img className="max-w-20 invert" src="/assets/icons/artConnect-logo.svg" />
                         </a>
                     </div>
-                    {/* INPUT */}
-                    <div className="col-span-7 flex justify-center ">
-                        <div className=" w-[60%] flex bg-stone-100 border gap-1 rounded-2xl border-stone-300 p-2">
-                            <input
-                            placeholder="Pesquisar"
-                            className="outline-none w-full placeholder:text-stone-400 text-stone-800 font-normal"
-                            type="text" />
-                            <button className="cursor-pointer">
-                                <i className="text-black bi bi-search"></i>
-                            </button>
-                        </div>
-                    </div>
+                   
                     {/* PERFIL */}
-                    <div className="col-span-3 flex justify-end">
+                    <div className="col-end-13 flex justify-end">
                         <button onClick={()=>setConfig(!config)} className="cursor-pointer">
-                            <i className="text-4xl bi bi-person-circle"></i>
+                            <i className="text-3xl bi bi-person-circle"></i>
                         </button>
                     </div>
                 </div>

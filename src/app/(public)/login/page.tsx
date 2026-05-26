@@ -25,7 +25,10 @@ export default function Login() {
 
     if(validation.success) {
       const request = await AuthService.login(validation.data);
-      
+      if(typeof request == "string") {
+        handleErrorAlert(request);
+        return;
+      }
       redirect("/dashboard");
     } else {
       console.log(validation.error.issues[0].message);

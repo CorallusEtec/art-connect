@@ -8,7 +8,7 @@ export function SideBarAdmin(props: SideBarAdminProps) {
     
     
     return (
-        <div className={`bg-azul-600 h-full absolute ease-in-out duration-500 ${props.showMenu?"translate-x-0":"-translate-x-full"}`}>
+        <div className={`bg-azul-600 h-full z-20 absolute ease-in-out duration-500 ${props.showMenu?"translate-x-0":"-translate-x-full"}`}>
                 <ul className="text-white flex flex-col gap-2 text-lg">
                     <li>
                         <SideBarItem href="/dashboard" title="Dashboard">
