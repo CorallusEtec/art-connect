@@ -1,14 +1,13 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 export default function AdminDashboard() {
     const [listaUsuarios, setListaUsuarios] = useState([]);
-    const [load, setLoad] = useState(true);
-    
 
     return (
+        <>
         <div className="flex flex-col">
             <div className="flex justify-center p-5">
-                <h1 className="text-3xl font-light text-stone-900">Bem vindo de volta, Fulano!</h1>
+                <h1 className="text-3xl font-light text-stone-900">Bem vindo de volta, Administrador</h1>
             </div>
 
             <div className="grid grid-cols-9">
@@ -24,11 +23,11 @@ export default function AdminDashboard() {
                     <div className="flex justify-between">
                         <div className="flex items-center gap-2">
                             <i className="text-xl bi bi-person"></i>
-                            <span className="text-lg">{listaUsuarios.filter(u=>u.tipoUsuario=="ARTISTA").length} Artistas</span>
+                            <span className="text-lg">0 Artistas</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <i className="text-xl bi bi-briefcase-fill"></i>
-                            <span className="text-lg">{listaUsuarios.filter(u=>u.tipoUsuario=="ESTABELECIMENTO").length} Estabelecimentos</span>
+                            <span className="text-lg">0 Estabelecimentos</span>
                         </div>
                     </div>
                 </a>
@@ -38,15 +37,16 @@ export default function AdminDashboard() {
                         <h2 className="text-2xl">Estabelecimentos</h2>
                     </div>
                     <div className="flex items-center justify-center text-2xl gap-3">
-                        <span className="text-3xl">{listaUsuarios.filter(u=>u.tipoUsuario=="ESTABELECIMENTO").length}</span>
+                        <span className="text-3xl">0</span>
                         <i className="text-5xl bi bi-briefcase-fill"></i>
                     </div>
                     <div className="flex justify-center gap-3">
                         <i className="text-lg bi bi-bell"></i>
-                        <span>{listaUsuarios.filter(u=>u.nomeStatusConta=="Pendente").length} contas aguardando aprovação</span>
+                        <span>0 contas aguardando aprovação</span>
                     </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }

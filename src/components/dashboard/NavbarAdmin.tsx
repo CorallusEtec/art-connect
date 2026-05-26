@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { SideBarAdmin } from "./SideBarAdmin";
 export default function NavbarAdmin() {
 
     const [config, setConfig] = useState(false);
@@ -22,8 +23,8 @@ export default function NavbarAdmin() {
                             <i className="text-4xl bi bi-list"></i>
                         </button>
                         {/* LOGO */}
-                        <a href="/admin">
-                            <img className="max-w-32 invert" src="/img/logo.svg" />
+                        <a href="/dashboard">
+                            <img className="max-w-32 invert" src="/assets/icons/artConnect-logo.svg" />
                         </a>
                     </div>
                     {/* INPUT */}
@@ -47,28 +48,7 @@ export default function NavbarAdmin() {
                 </div>
             </header>            
 
-            <div className={`bg-azul-600 h-full absolute ease-in-out duration-500 ${showMenu?"translate-x-0":"-translate-x-full"}`}>
-                <ul className="text-white flex flex-col gap-2 text-lg">
-                    <li>
-                        <a href="/admin" className="cursor-pointer flex gap-2 hover:bg-azul-200 p-3">
-                            <i className="bi bi-stack"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/usuarios" className="cursor-pointer flex hover:bg-azul-200 gap-2 p-3">
-                            <i className="bi bi-people-fill"></i>
-                            <span>Contas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/parceiros" className="cursor-pointer flex hover:bg-azul-200 gap-2 p-3">
-                            <i className="bi bi-briefcase-fill"></i>
-                            <span>Estabelecimentos</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <SideBarAdmin showMenu={showMenu} />
 
             <div onMouseLeave={()=>setConfig(false)} className={`m-3 p-3 absolute right-0 bg-stone-100 border text-lg font-light ${config?"flex":"invisible"} border-stone-300 rounded-lg gap-3 flex-col`}>
                 <a href="/home/seuPerfil" className="flex gap-2">
