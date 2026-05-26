@@ -1,10 +1,15 @@
-import NavbarAdmin from "@/components/NavbarAdmin"
+import NavbarAdmin from "@/components/dashboard/NavbarAdmin"
+import { ReactNode } from "react"
 
-export default function Layout({ children }) {
+type Layout = {
+    children: ReactNode
+}
+
+export default function Layout({...props}: Layout) {
     return (
         <div className="">
         <NavbarAdmin />
-        {children}
+        {props.children}
         </div>
         
     )

@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { IconType } from "react-icons"
 
 export type CardProps = {
     children: ReactNode,
@@ -17,7 +18,7 @@ export function Card({...props}: CardProps) {
                 <span className="text-azul-300 group-hover:text-white">{props.title}</span>
             </div>
             <div className="flex row-span-2 items-center justify-center">
-                <p className="text-xl font-light text-center text-azul-600 group-hover:text-white">{props.descricao}</p>
+                <p className="text-balance text-xl font-light text-center text-azul-600 group-hover:text-white">{props.descricao}</p>
             </div>
         </div>
     )

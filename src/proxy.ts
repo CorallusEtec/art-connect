@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 interface JWTPayload {
     sub?: string,
-    role?: string,
+    roles?: string,
     exp?: number,
 }
 
@@ -20,7 +20,7 @@ export function proxy(request: NextRequest) {
         try {
             const payload = jwtDecode<JWTPayload>(token);
 
-            if(payload.role !== "ADMIN") {
+            if(payload.roles !== "ADMIN") {
                 return NextResponse.redirect(new URL("/login", request.url));
             }
         } catch (error) {
