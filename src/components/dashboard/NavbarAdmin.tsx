@@ -18,7 +18,7 @@ export default function NavbarAdmin() {
             <header className=" bg-azul-400 p-1 text-white items-center px-3">
                 <div className="grid grid-cols-12 items-center gap-10">
                     {/* MENU */}
-                    <div className="col-span-2 flex justify-between">
+                    <div className="col-span-1 flex justify-between">
                         <button className="cursor-pointer" onClick={()=>setShowMenu(!showMenu)}>
                             <i className="text-2xl bi bi-list"></i>
                         </button>

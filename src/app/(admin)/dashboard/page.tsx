@@ -2,12 +2,28 @@
 import { Card, CardActionArea, CardActions, CardContent, CardHeader } from '@mui/material';
 import Box from '@mui/material/Box'
 import { BarChart } from '@mui/x-charts/BarChart';
+import { LineChart, PieChart } from '@mui/x-charts';
 import { BiSolidBriefcase, BiSolidStar } from 'react-icons/bi';
 import { FaUserClock, FaUserTie } from 'react-icons/fa';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { TbUserStar } from 'react-icons/tb';
+import { useEffect, useState } from 'react';
+import { AdminService } from '@/services/AdminService';
+import { RelatorioResponse } from '@/models/response/RelatorioResponse';
 export default function AdminDashboard() {
+    const [load, setLoad] = useState(true);
+    const [data, setData] = useState();
+    
+    (async()=>{
+        const data = await AdminService.getRelatorios();
 
+
+        console.log(data.json());
+        setLoad(false);
+    })();
+
+    if(load) return<></>
+    
     return (
         <>
         <div className="flex flex-col">
@@ -67,14 +83,29 @@ export default function AdminDashboard() {
             </div>
             
             <div className="grid grid-cols-12">
+                {/* ARTISTAS E CONTRATANTES CADASTROS */}
                 <div className="col-span-6">
-                <BarChart
-                xAxis={
-                    [{data: ["segunda", "tesça", "quarta"]}]
-                }
-                series={[{data: [0, 3, 5]}]}
-                height={200}
-                />
+                    <Box sx={{ width: '100%', height: 300 }}>
+                        <LineChart
+                            series={[
+                            { data: [8, 7, 5], label: 'Artistas', curve:"natural" },
+                            { data: [5, 6, 3], label: 'Contratantes', curve:"natural" },
+                            ]}
+                            xAxis={[{ scaleType: 'point', data: ["Janeiro", "Fevereiro", "Março"], height: 28 }]}
+                            yAxis={[{ width: 50 }]}
+                            margin={{right: 24}}
+                        />
+                    </Box>
+                </div>
+                {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
+                <div className="col-span-6">
+                    <BarChart
+                    xAxis={
+                        [{data: ["segunda", "tesça", "quarta"]}]
+                    }
+                    series={[{data: [0, 3, 5]}]}
+                    height={200}
+                    />
                 </div>
             </div>
         </div>
