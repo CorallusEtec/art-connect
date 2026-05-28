@@ -1,62 +1,109 @@
 'use client'
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SideBarAdmin } from "./SideBarAdmin";
+import { AppBar, Box, Button, Divider, Drawer, IconButton, ListItem, ListItemButton, Menu, MenuItem, Toolbar } from "@mui/material";
+import { MdSpaceDashboard } from "react-icons/md";
+import { BiMenu, BiSolidBriefcase } from "react-icons/bi";
+import { Logo } from "../Logo";
+import { BsBook, BsBoxArrowLeft, BsGearFill, BsPerson, BsPersonCircle } from "react-icons/bs";
 export default function NavbarAdmin() {
 
-    const [config, setConfig] = useState(false);
-    const route = useRouter();
-    const [showMenu, setShowMenu] = useState(false);
-    function logout() {
-        sessionStorage.clear();
-        route.push('/login');
+    const [drawer, setDrawer] = useState(false);
+    const [anchor, setAnchor] = useState<null | HTMLElement>(null);
+    
+    const menu = Boolean(anchor)
+    
+    function toggleDrawer(state: boolean) {
+        setDrawer(state);
     }
+
+    function handleOpenMenu(event: React.MouseEvent<HTMLElement>) {
+        setAnchor(event.currentTarget);
+    }
+
+    function handleCloseMenu() {
+        setAnchor(null);
+    }
+
+    const drawerRoutes = [
+        {title: "Dashboard", icon: <MdSpaceDashboard />, url: "/dashboard"},
+        {title: "Contratante", icon: <BiSolidBriefcase />, url: "/dashboard/contratantes"}
+    ]
 
     return (
         <>
-            <header className=" bg-azul-400 p-1 text-white items-center px-3">
-                <div className="grid grid-cols-12 items-center gap-10">
+        {/* NAVBAR */}
+            <AppBar className=" bg-azul-400 p-1 text-white px-3" position="sticky">
+                <Toolbar className="flex justify-between">
                     {/* MENU */}
-                    <div className="col-span-1 flex justify-between">
-                        <button className="cursor-pointer" onClick={()=>setShowMenu(!showMenu)}>
-                            <i className="text-2xl bi bi-list"></i>
-                        </button>
-                        {/* LOGO */}
-                        <a href="/dashboard">
-                            <img className="max-w-20 invert" src="/assets/icons/artConnect-logo.svg" />
-                        </a>
+                    <div className="flex items-center gap-6">
+                        <IconButton onClick={()=>toggleDrawer(true)}>
+                        <BiMenu className="text-white text-3xl" />
+                        </IconButton>
+                    <Logo />
                     </div>
+                    
+                       
                    
                     {/* PERFIL */}
-                    <div className="col-end-13 flex justify-end">
-                        <button onClick={()=>setConfig(!config)} className="cursor-pointer">
-                            <i className="text-3xl bi bi-person-circle"></i>
-                        </button>
-                    </div>
-                </div>
-            </header>            
-
-            <SideBarAdmin showMenu={showMenu} />
-
-            <div onMouseLeave={()=>setConfig(false)} className={`m-3 p-3 absolute right-0 bg-stone-100 border text-lg font-light ${config?"flex":"invisible"} border-stone-300 rounded-lg gap-3 flex-col`}>
-                <a href="/home/seuPerfil" className="flex gap-2">
-                    <i className="bi bi-person"></i>
+        
+                        <IconButton onClick={handleOpenMenu} className="cursor-pointer">
+                            <BsPersonCircle className="text-3xl text-white" />
+                        </IconButton>
+                   
+                </Toolbar>
+            </AppBar>            
+            {/* DRAWER */}
+            <Drawer open={drawer} onClose={()=>toggleDrawer(false)} anchor='left'>
+            
+                <Box component="div" className="bg-azul-200 h-full text-white">
+                    <ListItem className="flex justify-end" disablePadding>
+                        <ListItemButton onClick={()=>setDrawer(false)}>
+                            <BiMenu className="text-3xl" />
+                        </ListItemButton>
+                    </ListItem>
+                    {drawerRoutes.map((item, index)=> (
+                        <div key={index}>
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={()=>{
+                                setDrawer(false);
+                                redirect(item.url);
+                            }
+                                
+                                } className="gap-5">
+                                <div className="text-3xl">
+                                    {item.icon}
+                                </div>
+                                <span className="font-medium">{item.title}</span>
+                            </ListItemButton>
+                        </ListItem>
+                        <Divider variant="middle" />
+                        </div>
+                    ))}
+                </Box>
+            </Drawer>
+            {/* MENU  */}
+            <Menu open={menu} onMouseLeave={handleCloseMenu} anchorEl={anchor} onClose={handleCloseMenu}>
+                <MenuItem className="flex gap-2">
+                    <BsPerson />
                     <span>Dados e credenciais</span>
-                </a>
-                <a href="" className="flex gap-2">
-                    <i className="bi bi-gear"></i>
+                </MenuItem>
+                <MenuItem className="flex gap-2">
+                    <BsGearFill />
                     <span>Configurações</span>
-                </a>
-                <a href="" className="flex gap-2">
-                    <i className="bi bi-book"></i>
+                </MenuItem>
+                <MenuItem className="flex gap-2">
+                    <BsBook />
                     <span>Sobre o Art Connect</span>
-                </a>
-                <button onClick={()=>logout()} className="cursor-pointer text-red-500 gap-2 justify-center flex">
-                    <i className="bi bi-box-arrow-left"></i>
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={()=>console.log("TEste")} className="text-red-500 gap-2">
+                    <BsBoxArrowLeft />
                     <span>Sair</span>
-                </button>
-            </div>
+                </MenuItem>
+            </Menu>
         </>
     )
 }

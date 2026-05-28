@@ -2,6 +2,9 @@
 
 import { useState } from "react"
 import { Logo } from "./Logo";
+import { AppBar, Button, ButtonBase, Grid, IconButton, Toolbar } from "@mui/material";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Navbar() {
 
@@ -10,18 +13,22 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="flex justify-between bg-azul-400 p-2 px-5 text-white items-center overflow-hidden sticky top-0 w-full z-50">
-                <Logo size="48"  />
-                <div className="flex gap-20 items-center text-xl">
-                    <a href="/">Sobre o Art Connect</a>
-                    <div className="">
-                        <a className="border-2 rounded-lg p-3 px-8  bg-azul-300 border-azul-600" href="/login">Entrar</a>
-                    </div>
-                    
-                    
-                </div>
+            <AppBar className=" bg-azul-400 overflow-hidden" position="sticky" >
+                <Toolbar className="flex justify-between">
+                            <ButtonBase onClick={()=>redirect("/")}>
+                                <Logo /> 
+                            </ButtonBase>                  
+                            <div className="flex items-center gap-5">
+                                <ButtonBase onClick={()=>redirect("/")} className="text-white p-3">
+                                    <span>Sobre o Art Connect</span>
+                                </ButtonBase>
+                                <Button variant="outlined" color="inherit"  onClick={()=>redirect("/login")}>
+                                    Login
+                                </Button>
+                            </div>
+                </Toolbar>
                 
-            </header>
+            </AppBar>
         </>
     )
 }

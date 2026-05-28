@@ -1,6 +1,11 @@
 import { UsuarioResponse } from "./UsuarioResponse"
-export type PublicacaoData = {
-    dataPublicacao: string;
+
+interface PublicacaoData {
+    dataPublicacao: string
+}
+interface ArteQuantidade {
+    id: number,
+    [key: string]: number
 }
 
 export interface RelatorioResponse {
@@ -10,4 +15,5 @@ export interface RelatorioResponse {
     publicacoesSemanal: PublicacaoData[],
 
     usuarios: UsuarioResponse[]
+    listaArtes: ArteQuantidade[]
 }

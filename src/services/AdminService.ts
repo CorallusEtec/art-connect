@@ -1,4 +1,3 @@
-import { useQuery } from '@/hooks/useQuery';
 import {config} from './config';
 import { RelatorioResponse } from '@/models/response/RelatorioResponse';
 

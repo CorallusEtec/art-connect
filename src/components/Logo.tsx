@@ -6,5 +6,5 @@ export type LogoProps = ImgHTMLAttributes<HTMLImageElement> & {
 
 export function Logo({size = "32", ...props}: LogoProps) {
 
-    return <img className={`invert aspect-video w-24 ${size}`} src="/assets/icons/artConnect-logo.svg" alt="Art Connect logo" {...props} />
+    return <img className={`invert aspect-video w-32 ${size}`} src="/assets/icons/artConnect-logo.svg" alt="Art Connect logo" {...props} />
 }

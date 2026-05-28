@@ -44,6 +44,7 @@ export default function LandindPage() {
   }
   return (
     <>
+    <Navbar />
       {/* BANNER */}
       <section id="banner">
         <div className="min-h-60 inset-shadow-md bg-contain flex items-center justify-center"
