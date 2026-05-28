@@ -8,9 +8,9 @@ export default function Erro404() {
     return (
         <>
         <Navbar />
-            <div className="flex justify-center items-center gap-5">
+            <div className="flex justify-center mt-20 items-center gap-5">
 
-                <img src="/img/logo.svg" alt="Art Connect " className="max-w-1/4" />
+                <img src="/assets/icons/artConnect-logo.svg" alt="Art Connect " className="max-w-1/4" />
 
                 <div className="flex flex-col items-center gap-7">
                     <h1 className="text-7xl">Erro 404</h1>

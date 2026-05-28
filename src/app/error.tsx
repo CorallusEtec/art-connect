@@ -1,25 +1,28 @@
 'use client'
 
 import Navbar from "@/components/Navbar"
+import { Button } from "@mui/material";
 import { useRouter } from "next/navigation"
+import { IoWarning } from "react-icons/io5";
 
-export default function Error({error, reset}) {
+export default function Error({error, reset}: {error: Error & {digest?: string}, reset: ()=>void}) {
     const route = useRouter();
     return (
-        <>
+        <div className="h-screen overflow-y-hidden">
             <Navbar />
-            <div className="flex justify-center items-center gap-5">
-
-                <img src="/img/logo.svg" alt="Art Connect " className="max-w-1/4" />
-
+            <div className="flex justify-center items-center gap-5 h-full">
                 <div className="flex flex-col items-center gap-7">
-                    <h1 className="text-2xl text-center">Erro: {error.name}</h1>
-                    <button
+                    <div className="flex items-center gap-4">
+                        <IoWarning className="text-4xl text-vermelho-300" />
+                        <h1 className="text-3xl font-medium text-center">Ocorreu um erro</h1>
+                    </div>
+                    <p>Não foi possível processar o conteúdo solicitado. Por favor tente mais tarde</p>
+                    <Button
                     onClick={()=>route.push("/login")}
-                    className="cursor-pointer hover:bg-azul-400 bg-azul-500 text-white text-2xl p-2 border border-azul-600 rounded-lg">Voltar</button>
+                    className="bg-azul-600">Voltar</Button>
                 </div>
             </div>
         
-        </>
+        </div>
     )
 }

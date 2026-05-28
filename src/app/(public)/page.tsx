@@ -10,11 +10,16 @@ import { BsStar } from "react-icons/bs";
 import { FaCheckSquare } from "react-icons/fa";
 
 export default function LandindPage() {
-  const [option, setOption] = useState("busca");
-  
+  const [option, setOption] = useState<string>("busca");
+  interface Data {
+    [key: string]: {
+      title: string,
+      targets: string[]
+    }
+  }
   // Lista com os dados a serem consumidos na parte de funcionalidades do App
-  const features = {
-    "busca": {
+  const features:Data = {
+    busca: {
       title: "Pesquise, Filtre e Encontre",
       targets: [
         "Pesquise por artistas ou postagens",
@@ -22,7 +27,7 @@ export default function LandindPage() {
         "Encontre o talento que você buscava"
       ]
     },
-    "portifolio": {
+    portifolio: {
       title: "Mostre sua arte, alcance interesses",
       targets: [
         "Crie publicações sobre sua arte",
@@ -30,7 +35,7 @@ export default function LandindPage() {
         "Adicione seus contatos para negociar"
       ]
     },
-    "contatos": {
+    contatos: {
       title: "",
       targets: [
         ""
@@ -39,6 +44,7 @@ export default function LandindPage() {
   }
   return (
     <>
+    <Navbar />
       {/* BANNER */}
       <section id="banner">
         <div className="min-h-60 inset-shadow-md bg-contain flex items-center justify-center"
@@ -128,8 +134,8 @@ export default function LandindPage() {
             {/* LISTA DE ITEMS */}
             <div className="flex flex-col items-start">
               <div className="flex flex-col gap-10 ml-7">
-                {features[option].targets.map((item:string)=>(
-                  <div key={item} className="flex gap-3 items-center">
+                {features[option].targets.map((item:string, index:number)=>(
+                  <div key={index} className="flex gap-3 items-center">
                     <FaCheckSquare className="text-azul-500 text-lg" />
                     <span className="text-xl text-azul-400">{item}</span>
                   </div>
@@ -143,3 +149,4 @@ export default function LandindPage() {
     </>
   );
 }
+ 
