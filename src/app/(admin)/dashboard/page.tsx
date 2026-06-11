@@ -1,21 +1,17 @@
 'use client'
 
+import { CardDetails } from '@/components/CardDetails';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardHeader, Container, Divider, Drawer, Grid, IconButton, ListItem, ListItemButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Box from '@mui/material/Box'
-import { LineChart, PieChart } from '@mui/x-charts';
-import { BiSolidBriefcase, BiSolidStar } from 'react-icons/bi';
+import { BarChart, LineChart, PieChart } from '@mui/x-charts';
+import { BiSolidBriefcase, BiSolidStar, BiSolidUserPin } from 'react-icons/bi';
 import { FaUserClock, FaUserTie } from 'react-icons/fa';
+import { IoMdChatbubbles } from 'react-icons/io';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { TbUserStar } from 'react-icons/tb';
-import { useRelatorio } from '@/contexts/RelatorioContext';
-import { useState } from 'react';
-import { BsPencilFill, BsPenFill } from 'react-icons/bs';
 
 export default function AdminDashboard() {
     
-
-
-    const { relatorio } = useRelatorio();
     return (
         <>
         
@@ -27,59 +23,35 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-11 gap-7 mx-5 pb-7 border-b border-cinza-100">
                 {/* ARTISTAS CADASTRADOS */}
                 <Box component={"span"} className="col-start-2 col-span-3">
-                    <Card>
-                        <CardActionArea>
-                            <CardContent className="flex justify-between items-center gap-2">
-                                <span className="text-xs text-azul-300">Artistas cadastrados</span>
-                                <BiSolidStar className="text-lg text-azul-400" />
-                            </CardContent>
-                            <CardContent className="flex text-3xl justify-center mb-5 items-center gap-4">
-                                <h2 className="font-medium">{relatorio.artistasCadastrados}</h2>
-                                <TbUserStar />
-                            </CardContent>
-                            
-                        </CardActionArea>
-                    </Card>
+                    <CardDetails label="Artistas cadastrados" acessory={<BiSolidStar className="text-lg text-azul-400" />}>
+                        <TbUserStar />
+                    </CardDetails>
                 </Box>
 
                 {/* CONTRATANTES CADASTRADOS */}
                 <Box component={"span"} className="col-span-3">
-                    <Card>
-                        <CardActionArea>
-                            <CardContent className="flex justify-between items-center gap-2">
-                                <span className="text-xs text-azul-500">Contratantes cadastrados</span>
-                                <BiSolidBriefcase className="text-lg text-azul-500 " />
-                            </CardContent>
-                            <CardContent className="flex text-3xl mb-5 justify-center items-center gap-4">
-                                <h2 className="font-medium">{relatorio.contratantesCadastrados}</h2>
-                                <FaUserTie />
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
+                    <CardDetails label='Contratantes cadastrados' acessory={<BiSolidBriefcase className="text-lg text-azul-500 " />}>
+                        <FaUserTie />
+                    </CardDetails>
                 </Box>
 
                 {/* CONTRATANTES PENDENTES */}
                 <Box component={"span"} className="col-span-3">
-                    <Card>
-                        <CardActionArea>
-                            <CardContent className="flex justify-between items-center gap-2">
-                                <span className="text-xs text-vermelho-500">Contratantes pendentes</span>
-                                <MdOutlinePendingActions className='text-lg text-vermelho-300' />
-                            </CardContent>
-                            <CardContent className="flex text-3xl text-vermelho-300 mb-5 justify-center items-center gap-4">
-                                <h2 className="font-medium">{relatorio.contratantesPendentes}</h2>
-                                <FaUserClock />
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
+                    <CardDetails label='Mensagem dos usuários' acessory={<IoMdChatbubbles />}>
+                    <BiSolidUserPin />
+                    </CardDetails>
                 </Box>
             </div>
             
-            <div className="grid grid-cols-12">
-                {/* ARTISTAS E CONTRATANTES CADASTROS */}
-                <div className="col-span-6">
-                    <Box sx={{ width: '100%', height: 300 }}>
-                        
+            <div className="grid grid-cols-12 mt-10">
+                {/* PUBLICAÇÕES NAS ULTIMAS SEMANAS */}
+                <div className=" col-span-6">
+                    <Box component={"div"} className='flex flex-col justify-center'>
+                    <BarChart
+                    xAxis={[{ data: ['group A', 'group B', 'group C'] }]}
+                    series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+                    height={250}
+                    />
                     </Box>
                 </div>
                 {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
@@ -87,15 +59,15 @@ export default function AdminDashboard() {
                     <PieChart
                         series={[
                             {
-                            data: relatorio.listaArtes.map(arte=> ({
-                                id: arte.id,
-                                label: Object.keys(arte).filter(k=>k!=="id")[0],
-                                value: arte[Object.keys(arte).filter(k=>k!=="id")[0]],
-                            })),
+                            data: [
+                                { id: 0, value: 10, label: 'series A' },
+                                { id: 1, value: 15, label: 'series B' },
+                                { id: 2, value: 20, label: 'series C' },
+                            ]
                             },
                         ]}
                         width={200}
-                        height={200}
+
                         />
                 </div>
             </div>
@@ -121,21 +93,7 @@ export default function AdminDashboard() {
                             </TableRow>
                         </TableHead>
                         <TableBody >
-                            {relatorio.usuarios.map(user=>(
-                                <TableRow key={user.id}>
-                                    <TableCell >{user.nome}</TableCell>
-                                    <TableCell >{user.tipoConta}</TableCell>
-                                    <TableCell >{user.email}</TableCell>
-                                    <TableCell >{user.cidade}</TableCell>
-                                    <TableCell >{user.uf}</TableCell>
-                                    <TableCell >{user.status?.tipoStatus.nomeTipoStatus}</TableCell>
-                                    <TableCell >
-                                        <IconButton >
-                                            <BsPencilFill />
-                                        </IconButton>
-                                        </TableCell>
-                                </TableRow>
-                            ))}
+              
                         </TableBody>
                         </Table>
                     </TableContainer>
