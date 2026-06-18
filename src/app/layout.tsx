@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import "./globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Providers from "./providers";
 
 export const metadata = {
   title: "Art Connect",
@@ -11,7 +13,9 @@ export default function RootLayout({children}: {children: ReactNode}) {
     <html lang="pt-br">
       <body>
         <div>
-          {children}
+            <Providers>
+              {children}
+            </Providers>
         </div>
       </body>
     </html>

@@ -8,6 +8,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { BiMenu, BiSolidBriefcase } from "react-icons/bi";
 import { Logo } from "../Logo";
 import { BsBook, BsBoxArrowLeft, BsGearFill, BsPerson, BsPersonCircle } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 export default function NavbarAdmin() {
 
     const [drawer, setDrawer] = useState(false);
@@ -29,7 +30,8 @@ export default function NavbarAdmin() {
 
     const drawerRoutes = [
         {title: "Dashboard", icon: <MdSpaceDashboard />, url: "/dashboard"},
-        {title: "Contratante", icon: <BiSolidBriefcase />, url: "/dashboard/contratantes"}
+        {title: "Contratante", icon: <BiSolidBriefcase />, url: "/dashboard/contratantes"},
+        {title: "Usuários", icon: <FaUser />, url: "/dashboard/usuarios"}
     ]
 
     return (

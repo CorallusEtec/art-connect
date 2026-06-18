@@ -1,7 +1,6 @@
 'use client'
 
 import { CardDetails } from '@/components/CardDetails';
-import { Button, Card, CardActionArea, CardActions, CardContent, CardHeader, Container, Divider, Drawer, Grid, IconButton, ListItem, ListItemButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Box from '@mui/material/Box'
 import { BarChart, LineChart, PieChart } from '@mui/x-charts';
 import { BiSolidBriefcase, BiSolidStar, BiSolidUserPin } from 'react-icons/bi';
@@ -71,32 +70,7 @@ export default function AdminDashboard() {
                         />
                 </div>
             </div>
-                <div className="flex justify-center">
-                    <h2 className='font-semibold text-3xl'>Usuários no sistema</h2>
-                </div>
-                    <Divider variant='middle' />
-           
-               
-                    
-                        <TableContainer component={Paper} elevation={1} className='p-5'>
-                        <Table>
-                            <TableHead>
-                            <TableRow >
-                                <TableCell >Nome</TableCell>
-                                <TableCell >Tipo de Conta</TableCell>
-                                <TableCell >Email</TableCell>
-                                <TableCell >Cidade</TableCell>
-                                <TableCell >UF</TableCell>
-                                <TableCell >Status da Conta</TableCell>
-                                <TableCell ><Button>Editar</Button></TableCell>
-
-                            </TableRow>
-                        </TableHead>
-                        <TableBody >
-              
-                        </TableBody>
-                        </Table>
-                    </TableContainer>
+            
             
            
         </div>
