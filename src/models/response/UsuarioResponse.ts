@@ -19,7 +19,7 @@ export interface UsuarioResponse {
   nome: string;
   email: string;
   tipoConta: TipoConta;
-  status?: Status;
+  status: string;
   dataCriacao: string;
   nomeLog?: string;
   numLog?: number;
