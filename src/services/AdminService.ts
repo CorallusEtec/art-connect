@@ -1,18 +1,24 @@
+import axios from 'axios';
 import {config} from './config';
 import { RelatorioResponse } from '@/models/response/RelatorioResponse';
+import { useQuery } from '@tanstack/react-query';
 
 
+export function useRelatorio() {
+    const query = useQuery({
+        queryFn: AdminService.getRelatorios,
+        queryKey: ["relatorio"]
+    });
 
-export class AdminService {
-    static async getRelatorios() {
-        
-            const response = await fetch(`${config.apiURL}/admin/relatorio`, {
-                headers: {"Content-Type": "application/json"},
-                credentials: 'include'
-                });
+    return query;
+}
 
-            return response
 
-        
+class AdminService {
+    static async getRelatorios(): Promise<RelatorioResponse> {
+        const response = await fetch("/api/dados");
+
+        return await response.json()
+
     }
 }
