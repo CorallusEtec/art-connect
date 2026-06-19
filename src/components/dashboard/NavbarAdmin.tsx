@@ -15,9 +15,15 @@ export default function NavbarAdmin() {
     const [anchor, setAnchor] = useState<null | HTMLElement>(null);
     
     const menu = Boolean(anchor)
-    
+    const router = useRouter()
+
     function toggleDrawer(state: boolean) {
         setDrawer(state);
+    }
+
+    function logout() {
+        sessionStorage.clear();
+        router.push("/login");
     }
 
     function handleOpenMenu(event: React.MouseEvent<HTMLElement>) {
@@ -101,7 +107,7 @@ export default function NavbarAdmin() {
                     <span>Sobre o Art Connect</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={()=>console.log("TEste")} className="text-red-500 gap-2">
+                <MenuItem onClick={logout} className="text-red-500 gap-2">
                     <BsBoxArrowLeft />
                     <span>Sair</span>
                 </MenuItem>
