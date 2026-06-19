@@ -3,12 +3,10 @@ import { IconButton, InputAdornment, TextField, TextFieldProps } from "@mui/mate
 import { ChangeEventHandler, ReactNode, useState } from "react";
 import { BsKeyFill } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { LuKey } from "react-icons/lu";
 
 type InputSenhaProps = TextFieldProps & {
-  placeholder?: string;
-  value?: string;
-  children?: ReactNode;
-  setValue?: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
+
 }
 
 export function InputSenha({...props}: InputSenhaProps) {
@@ -19,8 +17,13 @@ export function InputSenha({...props}: InputSenhaProps) {
       input: {
         type: mostrarSenha?"text":"password",
         size: "small",
+        startAdornment: (
+          <InputAdornment position="start">
+            <LuKey className="text-xl" />
+          </InputAdornment>
+        ),
         endAdornment: (
-          <InputAdornment position="end">
+          <InputAdornment position="start">
             <IconButton size="small" onClick={()=>setMostrarSenha(prev => !prev)} >
               {mostrarSenha?<FiEye /> :  <FiEyeOff />}
             </IconButton>

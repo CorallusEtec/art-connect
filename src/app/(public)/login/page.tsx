@@ -9,7 +9,7 @@ import { loginSchema } from '@/models/request/AuthLoginRequest';
 
 import { AuthService } from "@/services/AuthService";
 import { redirect } from "next/navigation";
-import { Alert, Box, Button, Card, Container, Grid, Snackbar } from "@mui/material";
+import { Alert, Box, Button, Card, Container, Grid, Snackbar, Typography } from "@mui/material";
 import { set } from "zod";
 
 export default function Login() {
@@ -66,20 +66,18 @@ export default function Login() {
               <div className="flex flex-col gap-3">
                 {/* EMAIL */}
                 <div className="flex flex-col">
-                  <label className="font-semibold text-cinza-600" htmlFor="email">Email</label>
-                  <InputIcon value={email} onChange={(e)=>setEmail(e.target.value)} name="email" placeholder="Insira seu email" type="email" required>
-                    <MdOutlineMail className="text-cinza-600 text-2xl" />
+                  <InputIcon label="Email" value={email} placeholder="Digite seu email" onChange={(e)=>setEmail(e.target.value)} name="email" type="email" required>
+                    <MdOutlineMail className="text-xl" />
                   </InputIcon>
                 </div>
                 {/* SENHA */}
                 <div className="flex flex-col">
-                  <label className="font-semibold text-cinza-600" htmlFor="senha">Senha</label>
-                  <InputSenha value={senha} onChange={(e)=>setSenha(e.target.value)} name="senha" placeholder="Insira sua senha" required/>
+                  <InputSenha placeholder="Digite sua senha" variant="outlined" label="Senha" value={senha} onChange={(e)=>setSenha(e.target.value)} name="senha" required/>
                 </div>
                 
                 {/* LOGAR */}
                 <div className="flex justify-center">
-                  <Button type="submit" onClick={()=>login()} loading={buttonLoad} variant="contained" fullWidth>Logar</Button>
+                  <Button  type="submit" onClick={()=>login()} loading={buttonLoad} variant="contained" fullWidth>Logar</Button>
                 </div>
               </div>
             </div>

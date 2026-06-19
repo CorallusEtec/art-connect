@@ -2,7 +2,7 @@
 
 import { CardDetails } from '@/components/CardDetails';
 import { useRelatorio } from '@/services/AdminService';
-import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, Grid, Skeleton, Typography } from '@mui/material';
 import Box from '@mui/material/Box'
 import { BarChart, PieChart } from '@mui/x-charts';
 import { BiSolidBriefcase, BiSolidStar } from 'react-icons/bi';
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
                     <Grid size={4}>
                         <Box component={"span"}>
                             {data ? (
-                                <CardDetails insight={data.artistasCadastrados} elevation={1} label="Artistas cadastrados" acessory={<BiSolidStar className="text-lg text-azul-400" />}>
+                                <CardDetails insight={data.artistasCadastrados} label="Artistas cadastrados" acessory={<BiSolidStar className="text-lg text-azul-400" />}>
                                     <TbUserStar />
                                 </CardDetails>
                             ):(
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
                     <Grid size={4}>
                         <Box component={"span"}>
                             {data ? (
-                                <CardDetails insight={data.contratantesCadastrados} elevation={1} label='Contratantes cadastrados' acessory={<BiSolidBriefcase className="text-lg text-azul-500 " />}>
+                                <CardDetails insight={data.contratantesCadastrados} label='Contratantes cadastrados' acessory={<BiSolidBriefcase className="text-lg text-azul-500 " />}>
                                     <FaUserTie />
                                 </CardDetails>
                             ): (
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
                     <Grid size={4}>
                         <Box component={"span"}>
                             {data ? (
-                                <CardDetails insight={0} elevation={1} label='Publicações compartilhadas' acessory={<BsFillShareFill className="text-lg text-azul-500 " />}>
+                                <CardDetails insight={0} label='Publicações compartilhadas' acessory={<BsFillShareFill className="text-lg text-azul-500 " />}>
                                     <CgInsights />
                                 </CardDetails>
                             ): (
@@ -74,11 +74,14 @@ export default function AdminDashboard() {
                         <Box>
                             <Card>
                                 <CardContent>
+                                    <Typography variant='h6'>Publicações nessa semana</Typography>
+                                </CardContent>
+                                <CardContent>
                                     <BarChart
                                     xAxis={[{ data: ['group A', 'group B', 'group C'] }]}
                                     series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-                                    width={600}
-                                    height={220}
+                                    width={800}
+                                    height={270}
                                     />
                                 </CardContent>
                             </Card>
@@ -86,24 +89,31 @@ export default function AdminDashboard() {
                     </Grid>
                 </Grid>
                 {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
-                <Grid size={4}> 
-                    
+                <Grid size={4}>
                     <Box>
                         <Card>
+                            <CardActionArea>
+                                <CardContent>
+                                <Typography variant='h6'>Artes mais selecionadas</Typography>
+                            </CardContent>
                             <CardContent>
                                 <PieChart
-                            series={[
-                                {
+                                
+                            series={[{
                                 data: data ? data?.artes.map(arte=>({
                                     value: arte.quantidadeArtistas,
                                     id: arte.arte.id,
                                     label: arte.arte.nomeArte
-                                })): []
+                                })): [],
+                                innerRadius: 70,
+                                outerRadius: 100
                                 },
+                            
                             ]}
                             height={200}
                             />
                             </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Box>
                 </Grid>

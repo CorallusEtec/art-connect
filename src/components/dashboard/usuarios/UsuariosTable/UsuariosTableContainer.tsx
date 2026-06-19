@@ -1,8 +1,9 @@
-import { Autocomplete, Avatar, Box, CircularProgress, Container, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
+import { Autocomplete, Avatar, Box, CircularProgress, Container, IconButton, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { UsuariosTableHeader } from "./UsuariosTableHeader";
 import { useUsuarioList } from "@/services/UsuarioService";
 import { BsSearch } from "react-icons/bs";
 import { useRef, useState } from "react";
+import { MdSearch } from "react-icons/md";
 
 export function UsuariosTableContainer() {
     const page = useRef(1);
@@ -23,7 +24,9 @@ export function UsuariosTableContainer() {
                 <Autocomplete
                 options={data?.data.content ? data?.data.content.map(user=>user.nome):[]}
                 
-                renderInput={({ size = "small", ...params})=> (<TextField placeholder="Buscar usuário" size={size} {...params}/>)}
+                renderInput={({ size = "small", ...params})=>(
+                    <TextField placeholder="Buscar usuário" size={size} {...params}/>
+                )}
                 />
             <Pagination  className="mt-5" page={page.current} onChange={(event, page)=>handlePagina(page)} shape="rounded" count={data?.data.totalPages}  />
                 <Table>

@@ -1,4 +1,6 @@
 import { AuthLoginRequest } from "@/models/request/AuthLoginRequest";
+import axios from "axios";
+import { config } from "./config";
 
 export class AuthService {
     static async login(loginRequest: AuthLoginRequest) {

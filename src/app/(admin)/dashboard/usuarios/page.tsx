@@ -7,7 +7,7 @@ export default function AdminUsuarios() {
         <div className="flex flex-col">
             {/* TABELA */}
             
-            <Box className="p-7">
+            <Box className="p-20">
                 <UsuariosTableContainer />
             </Box>
         </div>

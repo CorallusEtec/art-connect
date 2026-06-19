@@ -1,5 +1,6 @@
 'use client';
 
+import { gStyles } from '@/styles/style';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -8,6 +9,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   const theme = createTheme({
   components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: gStyles.cinza[50]
+        }
+      },
+      defaultProps: {
+        elevation: 0,
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
