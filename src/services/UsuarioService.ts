@@ -1,13 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import axios from "axios";
 import { config } from "./config";
 import { PagedResponse } from "@/models/response/PagedResponse";
 import { UsuarioResponse } from "@/models/response/UsuarioResponse";
+import { UsuarioListFilters } from "@/models/request/paged/UsuarioListFilters";
 
-export function useUsuarioList(params: {page: number}) {
+export function useUsuarioList(params: UsuarioListFilters) {
     const query = useQuery({
-        queryKey: ["listaUsuarios"],
+        queryKey: ["listaUsuarios", params.page],
         staleTime: 1000 * 60 * 5,
+        placeholderData: keepPreviousData,
         queryFn:()=> UsuarioService.listaUsuarios(params)
     });
     return query
@@ -17,13 +19,13 @@ export function useUsuarioList(params: {page: number}) {
 class UsuarioService {
     // Métodos de consumo da API
 
-    static async listaUsuarios(params?: {page: number}) {
-        let pageNumber = 0;
+    static async listaUsuarios(params?: UsuarioListFilters) {
+        let numPage = 0
         if(params) {
-            pageNumber = params.page - 1;
+            numPage = params.page - 1;
         }
         const request = await axios.get<PagedResponse<UsuarioResponse>>(`${config.apiURL}/usuario/findAll`,{
-            params: {page: pageNumber}
+            params: {...params, page: numPage}
         });
 
         return request;

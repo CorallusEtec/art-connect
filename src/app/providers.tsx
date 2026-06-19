@@ -10,11 +10,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const theme = createTheme({
   components: {
     MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: gStyles.cinza[50]
-        }
-      },
       defaultProps: {
         elevation: 0,
       }

@@ -4,6 +4,7 @@ export function UsuariosTableHeader() {
     return (
         <TableHead>
             <TableRow>
+                <TableCell>Editar</TableCell>
                 <TableCell><Button variant="text">Foto</Button></TableCell>
                 <TableCell><Button>Nome</Button></TableCell>
                 <TableCell>Tipo de Conta</TableCell>

@@ -23,9 +23,9 @@ export default function NavbarAdmin() {
         setDrawer(state);
     }
 
-    function logout() {
-        sessionStorage.clear();
-        router.push("/login");
+    async function logout() {
+        await fetch('/api/auth/logout', { method: 'POST' });
+         window.location.href = '/login';
     }
 
     function handleOpenMenu(event: React.MouseEvent<HTMLElement>) {
@@ -52,7 +52,7 @@ export default function NavbarAdmin() {
                         <IconButton onClick={()=>toggleDrawer(true)}>
                         <BiMenu className="text-white text-3xl" />
                         </IconButton>
-                    <Logo />
+                    <Logo  />
                     </div>
                     
                        

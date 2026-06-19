@@ -1,7 +1,7 @@
 export default function Footer() {
     const dataAtual = new Date();
     return (
-        <section className="bg-azul-600 p-2" id="footer">
+        <section className="bg-azul-400 p-2" id="footer">
             <div className="grid grid-cols-12">
                 <div className="col-span-2 flex flex-col justify-center">
                     <img src="assets/icons/artConnect-logo.svg" alt="Art Connect Logo" className="invert" />

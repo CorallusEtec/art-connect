@@ -10,11 +10,11 @@ interface JWTPayload {
 export function proxy(request: NextRequest) {
     const token = request.cookies.get("admin_token")?.value;
 
-    const urlPath = request.nextUrl.pathname;
-
-    if((urlPath.startsWith("/dashboard")) && !token) {
-        return NextResponse.redirect(new URL("/login", request.url));
-    }
+    if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+        const loginUrl = new URL('/login', request.url);
+        // Redireciona para o login
+        return NextResponse.redirect(loginUrl);
+      }
 
     if(token) {
         try {
