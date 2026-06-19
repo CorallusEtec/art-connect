@@ -2,7 +2,7 @@
 
 import { CardDetails } from '@/components/CardDetails';
 import { useRelatorio } from '@/services/AdminService';
-import { Card, CardActionArea, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, Container, Grid, Skeleton, Typography, useTheme } from '@mui/material';
 import Box from '@mui/material/Box'
 import { BarChart, PieChart } from '@mui/x-charts';
 import { BiSolidBriefcase, BiSolidStar } from 'react-icons/bi';
@@ -14,13 +14,9 @@ import { TbUserStar } from 'react-icons/tb';
 
 export default function AdminDashboard() {
     
-    const { data, isLoading } = useRelatorio();
-
-
-
-
+    const { data } = useRelatorio();
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-screen bg-gray-100">
             <Typography className='p-4' variant='h5'>Bem vindo, Administrador</Typography>
             <Grid spacing={1} container>
                 <Grid container size={8}>
