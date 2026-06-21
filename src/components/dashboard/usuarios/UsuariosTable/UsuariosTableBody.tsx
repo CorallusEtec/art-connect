@@ -16,11 +16,7 @@ export function UsuariosTableBody() {
   const { data } = useUsuarioList();
   return (
     <>
-      <UsuarioEditModal
-        usuarioId={usuarioId.current}
-        open={open}
-        setOpen={setOpen}
-      />
+      <UsuarioEditModal />
       <TableBody>
         {data?.data.content.map((item) => (
           <TableRow hover key={item.id}>

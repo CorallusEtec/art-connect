@@ -1,7 +1,3 @@
 export type TipoConta = "ARTISTA" | "CONTRATANTE" | "ADMIN";
-export type TipoStatus =
-  | "ATIVO"
-  | "PENDENTE"
-  | "SUSPENSO"
-  | "EXCLUIDO"
-  | "BANIDO";
+export const status = ["ATIVO", "SUSPENSO", "EXCLUIDO", "BANIDO"] as const;
+export type TipoStatus = (typeof status)[number];

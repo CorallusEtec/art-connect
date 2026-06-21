@@ -17,7 +17,7 @@ import { UsuarioEditProvider } from "@/contexts/UsuarioEditContext";
 export function UsuariosTableContainer() {
   const { isLoading } = useUsuarioList();
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <></>;
 
   return (
     <>

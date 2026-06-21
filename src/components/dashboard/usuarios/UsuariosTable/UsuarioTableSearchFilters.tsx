@@ -1,10 +1,9 @@
 import { TipoConta } from "@/models/enumeration/enums";
 import { UsuarioListFilters } from "@/models/request/paged/UsuarioListFilters";
-import { useUfList } from "@/services/IBGEService";
+import { useCidadeList, useUfList } from "@/services/IBGEService";
 import {
   Box,
   Container,
-  Grid,
   MenuItem,
   Popover,
   Select,
@@ -27,8 +26,11 @@ export function UsuarioTableSearchFilters({
 }: UsuarioTableSearchFiltersProps) {
   const [tipoInput, setTipoInput] = useState<TipoConta | "">("");
   const [uf, setUf] = useState("");
+  const [cidade, setCidade] = useState("");
+  const { data: cidadeData } = useCidadeList(uf);
+  const { data: ufData } = useUfList();
+
   const { replace } = useRouter();
-  const { data, isLoading } = useUfList();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -69,7 +71,7 @@ export function UsuarioTableSearchFilters({
             </ToggleButton>
             <ToggleButton value={"CONTRATANTE"}>Contratante</ToggleButton>
           </ToggleButtonGroup>
-          <Box>
+          <Box component={"div"} className="flex items-center gap-5">
             <Typography>UF</Typography>
             <Select
               displayEmpty
@@ -83,8 +85,26 @@ export function UsuarioTableSearchFilters({
               <MenuItem value="" disabled>
                 <em>UF</em>
               </MenuItem>
-              {data?.data.map((uf) => (
+              {ufData?.data.map((uf) => (
                 <MenuItem value={uf.sigla}>{uf.sigla}</MenuItem>
+              ))}
+            </Select>
+
+            <Typography>Cidade</Typography>
+            <Select
+              displayEmpty
+              value={cidade}
+              onChange={(e) => {
+                setUf(e.target.value as string);
+                handleFiltro("cidade", e.target.value as string);
+              }}
+              size="small"
+            >
+              <MenuItem value="" disabled>
+                <em>Cidade</em>
+              </MenuItem>
+              {cidadeData?.data.map((cidade) => (
+                <MenuItem value={cidade.nome}>{cidade.nome}</MenuItem>
               ))}
             </Select>
           </Box>
