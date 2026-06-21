@@ -1,6 +1,5 @@
 import {
   CircularProgress,
-  Pagination,
   Paper,
   Stack,
   Table,
@@ -14,22 +13,14 @@ import {
   UsuariosTablePagination,
 } from "@/components/dashboard/usuarios/UsuariosTable";
 import { useUsuarioList } from "@/services/UsuarioService";
-import { useRef, useState } from "react";
-import { UsuarioEditModal } from "../UsuarioEditModal";
+import { UsuarioEditProvider } from "@/contexts/UsuarioEditContext";
 export function UsuariosTableContainer() {
-  const [edit, setEdit] = useState(false);
-  const usuarioId = useRef<number>(undefined);
   const { isLoading } = useUsuarioList();
 
   if (isLoading) return <CircularProgress />;
 
   return (
     <>
-      <UsuarioEditModal
-        usuarioId={usuarioId.current}
-        open={edit}
-        setOpen={setEdit}
-      />
       <TableContainer component={Paper} className="p-5">
         <Stack className="mb-5">
           <Typography align="center" variant="h4">
@@ -40,7 +31,9 @@ export function UsuariosTableContainer() {
         <UsuariosTablePagination />
         <Table>
           <UsuariosTableHeader />
-          <UsuariosTableBody />
+          <UsuarioEditProvider>
+            <UsuariosTableBody />
+          </UsuarioEditProvider>
         </Table>
         <UsuariosTablePagination />
       </TableContainer>

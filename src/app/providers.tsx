@@ -24,6 +24,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           },
         },
       },
+      MuiFab: {
+        styleOverrides: {
+          root: {
+            textTransform: "none",
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
