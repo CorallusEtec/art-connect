@@ -10,6 +10,8 @@ import {
 type UsuarioEditContextType = {
   open: boolean;
   setOpen: (value: boolean) => void;
+  alert: boolean;
+  setAlert: (value: boolean) => void;
 
   usuarioId: RefObject<number>;
 };
@@ -24,9 +26,12 @@ type UsuarioEditProviderProps = {
 
 export function UsuarioEditProvider({ children }: UsuarioEditProviderProps) {
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
   const usuarioId = useRef(0);
   return (
-    <UsuarioEditContext.Provider value={{ open, setOpen, usuarioId }}>
+    <UsuarioEditContext.Provider
+      value={{ alert, setAlert, open, setOpen, usuarioId }}
+    >
       {children}
     </UsuarioEditContext.Provider>
   );
