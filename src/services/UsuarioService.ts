@@ -19,6 +19,15 @@ export function useUsuarioList() {
   return query;
 }
 
+export function useUsuarioById(id: number) {
+  const query = useQuery({
+    queryKey: ["usuario", id],
+    queryFn: () => UsuarioService.findById(id),
+    enabled: id !== 0,
+  });
+  return query;
+}
+
 class UsuarioService {
   // Métodos de consumo da API
 
@@ -33,5 +42,12 @@ class UsuarioService {
     );
 
     return request;
+  }
+
+  static async findById(id: number) {
+    const response = await axios.get<UsuarioResponse>(
+      `${config.apiURL}/usuario/${id}`,
+    );
+    return response;
   }
 }
