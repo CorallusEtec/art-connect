@@ -21,7 +21,7 @@ export function UsuariosTableContainer() {
 
   return (
     <>
-      <TableContainer component={Paper} className="p-5">
+      <TableContainer component={Paper} elevation={4} className="p-5 mt-5">
         <Stack className="mb-5">
           <Typography align="center" variant="h4">
             Usuarios do sistema

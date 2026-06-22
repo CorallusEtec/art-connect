@@ -1,8 +1,9 @@
-import { ArteRelatorioResponse } from "./ArteRelatorioResponse"
+import { ArteRelatorioResponse } from "./ArteRelatorioResponse";
 
 export interface RelatorioResponse {
-    artistasCadastrados: number
-    contratantesCadastrados: number
-    publicacoesCompartilhadas: number,
-    artes: ArteRelatorioResponse[]
+  artistasCadastrados: number;
+  contratantesCadastrados: number;
+  publicacoesRealizadas: number;
+  artes: ArteRelatorioResponse[];
+  publicacaoSemana: [[string, number]];
 }
