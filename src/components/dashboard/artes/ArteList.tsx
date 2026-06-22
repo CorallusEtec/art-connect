@@ -58,9 +58,7 @@ export function ArteList() {
           <Button
             onClick={() => {
               deleteArte(arteId.current);
-              if (isSuccess) {
                 setDeleteDialog(false);
-              }
             }}
             variant="contained"
             color="error"
