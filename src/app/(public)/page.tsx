@@ -14,12 +14,14 @@ export default function LandindPage() {
   interface Data {
     [key: string]: {
       title: string,
+      img: string,
       targets: string[]
     }
   }
   // Lista com os dados a serem consumidos na parte de funcionalidades do App
   const features:Data = {
     busca: {
+      img: "/assets/mock/busca.jpeg",
       title: "Pesquise, Filtre e Encontre",
       targets: [
         "Pesquise por artistas ou postagens",
@@ -28,6 +30,7 @@ export default function LandindPage() {
       ]
     },
     portifolio: {
+      img: "/assets/mock/portifolio.jpeg",
       title: "Mostre sua arte, alcance interesses",
       targets: [
         "Crie publicações sobre sua arte",
@@ -36,9 +39,11 @@ export default function LandindPage() {
       ]
     },
     contatos: {
-      title: "",
+      title: "Contate e contrate!",
+      img: "/assets/mock/celular.jpeg",
       targets: [
-        ""
+        "Encontre o contato dos artistas",
+        "Converse e contrate com eles"
       ]
     }
   }
