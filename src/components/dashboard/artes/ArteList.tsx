@@ -33,15 +33,16 @@ import { Gauge } from "@mui/x-charts";
 import { useRef, useState } from "react";
 import { MdDelete, MdEdit, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { GenerosArteItem } from "./GenerosArteItem";
+import { EditArte } from "./EditArte";
+import { useArteEdit } from "@/contexts/ArteEditContext";
+import { GeneroArteEdit } from "./GeneroArteEdit";
 
 export function ArteList() {
   const { data: relatorioData, isLoading } = useRelatorio();
   const [deleteDialog, setDeleteDialog] = useState(false);
   const { mutate: deleteArte, isSuccess, error } = useDeleteArte();
-  const arteId = useRef(0);
-
+  const { arteId, setOpen } = useArteEdit();
   if (isLoading) return <CircularProgress />;
-  console.log(error);
   return (
     <>
       <Dialog open={deleteDialog} onClose={() => setDeleteDialog(false)}>
@@ -68,7 +69,8 @@ export function ArteList() {
           </Button>
         </DialogActions>
       </Dialog>
-
+      <EditArte />
+      <GeneroArteEdit />
       <Container className="mt-12" maxWidth="lg">
         {relatorioData?.artes?.map((arte) => (
           <Accordion key={arte.arte.id}>
@@ -85,7 +87,12 @@ export function ArteList() {
             </AccordionSummary>
             <AccordionDetails>
               <Box component="div" className="flex justify-end items-center">
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    arteId.current = arte.arte.id;
+                    setOpen(true);
+                  }}
+                >
                   <MdEdit />
                 </IconButton>
                 <IconButton
@@ -109,7 +116,13 @@ export function ArteList() {
                       <List>
                         <ListItem>
                           <ListItemText>
-                            <Typography>Nenhum genero de arte</Typography>
+                            <Typography
+                              align="center"
+                              color="textDisabled"
+                              variant="h6"
+                            >
+                              Nenhum genero criado para essa de arte
+                            </Typography>
                           </ListItemText>
                         </ListItem>
                       </List>
@@ -117,12 +130,17 @@ export function ArteList() {
                   </List>
                 </Grid>
                 <Grid size={4}>
-                  <Gauge
-                    text={({ value, valueMax }) => `${value} / ${valueMax}`}
-                    height={220}
-                    valueMax={relatorioData.artistasCadastrados}
-                    value={arte.quantidadeArtistas}
-                  />
+                  <Container className=" h-full flex flex-col items-center justify-center">
+                    <Typography align="center" variant="h6">
+                      Artistas que selecionaram {arte.arte.nomeArte}
+                    </Typography>
+                    <Gauge
+                      text={({ value, valueMax }) => `${value} / ${valueMax}`}
+                      height={220}
+                      valueMax={relatorioData.artistasCadastrados}
+                      value={arte.quantidadeArtistas}
+                    />
+                  </Container>
                 </Grid>
               </Grid>
             </AccordionDetails>

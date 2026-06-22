@@ -29,7 +29,10 @@ export async function PUT(
   return Response.json(dados);
 }
 
-export async function DELETE({ params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const { id } = await params;
   const cookieStore = await cookies();
   const token = cookieStore.get("admin_token")?.value;

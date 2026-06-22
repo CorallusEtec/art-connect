@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function Providers({ children }: { children: React.ReactNode }) {
   const theme = createTheme({
     typography: {
-      fontFamily: ["Poppins", "sans-serif"].join(","),
+      fontFamily: ["Inter", "sans-serif"].join(","),
     },
 
     components: {
