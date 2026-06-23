@@ -1,7 +1,7 @@
 "use client";
 
 import { useMenu } from "@/contexts/UIAdminContext";
-import { Divider, Menu, MenuItem } from "@mui/material";
+import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { BsBook, BsBoxArrowLeft, BsGearFill, BsPerson } from "react-icons/bs";
 
 export function MenuAdmin() {
@@ -21,20 +21,20 @@ export function MenuAdmin() {
     >
       <MenuItem className="flex gap-2">
         <BsPerson />
-        <span>Dados e credenciais</span>
+        <Typography>Dados e credenciais</Typography>
       </MenuItem>
       <MenuItem className="flex gap-2">
         <BsGearFill />
-        <span>Configurações</span>
+        <Typography>Configurações</Typography>
       </MenuItem>
       <MenuItem className="flex gap-2">
         <BsBook />
-        <span>Sobre o Art Connect</span>
+        <Typography>Sobre o Art Connect</Typography>
       </MenuItem>
       <Divider />
       <MenuItem onClick={logout} className="text-red-500 gap-2">
         <BsBoxArrowLeft />
-        <span>Sair</span>
+        <Typography>Sair</Typography>
       </MenuItem>
     </Menu>
   );

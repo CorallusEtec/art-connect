@@ -10,7 +10,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     typography: {
       fontFamily: ["Inter", "sans-serif"].join(","),
     },
-
+    palette: {
+      primary: {
+        main: "rgb(34, 90, 186)",
+        contrastText: "rgb(255, 255, 255)",
+      },
+      mode: "light",
+    },
     components: {
       MuiCard: {
         defaultProps: {
