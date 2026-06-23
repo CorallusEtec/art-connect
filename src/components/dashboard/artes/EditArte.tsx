@@ -18,11 +18,17 @@ import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 
 export function EditArte() {
-  const { mutate } = useEditArte();
+  const { mutate, isPending } = useEditArte();
   const { open, setOpen, arteId } = useArteEdit();
   const { data, isLoading } = useGetArte(arteId.current);
 
-  const { control, reset, handleSubmit, resetDefaultValues } = useForm({
+  const {
+    control,
+    reset,
+    formState: { errors },
+    handleSubmit,
+    resetDefaultValues,
+  } = useForm({
     resolver: zodResolver(addArteSchema),
     defaultValues: { nomeArte: "" },
   });
@@ -51,7 +57,13 @@ export function EditArte() {
           control={control}
           name="nomeArte"
           render={({ field }) => (
-            <TextField size="small" label="Nome da arte" {...field} />
+            <TextField
+              helperText={errors.nomeArte?.message}
+              error={!!errors.nomeArte}
+              size="small"
+              label="Nome da arte"
+              {...field}
+            />
           )}
         />
       </DialogContent>
@@ -59,11 +71,20 @@ export function EditArte() {
         <Button
           onClick={handleSubmit(edit)}
           variant="contained"
-          color="secondary"
+          loading={isPending}
+          disabled={isPending}
+          color="primary"
         >
           Salvar alterações
         </Button>
-        <Button onClick={() => setOpen(false)} variant="outlined">
+        <Button
+          color="success"
+          onClick={() => {
+            setOpen(false);
+            arteId.current = 0;
+          }}
+          variant="outlined"
+        >
           Cancelar
         </Button>
       </DialogActions>

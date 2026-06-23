@@ -25,7 +25,7 @@ export default function AdminDashboard() {
   const { data } = useRelatorio();
   return (
     <Box
-      className="bg-gray-100 flex flex-col p-2 "
+      className="bg-gray-100 flex h-full flex-col p-2 "
       sx={{ transition: "ease 200ms" }}
     >
       <Typography className="p-4" variant="h5">

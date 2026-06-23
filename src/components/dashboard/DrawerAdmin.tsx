@@ -37,7 +37,6 @@ export function DrawerAdmin() {
     },
   ];
   const pathname = usePathname();
-  console.log(pathname);
   const theme = useTheme();
   const { drawer, toggleDrawer } = useDrawer();
   return (

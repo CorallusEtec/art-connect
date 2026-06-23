@@ -1,8 +1,5 @@
-import { useArteEdit } from "@/contexts/ArteEditContext";
 import { useGeneroArteEdit } from "@/contexts/GeneroEditContext";
-import { addArteSchema } from "@/schemas/addArteSchema";
 import { addGeneroArteSchema } from "@/schemas/addGeneroArteSchema";
-import { useAddArte, useEditArte, useGetArte } from "@/services/ArteService";
 import {
   useEditGeneroArte,
   useGetGeneroArte,
@@ -10,25 +7,28 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 
 export function GeneroArteEdit() {
-  const { mutate } = useEditGeneroArte();
+  const { mutate, isPending } = useEditGeneroArte();
   const { open, setOpen, generoArteId } = useGeneroArteEdit();
   const { data, isLoading } = useGetGeneroArte(generoArteId.current);
 
-  const { control, reset, handleSubmit, resetDefaultValues } = useForm({
+  const {
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    resetDefaultValues,
+  } = useForm({
     resolver: zodResolver(addGeneroArteSchema),
     defaultValues: { nomeGeneroArte: "" },
   });
@@ -57,7 +57,13 @@ export function GeneroArteEdit() {
           control={control}
           name="nomeGeneroArte"
           render={({ field }) => (
-            <TextField size="small" label="Nome da arte" {...field} />
+            <TextField
+              error={!!errors.nomeGeneroArte}
+              helperText={errors.nomeGeneroArte?.message}
+              size="small"
+              label="Nome da arte"
+              {...field}
+            />
           )}
         />
       </DialogContent>
@@ -65,11 +71,18 @@ export function GeneroArteEdit() {
         <Button
           onClick={handleSubmit(edit)}
           variant="contained"
-          color="secondary"
+          color="primary"
         >
           Salvar alterações
         </Button>
-        <Button onClick={() => setOpen(false)} variant="outlined">
+        <Button
+          onClick={() => {
+            setOpen(false);
+            generoArteId.current = 0;
+          }}
+          color="success"
+          variant="outlined"
+        >
           Cancelar
         </Button>
       </DialogActions>
