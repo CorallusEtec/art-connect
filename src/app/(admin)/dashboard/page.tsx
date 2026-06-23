@@ -24,7 +24,10 @@ import { TbUserStar } from "react-icons/tb";
 export default function AdminDashboard() {
   const { data } = useRelatorio();
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <Box
+      className="bg-gray-100 flex flex-col p-2 "
+      sx={{ transition: "ease 200ms" }}
+    >
       <Typography className="p-4" variant="h5">
         Bem vindo, Administrador
       </Typography>
@@ -101,6 +104,7 @@ export default function AdminDashboard() {
                 <CardContent>
                   {data && (
                     <BarChart
+                      sx={{ transition: "ease 200ms" }}
                       xAxis={[
                         {
                           data: data.publicacaoSemana.map((item) =>
@@ -130,6 +134,7 @@ export default function AdminDashboard() {
                 </CardContent>
                 <CardContent>
                   <PieChart
+                    sx={{ transition: "ease 2s" }}
                     series={[
                       {
                         data: data
@@ -151,6 +156,6 @@ export default function AdminDashboard() {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }

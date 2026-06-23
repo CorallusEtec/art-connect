@@ -2,7 +2,7 @@ import { DrawerAdmin } from "@/components/dashboard/DrawerAdmin";
 import { MenuAdmin } from "@/components/dashboard/MenuAdmin";
 import NavbarAdmin from "@/components/dashboard/NavbarAdmin";
 import { UIAdminProvider } from "@/contexts/UIAdminContext";
-import { Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import { ReactNode } from "react";
 
 type Layout = {
@@ -12,11 +12,18 @@ type Layout = {
 export default async function DashboardLayout({ ...props }: Layout) {
   return (
     <UIAdminProvider>
-      <NavbarAdmin />
-      <MenuAdmin />
-      <DrawerAdmin />
-      <Box component={"main"} sx={{ flexGrow: 1, p: 3 }}>
-        {props.children}
+      <Box sx={{ display: "flex" }}>
+        <MenuAdmin />
+        <DrawerAdmin />
+        <Box
+          className="h-screen"
+          component={"main"}
+          sx={{ flexGrow: 1, transition: "ease 200ms" }}
+        >
+          <Toolbar />
+          {props.children}
+        </Box>
+        <NavbarAdmin />
       </Box>
     </UIAdminProvider>
   );
