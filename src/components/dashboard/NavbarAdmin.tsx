@@ -17,7 +17,7 @@ export default function NavbarAdmin() {
         color="primary"
         //className=" bg-azul-400 p-1 text-white px-3"]
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        position="sticky"
+        position="fixed"
       >
         <Toolbar className="flex justify-between">
           {/* MENU */}

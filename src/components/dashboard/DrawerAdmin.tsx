@@ -44,22 +44,26 @@ export function DrawerAdmin() {
       open={drawer}
       onClose={toggleDrawer}
       anchor="left"
-    >
-      <Box
-        sx={{
-          height: "100%",
+      sx={{
+        width: drawer ? 200 : 50,
+
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          overflow: "hidden",
+          transition: "ease 200ms",
+          width: drawer ? 200 : 50,
+          boxSizing: "border-box",
           backgroundColor: theme.palette.primary.main,
-        }}
-      >
+        },
+      }}
+    >
+      <Box sx={{}}>
         <Toolbar />
         <List>
           {drawerRoutes.map((item, index) => (
             <ListItem divider key={index} disablePadding>
               <ListItemButton
-                onClick={() => {
-                  toggleDrawer();
-                  redirect(item.url);
-                }}
+                onClick={() => redirect(item.url)}
                 className="gap-5"
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
