@@ -4,6 +4,7 @@ import { GeneroArteEditRequest } from "@/models/request/GeneroArteEditRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GeneroArte } from "@/models/response/GeneroArteResponse";
 import { useGeneroArteEdit } from "@/contexts/GeneroEditContext";
+import { GeneroArteSaveRequest } from "@/models/request/GeneroArteSaveRequest";
 
 export function useGetGeneroArte(id: number) {
   const query = useQuery({
@@ -28,10 +29,27 @@ export function useEditGeneroArte() {
   return mutate;
 }
 
+export function useSaveGeneroArte() {
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: (saveRequest: GeneroArteSaveRequest) =>
+      GeneroArteService.save(saveRequest),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["relatorio"] });
+      queryClient.invalidateQueries({ queryKey: ["artes"] });
+    },
+  });
+  return mutate;
+}
+
 export function useDeleteGeneroArte() {
+  const queryClient = useQueryClient();
   const mutate = useMutation({
     mutationFn: (id: number) => GeneroArteService.deleteById(id),
-    onMutate: () => {},
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["relatorio"] });
+      queryClient.invalidateQueries({ queryKey: ["artes"] });
+    },
   });
   return mutate;
 }
@@ -39,6 +57,11 @@ export function useDeleteGeneroArte() {
 class GeneroArteService {
   static async deleteById(id: number) {
     const response = await axios.delete(`/api/generoArte/${id}`);
+    return response;
+  }
+
+  static async save(saveRequest: GeneroArteSaveRequest) {
+    const response = await axios.post("/api/generoArte/save", saveRequest);
     return response;
   }
 

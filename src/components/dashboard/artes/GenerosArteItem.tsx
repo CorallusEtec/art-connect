@@ -14,15 +14,18 @@ import { useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { GeneroArteEdit } from "./GeneroArteEdit";
 import { useGeneroArteEdit } from "@/contexts/GeneroEditContext";
+import { useDeleteGeneroArte } from "@/services/GeneroArteService";
 
 export function GenerosArteItem({ g }: { g: GeneroArte }) {
   const [deleteDialog, setDeleteDialog] = useState(false);
-
   const { generoArteId, setOpen } = useGeneroArteEdit();
+  const { mutate, isPending } = useDeleteGeneroArte();
   return (
     <>
       <Dialog open={deleteDialog} onClose={() => setDeleteDialog(false)}>
-        <DialogTitle variant="subtitle1">Deseja mesmo excluir?</DialogTitle>
+        <DialogTitle variant="subtitle1">
+          Deseja mesmo excluir {g.nomeGeneroArte}?
+        </DialogTitle>
         <DialogActions>
           <Button
             onClick={() => setDeleteDialog(false)}
@@ -31,12 +34,21 @@ export function GenerosArteItem({ g }: { g: GeneroArte }) {
           >
             Cancelar
           </Button>
-          <Button variant="contained" color="error">
+          <Button
+            onClick={() => {
+              mutate(g.id);
+              setDeleteDialog(false);
+            }}
+            variant="contained"
+            color="error"
+            disabled={isPending}
+            loading={isPending}
+          >
             Sim
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <ListItem divider key={g.id}>
         <Box component={"div"} className="flex w-full justify-between">
           <ListItemText>
@@ -51,7 +63,7 @@ export function GenerosArteItem({ g }: { g: GeneroArte }) {
             >
               <MdEdit />
             </IconButton>
-            <IconButton color="error">
+            <IconButton onClick={() => setDeleteDialog(true)} color="error">
               <MdDelete />
             </IconButton>
           </Box>
