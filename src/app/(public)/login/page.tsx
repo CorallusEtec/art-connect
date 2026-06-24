@@ -9,7 +9,7 @@ import { loginSchema } from '@/models/request/AuthLoginRequest';
 
 import { AuthService } from "@/services/AuthService";
 import { redirect } from "next/navigation";
-import { Alert, Box, Button, Card, Container, Grid, Snackbar } from "@mui/material";
+import { Alert, Box, Button, Card, Container, Grid, Snackbar, Typography } from "@mui/material";
 import { set } from "zod";
 
 export default function Login() {
@@ -53,37 +53,35 @@ export default function Login() {
       {/* CONTAINER PRICIPAL */}
       <Container maxWidth="sm" className="flex flex-col pt-20">
         <Card>
-              {/* LOGIN UI */}
-              <div className="flex flex-col p-10 rounded-r-lg">
+          {/* LOGIN UI */}
+          <div className="flex flex-col p-10 rounded-r-lg">
+            
+            <div className="flex flex-col gap-5">
+              {/* HEADER */}
+              <div className="flex flex-col items-center">
+                <h2 className="font-bold text-2xl text-azul-700">Bem vindo ao Art Connect</h2>
+                <span className="text-md text-cinza-600">Faça login em sua conta</span>
+              </div>
+              {/* CAMPOS LOGIN */}
+              <div className="flex flex-col gap-3">
+                {/* EMAIL */}
+                <div className="flex flex-col">
+                  <InputIcon label="Email" value={email} placeholder="Digite seu email" onChange={(e)=>setEmail(e.target.value)} name="email" type="email" required>
+                    <MdOutlineMail className="text-xl" />
+                  </InputIcon>
+                </div>
+                {/* SENHA */}
+                <div className="flex flex-col">
+                  <InputSenha placeholder="Digite sua senha" variant="outlined" label="Senha" value={senha} onChange={(e)=>setSenha(e.target.value)} name="senha" required/>
+                </div>
                 
-                <div className="flex flex-col gap-5">
-                  {/* HEADER */}
-                  <div className="flex flex-col items-center">
-                    <h2 className="font-bold text-2xl text-azul-700">Bem vindo ao Art Connect</h2>
-                    <span className="text-md text-cinza-600">Faça login em sua conta</span>
-                  </div>
-                  {/* CAMPOS LOGIN */}
-                  <div className="flex flex-col gap-3">
-                    {/* EMAIL */}
-                    <div className="flex flex-col">
-                      <label className="font-semibold text-cinza-600" htmlFor="email">Email</label>
-                      <InputIcon value={email} onChange={(e)=>setEmail(e.target.value)} name="email" placeholder="Insira seu email" type="email" required>
-                        <MdOutlineMail className="text-cinza-600 text-2xl" />
-                      </InputIcon>
-                    </div>
-                    {/* SENHA */}
-                    <div className="flex flex-col">
-                      <label className="font-semibold text-cinza-600" htmlFor="senha">Senha</label>
-                      <InputSenha value={senha} onChange={(e)=>setSenha(e.target.value)} name="senha" placeholder="Insira sua senha" required/>
-                    </div>
-                    
-                    {/* LOGAR */}
-                    <div className="flex justify-center">
-                      <Button type="submit" onClick={()=>login()} loading={buttonLoad} variant="contained" fullWidth>Logar</Button>
-                    </div>
-                  </div>
+                {/* LOGAR */}
+                <div className="flex justify-center">
+                  <Button  type="submit" onClick={()=>login()} loading={buttonLoad} variant="contained" fullWidth>Logar</Button>
                 </div>
               </div>
+            </div>
+          </div>
         </Card>
         
       </Container>

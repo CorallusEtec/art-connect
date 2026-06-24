@@ -1,79 +1,161 @@
-'use client'
+"use client";
 
-import { CardDetails } from '@/components/CardDetails';
-import Box from '@mui/material/Box'
-import { BarChart, LineChart, PieChart } from '@mui/x-charts';
-import { BiSolidBriefcase, BiSolidStar, BiSolidUserPin } from 'react-icons/bi';
-import { FaUserClock, FaUserTie } from 'react-icons/fa';
-import { IoMdChatbubbles } from 'react-icons/io';
-import { MdOutlinePendingActions } from 'react-icons/md';
-import { TbUserStar } from 'react-icons/tb';
+import { CardDetails } from "@/components/CardDetails";
+import { useRelatorio } from "@/services/AdminService";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Container,
+  Grid,
+  Skeleton,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import Box from "@mui/material/Box";
+import { BarChart, PieChart } from "@mui/x-charts";
+import { BiSolidBriefcase, BiSolidStar } from "react-icons/bi";
+import { BsFillShareFill } from "react-icons/bs";
+import { CgInsights } from "react-icons/cg";
+import { FaUserTie } from "react-icons/fa";
+
+import { TbUserStar } from "react-icons/tb";
 
 export default function AdminDashboard() {
-    
-    return (
-        <>
-        
-        <div className="flex flex-col">
-            <div className="grid grid-cols-11 p-4">
-                <h1 className="col-start-2 col-span-10 text-2xl font-light text-stone-900">Bem vindo de volta, Administrador</h1>
-            </div>
-            {/* CARDS */}
-            <div className="grid grid-cols-11 gap-7 mx-5 pb-7 border-b border-cinza-100">
-                {/* ARTISTAS CADASTRADOS */}
-                <Box component={"span"} className="col-start-2 col-span-3">
-                    <CardDetails label="Artistas cadastrados" acessory={<BiSolidStar className="text-lg text-azul-400" />}>
-                        <TbUserStar />
-                    </CardDetails>
-                </Box>
+  const { data } = useRelatorio();
+  return (
+    <Box
+      className="bg-gray-100 flex h-full flex-col p-2 "
+      sx={{ transition: "ease 200ms" }}
+    >
+      <Typography className="p-4" variant="h5">
+        Bem vindo, Administrador
+      </Typography>
+      <Grid spacing={1} container>
+        <Grid container size={8}>
+          {/* Artistas cadastrados */}
+          <Grid size={4}>
+            <Box component={"span"}>
+              {data ? (
+                <CardDetails
+                  insight={data.artistasCadastrados}
+                  label="Artistas cadastrados"
+                  acessory={<BiSolidStar className="text-lg text-azul-400" />}
+                >
+                  <TbUserStar />
+                </CardDetails>
+              ) : (
+                <Skeleton variant="rectangular" width={210} height={60} />
+              )}
+            </Box>
+          </Grid>
 
-                {/* CONTRATANTES CADASTRADOS */}
-                <Box component={"span"} className="col-span-3">
-                    <CardDetails label='Contratantes cadastrados' acessory={<BiSolidBriefcase className="text-lg text-azul-500 " />}>
-                        <FaUserTie />
-                    </CardDetails>
-                </Box>
-
-                {/* CONTRATANTES PENDENTES */}
-                <Box component={"span"} className="col-span-3">
-                    <CardDetails label='Mensagem dos usuários' acessory={<IoMdChatbubbles />}>
-                    <BiSolidUserPin />
-                    </CardDetails>
-                </Box>
-            </div>
-            
-            <div className="grid grid-cols-12 mt-10">
-                {/* PUBLICAÇÕES NAS ULTIMAS SEMANAS */}
-                <div className=" col-span-6">
-                    <Box component={"div"} className='flex flex-col justify-center'>
+          {/* CONTRATANTES CADASTRADOS */}
+          <Grid size={4}>
+            <Box component={"span"}>
+              {data ? (
+                <CardDetails
+                  insight={data.contratantesCadastrados}
+                  label="Contratantes cadastrados"
+                  acessory={
+                    <BiSolidBriefcase className="text-lg text-azul-500 " />
+                  }
+                >
+                  <FaUserTie />
+                </CardDetails>
+              ) : (
+                <>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                </>
+              )}
+            </Box>
+          </Grid>
+          {/* Publicações Realizadas */}
+          <Grid size={4}>
+            <Box component={"span"}>
+              {data ? (
+                <CardDetails
+                  insight={data.publicacoesRealizadas}
+                  label="Publicações realizadas"
+                  acessory={
+                    <BsFillShareFill className="text-lg text-azul-500 " />
+                  }
+                >
+                  <CgInsights />
+                </CardDetails>
+              ) : (
+                <>
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton />
+                  <Skeleton />
+                </>
+              )}
+            </Box>
+          </Grid>
+          {/* PUBLICAÇÕES NAS ULTIMAS SEMANAS */}
+          <Grid size={12}>
+            <Box>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Publicações nessa semana</Typography>
+                </CardContent>
+                <CardContent>
+                  {data && (
                     <BarChart
-                    xAxis={[{ data: ['group A', 'group B', 'group C'] }]}
-                    series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-                    height={250}
+                      sx={{ transition: "ease 200ms" }}
+                      xAxis={[
+                        {
+                          data: data.publicacaoSemana.map((item) =>
+                            new Date(item[0]).toLocaleDateString(),
+                          ),
+                        },
+                      ]}
+                      series={[
+                        { data: data.publicacaoSemana.map((item) => item[1]) },
+                      ]}
+                      width={800}
+                      height={250}
                     />
-                    </Box>
-                </div>
-                {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
-                <div className="col-span-6">
-                    <PieChart
-                        series={[
-                            {
-                            data: [
-                                { id: 0, value: 10, label: 'series A' },
-                                { id: 1, value: 15, label: 'series B' },
-                                { id: 2, value: 20, label: 'series C' },
-                            ]
-                            },
-                        ]}
-                        width={200}
-
-                        />
-                </div>
-            </div>
-            
-            
-           
-        </div>
-        </>
-    )
+                  )}
+                </CardContent>
+              </Card>
+            </Box>
+          </Grid>
+        </Grid>
+        {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
+        <Grid size={4}>
+          <Box>
+            <Card>
+              <CardActionArea>
+                <CardContent>
+                  <Typography variant="h6">Artes mais selecionadas</Typography>
+                </CardContent>
+                <CardContent>
+                  <PieChart
+                    sx={{ transition: "ease 2s" }}
+                    series={[
+                      {
+                        data: data
+                          ? data?.artes.map((arte) => ({
+                              value: arte.quantidadeArtistas,
+                              id: arte.arte.id,
+                              label: arte.arte.nomeArte,
+                            }))
+                          : [],
+                        innerRadius: 70,
+                        outerRadius: 100,
+                      },
+                    ]}
+                    height={200}
+                  />
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }

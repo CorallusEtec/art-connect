@@ -1,19 +1,9 @@
-import { UsuarioResponse } from "./UsuarioResponse"
-
-interface PublicacaoData {
-    dataPublicacao: string
-}
-interface ArteQuantidade {
-    id: number,
-    [key: string]: number
-}
+import { ArteRelatorioResponse } from "./ArteRelatorioResponse";
 
 export interface RelatorioResponse {
-    artistasCadastrados: number
-    contratantesCadastrados: number
-    contratantesPendentes: number
-    publicacoesSemanal: PublicacaoData[],
-
-    usuarios: UsuarioResponse[]
-    listaArtes: ArteQuantidade[]
+  artistasCadastrados: number;
+  contratantesCadastrados: number;
+  publicacoesRealizadas: number;
+  artes: ArteRelatorioResponse[];
+  publicacaoSemana: [[string, number]];
 }
