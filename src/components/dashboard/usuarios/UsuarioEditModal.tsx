@@ -57,6 +57,7 @@ export function UsuarioEditModal() {
         status: data.data.status.tipoStatus || "ATIVO",
         nome: data.data.nome || "",
         email: data.data.email || "",
+        descricao: data.data.status.descricao || "",
       });
     }
   }, [data, reset]);
@@ -170,6 +171,7 @@ export function UsuarioEditModal() {
             control={control}
             render={({ field }) => (
               <TextField
+                variant="outlined"
                 rows={3}
                 label="Descrição do status"
                 placeholder="Mensagem do status"

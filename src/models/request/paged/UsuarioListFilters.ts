@@ -1,10 +1,10 @@
 import { TipoConta } from "@/models/enumeration/enums";
 
 export interface UsuarioListFilters {
-    page: number,
-    nome?: string,
-    tipoConta?: TipoConta,
-    cidade?: string,
-    uf?: string,
-    
+  page: number;
+  nome?: string;
+  tipoConta?: TipoConta;
+  cidade?: string;
+  uf?: string;
+  tipoStatus?: string;
 }
