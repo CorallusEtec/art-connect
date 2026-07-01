@@ -21,7 +21,7 @@ export default function Erro404() {
             O endereço que você está tentando acessar não existe.
           </p>
           <button
-            onClick={route.back}
+            onClick={() => route.push("/dashboard")}
             className="cursor-pointer
                      hover:bg-azul-400 bg-azul-500 text-white text-2xl p-2 w-[30%] border
                       border-azul-600 rounded-lg"

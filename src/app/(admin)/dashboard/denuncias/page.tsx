@@ -1,21 +1,17 @@
 "use client";
 import { CardDetails } from "@/components/CardDetails";
-import { DenunciaCard } from "@/components/dashboard/denuncias/DenunciaCard";
-import { useListDenuncia } from "@/services/DenunciaService";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Container,
-  Typography,
-} from "@mui/material";
+import { DenunciasArquivadasTab } from "@/components/dashboard/denuncias/tabs/DenunciasArquivadas";
+import { DenunciasPendentesTab } from "@/components/dashboard/denuncias/tabs/DenunciasPendentes";
+import { Container, Tab, Tabs, Typography } from "@mui/material";
+import { useState } from "react";
 import { FaFlag } from "react-icons/fa";
 
 export default function DenunciasAdmin() {
-  const { data, isLoading } = useListDenuncia();
+  const [tab, setTab] = useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
+
   return (
     <main className="p-4">
       <Typography variant="h4">Denúncias</Typography>
@@ -37,10 +33,14 @@ export default function DenunciasAdmin() {
           <FaFlag color="red" />
         </CardDetails>
       </Container>
+
       <Container component="div" className="flex flex-col gap-5">
-        {data?.data.content.map((d, index) => (
-          <DenunciaCard data={d} key={index} />
-        ))}
+        <Tabs value={tab} onChange={handleChange}>
+          <Tab label={<Typography>Denúncias pendentes</Typography>} />
+          <Tab label={<Typography>Denúncias arquivadas</Typography>} />
+        </Tabs>
+        <DenunciasPendentesTab value={tab} index={0} />
+        <DenunciasArquivadasTab value={tab} index={1} />
       </Container>
     </main>
   );
