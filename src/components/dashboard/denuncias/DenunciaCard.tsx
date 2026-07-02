@@ -27,36 +27,55 @@ export function DenunciaCard({ data }: DenunciaCardProps) {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<MdKeyboardArrowDown />}>
-        <Box component="div" className="flex gap-5 items-center">
-          <Chip label={capitalize(data.status.tipoStatus)} />
-          <FaFlag />
+        <Box>
+          <Box component="div" className="flex gap-5 items-center">
+            <Chip label={capitalize(data.status.tipoStatus)} />
+            <FaFlag />
 
-          <Box component="div" className="flex items-center gap-2">
-            <Avatar
-              sx={{ backgroundColor: "#0067EA" }}
-              src={data.autor?.fotoPerfilUrl}
-              alt={"Foto de perfil de " + data.autor.nome}
-            >
-              {data.autor.nome.charAt(0)}
-            </Avatar>
-            <Typography>{data.autor.nome}</Typography>
-            <Typography>
-              {labelData(converterData(new Date(data.dataEnvio)))}
-            </Typography>
+            <Box component="div" className="flex items-center gap-2">
+              <Avatar
+                sx={{ backgroundColor: "#0067EA" }}
+                src={data.autor?.fotoPerfilUrl}
+                alt={"Foto de perfil de " + data.autor.nome}
+              >
+                {data.autor.nome.charAt(0)}
+              </Avatar>
+              <Typography>{data.autor.nome}</Typography>
+            </Box>
+
+            <Chip
+              variant="outlined"
+              color="info"
+              label={capitalize(data.tipoDenuncia)}
+            />
           </Box>
-          <Typography>Motivo da denúncia: {data.titulo}</Typography>
+          <Typography className="pl-5" variant="caption" color="textSecondary">
+            Enviado há {labelData(converterData(new Date(data.dataEnvio)))}
+          </Typography>
+          <Typography variant="body2">
+            Motivo da denúncia: {data.titulo}
+          </Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails>
         <Button
           loading={isPending}
+          variant="outlined"
           disabled={isPending}
           onClick={() =>
-            mutate({ idDenuncia: data.id, tipoStatus: "ARQUIVADO" })
+            mutate({
+              idDenuncia: data.id,
+              tipoStatus:
+                data.status.tipoStatus === "ARQUIVADO"
+                  ? "PENDENTE"
+                  : "ARQUIVADO",
+            })
           }
           startIcon={<MdArchive />}
         >
-          Arquivar denúncia
+          {data.status.tipoStatus == "PENDENTE"
+            ? "Arquivar denúncia"
+            : "Desarquivar denúncia"}
         </Button>
 
         {renderContentDenuncia({

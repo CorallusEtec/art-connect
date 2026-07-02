@@ -44,7 +44,7 @@ export function useMutateUsuario() {
   return mutate;
 }
 
-export function useDeletePublicacao() {
+export function useAlterPublicacao() {
   const queryClient = useQueryClient();
   const mutate = useMutation({
     mutationFn: ({
@@ -54,6 +54,23 @@ export function useDeletePublicacao() {
       idPublicacao: number;
       tipoStatus: TipoStatus;
     }) => AdminService.alterStatusPublicacao({ idPublicacao, tipoStatus }),
+    onSettled: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+  return mutate;
+}
+
+export function useAlterComentario() {
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: ({
+      idComentario,
+      tipoStatus,
+    }: {
+      idComentario: number;
+      tipoStatus: TipoStatus;
+    }) => AdminService.alterStatusComentario({ idComentario, tipoStatus }),
     onSettled: () => {
       queryClient.invalidateQueries();
     },
@@ -81,6 +98,19 @@ class AdminService {
     tipoStatus: TipoStatus;
   }) {
     const response = await axios.patch(`/api/publicacao/${idPublicacao}`, {
+      tipoStatus: tipoStatus,
+    });
+    return response;
+  }
+
+  static async alterStatusComentario({
+    idComentario,
+    tipoStatus,
+  }: {
+    idComentario: number;
+    tipoStatus: TipoStatus;
+  }) {
+    const response = await axios.patch(`/api/comentario/${idComentario}`, {
       tipoStatus: tipoStatus,
     });
     return response;

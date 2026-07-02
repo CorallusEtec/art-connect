@@ -11,12 +11,14 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { BiSolidBriefcase, BiSolidStar } from "react-icons/bi";
 import { FaUserTie } from "react-icons/fa";
 import { TbUser, TbUserStar } from "react-icons/tb";
 
 export default function AdminUsuarios() {
   const { data } = useRelatorio();
+  const router = useRouter();
   return (
     <main className="flex mt-10 flex-col">
       <Container maxWidth="lg">

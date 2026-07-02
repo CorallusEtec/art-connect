@@ -24,7 +24,7 @@ export function CreateArte({
 }) {
   const { mutate } = useAddArte();
 
-  const { control, handleSubmit, resetDefaultValues } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     resolver: zodResolver(addArteSchema),
     defaultValues: { nomeArte: "" },
   });
@@ -32,7 +32,7 @@ export function CreateArte({
   function create(data: z.infer<typeof addArteSchema>) {
     mutate(data);
 
-    resetDefaultValues({ nomeArte: "" });
+    setValue("nomeArte", "");
     setOpen(false);
   }
 

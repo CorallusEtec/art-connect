@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BarChart, PieChart } from "@mui/x-charts";
+import { useRouter } from "next/navigation";
 import { BiSolidBriefcase, BiSolidStar } from "react-icons/bi";
 import { BsFillShareFill } from "react-icons/bs";
 import { CgInsights } from "react-icons/cg";
@@ -23,6 +24,8 @@ import { TbUserStar } from "react-icons/tb";
 
 export default function AdminDashboard() {
   const { data } = useRelatorio();
+  const router = useRouter();
+
   return (
     <Box
       className="bg-gray-100 flex h-full flex-col p-2 "
@@ -38,6 +41,7 @@ export default function AdminDashboard() {
             <Box component={"span"}>
               {data ? (
                 <CardDetails
+                  onClick={() => router.push("/dashboard/usuarios")}
                   insight={data.artistasCadastrados}
                   label="Artistas cadastrados"
                   acessory={<BiSolidStar className="text-lg text-azul-400" />}
@@ -55,6 +59,7 @@ export default function AdminDashboard() {
             <Box component={"span"}>
               {data ? (
                 <CardDetails
+                  onClick={() => router.push("/dashboard/usuarios")}
                   insight={data.contratantesCadastrados}
                   label="Contratantes cadastrados"
                   acessory={
@@ -77,6 +82,7 @@ export default function AdminDashboard() {
             <Box component={"span"}>
               {data ? (
                 <CardDetails
+                  onClick={() => router.push("/dashboard/denuncias")}
                   insight={data.publicacoesRealizadas}
                   label="Publicações realizadas"
                   acessory={
@@ -127,7 +133,7 @@ export default function AdminDashboard() {
         {/* (ARTES E SUBGENEROS PROXIMA PRÉVIA 18/06) Publicações nos ultimos 7 dias  */}
         <Grid size={4}>
           <Box>
-            <Card>
+            <Card onClick={() => router.push("/dashboard/artes")}>
               <CardActionArea>
                 <CardContent>
                   <Typography variant="h6">Artes mais selecionadas</Typography>

@@ -1,3 +1,4 @@
+import { useAlterComentario } from "@/services/AdminService";
 import { useGetComentario } from "@/services/ComentarioService";
 import { capitalize, converterData, labelData } from "@/utils/utils";
 import {
@@ -33,6 +34,7 @@ export function Comentario({ idComentario }: ComentarioProps) {
   };
   const theme = useTheme();
   const { data, isLoading } = useGetComentario(idComentario);
+  const { mutate } = useAlterComentario();
   const router = useRouter();
 
   if (isLoading) return <></>;
@@ -62,8 +64,10 @@ export function Comentario({ idComentario }: ComentarioProps) {
                   <Typography variant="subtitle1">
                     {data?.data.usuario.nome}
                   </Typography>
-                  <Chip variant="outlined" color="info" label="Comentário" />
                   <Chip
+                    size="small"
+                    variant="outlined"
+                    color="primary"
                     label={`Status do comentário: ${capitalize(data?.data.status.tipoStatus || "")}`}
                   />
                 </Box>
@@ -87,9 +91,36 @@ export function Comentario({ idComentario }: ComentarioProps) {
       </CardContent>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem sx={{ color: theme.palette.error.main }} onClick={() => {}}>
-          Excluir Publicacao
-        </MenuItem>
+        {data?.data.status.tipoStatus == "ATIVO" ? (
+          <MenuItem
+            sx={{ color: theme.palette.error.main }}
+            onClick={() => {
+              mutate({
+                idComentario: idComentario,
+                tipoStatus:
+                  data.data.status.tipoStatus == "ATIVO" ? "EXCLUIDO" : "ATIVO",
+              });
+              handleClose();
+            }}
+          >
+            Excluir Comentário
+          </MenuItem>
+        ) : (
+          <MenuItem
+            onClick={() => {
+              mutate({
+                idComentario: idComentario,
+                tipoStatus:
+                  data?.data.status.tipoStatus == "ATIVO"
+                    ? "EXCLUIDO"
+                    : "ATIVO",
+              });
+              handleClose();
+            }}
+          >
+            Reativar Comentário
+          </MenuItem>
+        )}
         <MenuItem onClick={() => {}}>Teste</MenuItem>
       </Menu>
     </Card>

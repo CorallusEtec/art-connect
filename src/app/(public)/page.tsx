@@ -40,7 +40,7 @@ export default function LandindPage() {
     },
     contatos: {
       title: "Contate e contrate!",
-      img: "/assets/mock/celular.png",
+      img: "/assets/mock/contato.png",
       targets: [
         "Encontre o contato dos artistas",
         "Converse e contrate com eles",

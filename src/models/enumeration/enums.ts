@@ -8,6 +8,7 @@ export const status = [
   "CONCLUIDO",
   "ARQUIVADO",
 ] as const;
+export const usuarioStatus = ["SUSPENSO", "BANIDO", "ATIVO"];
 export const tipoMidia = ["VIDEO", "IMAGEM", "AUDIO"] as const;
 export type TipoMidia = (typeof tipoMidia)[number];
 

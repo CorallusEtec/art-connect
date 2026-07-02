@@ -1,5 +1,5 @@
 import { usePublicacaoContext } from "@/contexts/PublicacaoContext";
-import { useDeletePublicacao } from "@/services/AdminService";
+import { useAlterPublicacao } from "@/services/AdminService";
 import { useGetPublicacao } from "@/services/PublicacaoService";
 import { capitalize, converterData, labelData } from "@/utils/utils";
 import {
@@ -35,7 +35,7 @@ export function PublicacaoHeader() {
   };
   const theme = useTheme();
 
-  const { mutate } = useDeletePublicacao();
+  const { mutate } = useAlterPublicacao();
   return (
     <CardContent>
       <Grid container>
@@ -60,16 +60,25 @@ export function PublicacaoHeader() {
                 <Typography variant="subtitle1">
                   {data?.data.publicacao.autor.nome}
                 </Typography>
-                <Chip variant="outlined" color="info" label="Publicação" />
+              </Box>
+              <Box component="div" className="flex gap-3 items-center">
+                <Typography variant="caption">
+                  {labelData(
+                    converterData(
+                      new Date(data!.data.publicacao.dataPublicacao),
+                    ),
+                  )}
+                </Typography>
                 <Chip
-                  label={`Status da publicação: ${capitalize(data?.data.publicacao.statusPublicacao.tipoStatus || "")}`}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  label={`Status da publicação:
+                  ${capitalize(
+                    data?.data.publicacao.statusPublicacao.tipoStatus || "",
+                  )}`}
                 />
               </Box>
-              <Typography variant="caption">
-                {labelData(
-                  converterData(new Date(data!.data.publicacao.dataPublicacao)),
-                )}
-              </Typography>
             </Box>
           </ButtonBase>
         </Grid>
