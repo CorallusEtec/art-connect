@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { redirect, usePathname, useRouter } from "next/navigation";
-import { FaUser } from "react-icons/fa";
+import { FaFlag, FaUser } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import { RiBrushAiFill } from "react-icons/ri";
 
@@ -34,6 +34,11 @@ export function DrawerAdmin() {
       title: "Usuários",
       icon: <FaUser size={22} color="white" />,
       url: "/dashboard/usuarios",
+    },
+    {
+      title: "Denuncias",
+      icon: <FaFlag size={22} color="white" />,
+      url: "/dashboard/denuncias",
     },
   ];
   const pathname = usePathname();

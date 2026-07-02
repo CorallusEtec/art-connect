@@ -20,14 +20,6 @@ export function MenuAdmin() {
       onClose={handleCloseMenu}
     >
       <MenuItem className="flex gap-2">
-        <BsPerson />
-        <Typography>Dados e credenciais</Typography>
-      </MenuItem>
-      <MenuItem className="flex gap-2">
-        <BsGearFill />
-        <Typography>Configurações</Typography>
-      </MenuItem>
-      <MenuItem className="flex gap-2">
         <BsBook />
         <Typography>Sobre o Art Connect</Typography>
       </MenuItem>

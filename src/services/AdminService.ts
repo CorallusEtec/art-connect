@@ -1,12 +1,18 @@
 import axios from "axios";
 import { config } from "./config";
 import { RelatorioResponse } from "@/models/response/RelatorioResponse";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useMutationState,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import z, { email } from "zod";
 import { usuarioEditSchema } from "@/schemas/usuarioEditSchema";
 import { UsuarioAdminEditRequest } from "@/models/request/UsuarioAdminEditRequest";
 import { useUsuarioEdit } from "@/contexts/UsuarioEditContext";
 import { useSearchParams } from "next/navigation";
+import { TipoStatus } from "@/models/enumeration/enums";
 
 export function useRelatorio() {
   const query = useQuery({
@@ -38,6 +44,40 @@ export function useMutateUsuario() {
   return mutate;
 }
 
+export function useAlterPublicacao() {
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: ({
+      idPublicacao,
+      tipoStatus,
+    }: {
+      idPublicacao: number;
+      tipoStatus: TipoStatus;
+    }) => AdminService.alterStatusPublicacao({ idPublicacao, tipoStatus }),
+    onSettled: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+  return mutate;
+}
+
+export function useAlterComentario() {
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: ({
+      idComentario,
+      tipoStatus,
+    }: {
+      idComentario: number;
+      tipoStatus: TipoStatus;
+    }) => AdminService.alterStatusComentario({ idComentario, tipoStatus }),
+    onSettled: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+  return mutate;
+}
+
 class AdminService {
   static async getRelatorios(): Promise<RelatorioResponse> {
     const response = await fetch("/api/dados");
@@ -47,6 +87,32 @@ class AdminService {
 
   static async editUsuario(id: number, editData: UsuarioAdminEditRequest) {
     const response = await axios.put(`/api/usuario/${id}`, editData);
+    return response;
+  }
+
+  static async alterStatusPublicacao({
+    idPublicacao,
+    tipoStatus,
+  }: {
+    idPublicacao: number;
+    tipoStatus: TipoStatus;
+  }) {
+    const response = await axios.patch(`/api/publicacao/${idPublicacao}`, {
+      tipoStatus: tipoStatus,
+    });
+    return response;
+  }
+
+  static async alterStatusComentario({
+    idComentario,
+    tipoStatus,
+  }: {
+    idComentario: number;
+    tipoStatus: TipoStatus;
+  }) {
+    const response = await axios.patch(`/api/comentario/${idComentario}`, {
+      tipoStatus: tipoStatus,
+    });
     return response;
   }
 }

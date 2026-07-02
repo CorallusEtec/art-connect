@@ -24,7 +24,7 @@ import { MdClose } from "react-icons/md";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usuarioEditSchema } from "@/schemas/usuarioEditSchema";
-import { status } from "@/models/enumeration/enums";
+import { usuarioStatus } from "@/models/enumeration/enums";
 import { useEffect, useState } from "react";
 import z from "zod";
 import { UsuarioAdminEditRequest } from "@/models/request/UsuarioAdminEditRequest";
@@ -47,16 +47,12 @@ export function UsuarioEditModal() {
     isSuccess,
   } = useMutateUsuario();
   const [confirmAlert, setConfirmAlert] = useState(false);
-  function getStatusList() {
-    return status;
-  }
 
   useEffect(() => {
     if (data) {
       reset({
         status: data.data.status.tipoStatus || "ATIVO",
-        nome: data.data.nome || "",
-        email: data.data.email || "",
+        descricao: data.data.status.descricao || "",
       });
     }
   }, [data, reset]);
@@ -64,8 +60,6 @@ export function UsuarioEditModal() {
 
   const saveEdits = (edit: z.infer<typeof usuarioEditSchema>) => {
     const editRequest: UsuarioAdminEditRequest = {
-      email: edit.email,
-      nome: edit.nome,
       status: {
         ...data!.data.status,
         descricao: edit.descricao,
@@ -118,37 +112,12 @@ export function UsuarioEditModal() {
 
       <Dialog fullWidth hideBackdrop open={open}>
         <div className="flex items-center p-2 justify-between">
-          <DialogTitle>Editar: {data?.data.nome}</DialogTitle>
+          <DialogTitle>Editar status de {data?.data.nome}</DialogTitle>
           <IconButton onClick={() => setOpen(false)}>
             <MdClose />
           </IconButton>
         </div>
         <DialogContent className="flex flex-col gap-5">
-          <Grid container spacing={2}>
-            <Grid size={6}>
-              <Controller
-                name="nome"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    label="Nome"
-                    variant="outlined"
-                    fullWidth
-                    {...field}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid size={6}>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <TextField fullWidth label="Email" {...field} />
-                )}
-              />
-            </Grid>
-          </Grid>
           <Controller
             name="status"
             control={control}
@@ -156,7 +125,7 @@ export function UsuarioEditModal() {
               <FormControl variant="outlined" fullWidth>
                 <InputLabel>Status</InputLabel>
                 <Select label="Status" {...field}>
-                  {getStatusList().map((status) => (
+                  {usuarioStatus.map((status) => (
                     <MenuItem value={status} key={status}>
                       {status}
                     </MenuItem>
@@ -170,6 +139,7 @@ export function UsuarioEditModal() {
             control={control}
             render={({ field }) => (
               <TextField
+                variant="outlined"
                 rows={3}
                 label="Descrição do status"
                 placeholder="Mensagem do status"

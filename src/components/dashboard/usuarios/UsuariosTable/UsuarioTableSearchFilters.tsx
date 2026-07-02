@@ -1,4 +1,9 @@
-import { TipoConta } from "@/models/enumeration/enums";
+import {
+  status,
+  TipoConta,
+  TipoStatus,
+  usuarioStatus,
+} from "@/models/enumeration/enums";
 import { UsuarioListFilters } from "@/models/request/paged/UsuarioListFilters";
 import { useCidadeList, useUfList } from "@/services/IBGEService";
 import {
@@ -24,15 +29,12 @@ export function UsuarioTableSearchFilters({
   anchor,
   handleAnchor,
 }: UsuarioTableSearchFiltersProps) {
-  const [tipoInput, setTipoInput] = useState<TipoConta | "">("");
-  const [uf, setUf] = useState("");
-  const [cidade, setCidade] = useState("");
-  const { data: cidadeData } = useCidadeList(uf);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { data: cidadeData } = useCidadeList(searchParams.get("uf") ?? "");
   const { data: ufData } = useUfList();
 
   const { replace } = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   function handleFiltro(tipo: keyof UsuarioListFilters, valor: string | null) {
     const params = new URLSearchParams(searchParams);
@@ -53,31 +55,56 @@ export function UsuarioTableSearchFilters({
       open={Boolean(anchor)}
     >
       <Container className="p-3">
-        <Typography variant="h5">Buscar por</Typography>
-        <Typography variant="subtitle2">Tipo de usuário</Typography>
+        <Typography align="center" variant="h5">
+          Buscar por
+        </Typography>
         <Stack className="gap-5">
-          <ToggleButtonGroup
-            value={tipoInput}
-            onChange={(e, v) => {
-              setTipoInput(v);
-              handleFiltro("tipoConta", v);
-            }}
-            color="primary"
-            size="small"
-            exclusive
+          <Box
+            component="div"
+            className="flex gap-10 items-center justify-between"
           >
-            <ToggleButton size="small" value={"ARTISTA"}>
-              Artista
-            </ToggleButton>
-            <ToggleButton value={"CONTRATANTE"}>Contratante</ToggleButton>
-          </ToggleButtonGroup>
+            <Box>
+              <Typography variant="subtitle2">Tipo de usuário</Typography>
+              <ToggleButtonGroup
+                value={searchParams.get("tipoConta")}
+                onChange={(e, v) => {
+                  handleFiltro("tipoConta", v);
+                }}
+                color="primary"
+                size="small"
+                exclusive
+              >
+                <ToggleButton size="small" value={"ARTISTA"}>
+                  Artista
+                </ToggleButton>
+                <ToggleButton value={"CONTRATANTE"}>Contratante</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+            <Box>
+              <Typography>Status da conta</Typography>
+              <Select
+                displayEmpty
+                value={searchParams.get("tipoStatus") ?? "ATIVO"}
+                onChange={(e) => {
+                  handleFiltro("tipoStatus", e.target.value);
+                }}
+                size="small"
+              >
+                <MenuItem value={""} disabled>
+                  <em>Status da conta</em>
+                </MenuItem>
+                {usuarioStatus.map((st) => (
+                  <MenuItem value={st}>{st}</MenuItem>
+                ))}
+              </Select>
+            </Box>
+          </Box>
           <Box component={"div"} className="flex items-center gap-5">
             <Typography>UF</Typography>
             <Select
               displayEmpty
-              value={uf}
+              value={searchParams.get("uf") ?? ""}
               onChange={(e) => {
-                setUf(e.target.value as string);
                 handleFiltro("uf", e.target.value as string);
               }}
               size="small"
@@ -93,9 +120,8 @@ export function UsuarioTableSearchFilters({
             <Typography>Cidade</Typography>
             <Select
               displayEmpty
-              value={cidade}
+              value={searchParams.get("cidade") ?? ""}
               onChange={(e) => {
-                setUf(e.target.value as string);
                 handleFiltro("cidade", e.target.value as string);
               }}
               size="small"
