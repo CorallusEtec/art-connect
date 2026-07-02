@@ -1,4 +1,9 @@
-import { status, TipoConta, TipoStatus } from "@/models/enumeration/enums";
+import {
+  status,
+  TipoConta,
+  TipoStatus,
+  usuarioStatus,
+} from "@/models/enumeration/enums";
 import { UsuarioListFilters } from "@/models/request/paged/UsuarioListFilters";
 import { useCidadeList, useUfList } from "@/services/IBGEService";
 import {
@@ -88,7 +93,7 @@ export function UsuarioTableSearchFilters({
                 <MenuItem value={""} disabled>
                   <em>Status da conta</em>
                 </MenuItem>
-                {status.map((st) => (
+                {usuarioStatus.map((st) => (
                   <MenuItem value={st}>{st}</MenuItem>
                 ))}
               </Select>

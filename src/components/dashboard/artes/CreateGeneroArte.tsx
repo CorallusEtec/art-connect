@@ -28,7 +28,7 @@ export function CreateGeneroArte({
 }) {
   const { mutate } = useSaveGeneroArte();
 
-  const { control, handleSubmit, resetDefaultValues } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     resolver: zodResolver(addGeneroArteSchema),
     defaultValues: { nomeGeneroArte: "" },
   });
@@ -39,7 +39,7 @@ export function CreateGeneroArte({
       arteId: arteId,
     });
 
-    resetDefaultValues({ nomeGeneroArte: "" });
+    setValue("nomeGeneroArte", "");
     setOpen(false);
   }
 
